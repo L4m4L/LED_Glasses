@@ -265,7 +265,7 @@
   )
 
   (module Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM (layer F.Cu) (tedit 5D7A1950) (tstamp 5D835EAD)
-    (at 236.730209 102.60337)
+    (at 236.8931 101.0158)
     (descr "surface-mounted straight pin header, 1x03, 1.00mm pitch, single row, style 1 (pin 1 left)")
     (tags "Surface mounted pin header SMD 1x03 1.00mm single row style1 pin1 left")
     (path /5D891789)
