@@ -3,7 +3,7 @@
   (general
     (thickness 1.6)
     (drawings 156)
-    (tracks 608)
+    (tracks 612)
     (zones 0)
     (modules 85)
     (nets 70)
@@ -360,7 +360,7 @@
     )
   )
 
-  (module Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM (layer F.Cu) (tedit 5D7A1950) (tstamp 5D7E3314)
+  (module Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM (layer F.Cu) (tedit 5D7A1950) (tstamp 5DAA5FC3)
     (at 88.6968 105.0417)
     (descr "surface-mounted straight pin header, 1x03, 1.00mm pitch, single row, style 1 (pin 1 left)")
     (tags "Surface mounted pin header SMD 1x03 1.00mm single row style1 pin1 left")
@@ -4125,6 +4125,10 @@
   (segment (start 222.25 101.225) (end 221.2 101.225) (width 0.25) (layer F.Cu) (net 1))
   (segment (start 147.5963 100.8787) (end 147.25 101.225) (width 0.25) (layer F.Cu) (net 2))
   (segment (start 151.6634 100.8787) (end 147.5963 100.8787) (width 0.25) (layer F.Cu) (net 2))
+  (segment (start 112.874999 126.024999) (end 109.877501 126.024999) (width 0.25) (layer F.Cu) (net 2))
+  (segment (start 114.625 126.725) (end 113.575 126.725) (width 0.25) (layer F.Cu) (net 2))
+  (segment (start 113.575 126.725) (end 112.874999 126.024999) (width 0.25) (layer F.Cu) (net 2))
+  (segment (start 109.877501 126.024999) (end 109.4105 126.492) (width 0.25) (layer F.Cu) (net 2))
   (segment (start 219.4394 115.725) (end 219.3671 115.7973) (width 0.25) (layer F.Cu) (net 3))
   (segment (start 222.25 115.725) (end 219.4394 115.725) (width 0.25) (layer F.Cu) (net 3))
   (segment (start 182.292 120.283) (end 182.25 120.325) (width 0.25) (layer F.Cu) (net 3))
