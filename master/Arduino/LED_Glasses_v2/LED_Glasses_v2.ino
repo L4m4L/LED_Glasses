@@ -63,7 +63,7 @@ void loop() {
     frame=0;  
   }
   sineWave(frame, 1, 25);
-  delay(50);
+  delay(40);
 }
 
 // Map the neo_matrix to my Matrix
