@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 25)
+    (drawings 26)
     (tracks 0)
     (zones 0)
     (modules 0)
@@ -60,7 +60,7 @@
     (pad_to_mask_clearance 0.051)
     (solder_mask_min_width 0.25)
     (aux_axis_origin 0 0)
-    (visible_elements 7FFFFFFF)
+    (visible_elements FFFFFF7F)
     (pcbplotparams
       (layerselection 0x010fc_ffffffff)
       (usegerberextensions false)
@@ -107,6 +107,7 @@
   (gr_line (start 99.442077 91.28235) (end 99.451257 91.283632) (layer Dwgs.User) (width 0.2))
   (gr_arc (start 163.86612 81.255582) (end 161.052674 101.385258) (angle -27.55190151) (layer Dwgs.User) (width 0.2))
   (gr_arc (start 182.646292 129.560074) (end 201.748929 104.494043) (angle -59.62026988) (layer Dwgs.User) (width 0.2))
+  (gr_line (start 99.451257 91.283632) (end 161.052674 101.385258) (layer Dwgs.User) (width 0.2))
   (gr_arc (start 168.966113 181.839731) (end 221.777745 107.413276) (angle -24.79562426) (layer Dwgs.User) (width 0.2))
   (gr_arc (start 164.209918 84.628795) (end 161.052674 101.385258) (angle -32.9800478) (layer Dwgs.User) (width 0.2))
   (gr_line (start 94.396198 91.276777) (end 99.442077 91.28235) (layer Dwgs.User) (width 0.2))
