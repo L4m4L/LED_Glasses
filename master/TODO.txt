@@ -1,0 +1,2 @@
+C Library for SK6812
+https://github.com/EdwardHartmann/SK6812RGBW
