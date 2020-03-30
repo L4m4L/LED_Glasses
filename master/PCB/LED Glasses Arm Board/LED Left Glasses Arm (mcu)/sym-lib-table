@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name misc-symbols)(type Legacy)(uri D:/repo/LED_Glasses/master/PCB/misc-symbols.lib)(options "")(descr ""))
+)

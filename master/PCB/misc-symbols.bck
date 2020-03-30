@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP STM32G071KBU6
+D STMICROELECTRONICS - STM32G071KBU6 - MCU, 32BIT, 64MHZ, UFQFPN-32
+F https://www.st.com/resource/en/datasheet/stm32g071kb.pdf
+$ENDCMP
+#
+#End Doc Library
