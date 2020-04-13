@@ -15,7 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L misc-symbols:STM32G071KBU6 U102
+L LED-Left-Glasses-Arm-(mcu)-rescue:STM32G071KBU6-misc-symbols U102
 U 1 1 5E81D115
 P 5250 3900
 F 0 "U102" H 5350 4550 50  0000 R CNN
@@ -191,7 +191,7 @@ Wire Wire Line
 Text Label 4850 4500 0    50   ~ 0
 LED_DATA
 $Comp
-L misc-symbols:CONN_SOLDER_1X3 J101
+L LED-Left-Glasses-Arm-(mcu)-rescue:CONN_SOLDER_1X3-misc-symbols J101
 U 1 1 5E844BA7
 P 1600 1350
 F 0 "J101" H 1750 1450 50  0000 L CNN
@@ -386,7 +386,7 @@ $EndComp
 Connection ~ 10150 4100
 Connection ~ 10150 4300
 $Comp
-L misc-symbols:SPH0641LM4H-1 MK101
+L LED-Left-Glasses-Arm-(mcu)-rescue:SPH0641LM4H-1-misc-symbols MK101
 U 1 1 5E81E214
 P 9650 4200
 F 0 "MK101" H 9650 4600 50  0000 C CNN
