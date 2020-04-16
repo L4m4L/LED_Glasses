@@ -62,8 +62,17 @@ void loop() {
   if(frame>=65355){
     frame=0;  
   }
-  sineWave(frame, 1, 25);
-  delay(40);
+  //sineWave(frame, 1, 25);
+  for(int i = 0; i<NUMROWS; i++){
+    lightRow(i);
+    delay(40);
+  }
+  pixels.clear();
+  for(int i = 0; i<NUMCOLS; i++){
+    lightCol(i);
+    delay(40);
+  }
+  pixels.clear();
 }
 
 // Map the neo_matrix to my Matrix
