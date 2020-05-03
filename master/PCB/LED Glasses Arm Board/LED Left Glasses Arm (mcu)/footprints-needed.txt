@@ -1,0 +1,56 @@
+Info: Processing component “C103:/5E88E644:Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder”.
+
+Info: Cannot add new symbol “MK101:/5E81E214” due to missing footprint “”.
+
+Info: Processing component “MK101:/5E81E214:”.
+
+Info: Cannot add new symbol “J102:/5E8495CE” due to missing footprint “”.
+
+Info: Processing component “SW101:/5E81D560:”.
+
+Info: Processing component “J102:/5E8495CE:”.
+
+Info: Cannot add new symbol “J101:/5E844BA7” due to missing footprint “”.
+
+Info: Processing component “J101:/5E844BA7:”.
+
+Info: Processing component “C105:/5E81D41F:Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder”.
+
+Info: Processing component “C104:/5E81E55E:Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder”.
+
+Info: Processing component “C102:/5E84E914:Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder”.
+
+Info: Processing component “C101:/5E84E84A:Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder”.
+
+Info: Processing component “D101:/5E84A727:Diode_SMD:D_SOD-123”.
+
+Info: Processing component “U101:/5E84D2AA:Package_TO_SOT_SMD:SOT-23-5”.
+
+Info: Processing component “R101:/5E81DA5F:Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder”.
+
+Info: Cannot add new symbol “SW101:/5E81D560” due to missing footprint “”.
+
+Info: Processing component “U102:/5E81D115:”.
+
+Info: Cannot add new symbol “U102:/5E81D115” due to missing footprint “”.
+
+Error: Cannot add symbol J101 due to missing footprint .
+
+Error: Cannot add symbol SW101 due to missing footprint .
+
+Error: Cannot add symbol U102 due to missing footprint .
+
+Error: Cannot add symbol MK101 due to missing footprint .
+
+Error: Cannot add symbol J102 due to missing footprint .
+
+Error: No footprint defined for symbol “J101”.
+
+Error: No footprint defined for symbol “U102”.
+
+Error: No footprint defined for symbol “SW101”.
+
+Error: No footprint defined for symbol “MK101”.
+
+Error: No footprint defined for symbol “J102”.
+

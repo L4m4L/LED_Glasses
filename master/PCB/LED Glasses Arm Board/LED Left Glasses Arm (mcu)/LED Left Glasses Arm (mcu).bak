@@ -15,12 +15,12 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L misc-symbols:STM32G071KBU6 U102
+L LED-Left-Glasses-Arm-(mcu)-rescue:STM32G071KBU6-misc-symbols U102
 U 1 1 5E81D115
 P 5250 3900
 F 0 "U102" H 5350 4550 50  0000 R CNN
 F 1 "STM32G071KBU6" H 5350 4450 50  0000 R CNN
-F 2 "QFN50P500X500X60-33N-D" H 7100 4600 50  0001 L CNN
+F 2 "" H 7100 4600 50  0001 L CNN
 F 3 "" H 7100 4500 50  0001 L CNN
 F 4 "497-18357-ND" H 5250 3900 50  0001 C CNN "Digi-Key Part Number"
 F 5 "ARM Cortex-M0+ STM32G0 Microcontroller IC 32-Bit 64MHz 128KB (128K x 8) FLASH 32-UFQFPN (5x5)" H 7100 4400 50  0001 L CNN "Description"
@@ -188,10 +188,10 @@ Text Label 6150 5600 1    50   ~ 0
 MIC_CLK
 Wire Wire Line
 	8800 4300 9150 4300
-Text Label 4850 4500 0    50   ~ 0
+Text Label 5850 5600 1    50   ~ 0
 LED_DATA
 $Comp
-L misc-symbols:CONN_SOLDER_1X3 J101
+L LED-Left-Glasses-Arm-(mcu)-rescue:CONN_SOLDER_1X3-misc-symbols J101
 U 1 1 5E844BA7
 P 1600 1350
 F 0 "J101" H 1750 1450 50  0000 L CNN
@@ -216,7 +216,7 @@ Wire Wire Line
 Text Label 8800 4300 0    50   ~ 0
 MIC_CLK
 Wire Wire Line
-	4850 4500 5250 4500
+	5850 5600 5850 5200
 Text Label 6650 2750 3    50   ~ 0
 SWCLK
 Text Label 7500 3900 2    50   ~ 0
@@ -386,12 +386,12 @@ $EndComp
 Connection ~ 10150 4100
 Connection ~ 10150 4300
 $Comp
-L misc-symbols:SPH0641LM4H-1 MK101
+L LED-Left-Glasses-Arm-(mcu)-rescue:SPH0641LM4H-1-misc-symbols MK101
 U 1 1 5E81E214
 P 9650 4200
 F 0 "MK101" H 9650 4600 50  0000 C CNN
 F 1 "SPH0641LM4H-1" H 9650 4500 50  0000 C CNN
-F 2 "MIC_SPH0641LM4H-1" H 9650 4300 50  0001 L BNN
+F 2 "" H 9650 4300 50  0001 L BNN
 F 3 "" H 9650 4200 50  0001 L BNN
 F 4 "423-1395-1-ND" H 9650 4200 50  0001 C CNN "Digi-Key Part Number"
 F 5 "100Hz ~ 10kHz Digital, PDM Microphone MEMS (Silicon) 1.62V ~ 3.6V Omnidirectional (-26dB ±1dB @ 94dB SPL)" H 9650 4200 50  0001 C CNN "Description"
