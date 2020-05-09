@@ -20,7 +20,7 @@ U 1 1 5E81D115
 P 5250 3900
 F 0 "U102" H 5350 4550 50  0000 R CNN
 F 1 "STM32G071KBU6" H 5350 4450 50  0000 R CNN
-F 2 "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm" H 7100 4600 50  0001 L CNN
+F 2 "misc-footprints:QFN50P500X500X60-33N-D" H 7100 4600 50  0001 L CNN
 F 3 "" H 7100 4500 50  0001 L CNN
 F 4 "497-18357-ND" H 5250 3900 50  0001 C CNN "Digi-Key Part Number"
 F 5 "ARM Cortex-M0+ STM32G0 Microcontroller IC 32-Bit 64MHz 128KB (128K x 8) FLASH 32-UFQFPN (5x5)" H 7100 4400 50  0001 L CNN "Description"
@@ -196,7 +196,7 @@ U 1 1 5E844BA7
 P 1600 1350
 F 0 "J101" H 1750 1450 50  0000 L CNN
 F 1 "Front Connector" H 1750 1350 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x03_P1.00mm_Vertical_SMD_Pin1Left_CUSTOM" H 1600 1350 50  0001 C CNN
+F 2 "misc-footprints:PinHeader_1x03_P1.00mm_Vertical_SMD_Pin1Left_CUSTOM" H 1600 1350 50  0001 C CNN
 F 3 "" H 1600 1350 50  0001 C CNN
 F 4 "Front of Glasses Interface, Solder Pads" H 250 350 50  0001 C CNN "Description"
 F 5 "N/A" H 250 350 50  0001 C CNN "Digi-Key Part Number"
@@ -233,7 +233,7 @@ U 1 1 5E8495CE
 P 1550 4350
 F 0 "J102" H 1700 4550 50  0000 L CNN
 F 1 "SWD" H 1700 4450 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x05_P1.00mm_Vertical_SMD_Pin1Left_CUSTOM" H 1550 4350 50  0001 C CNN
+F 2 "misc-footprints:PinHeader_1x05_P1.00mm_Vertical_SMD_Pin1Left_CUSTOM" H 1550 4350 50  0001 C CNN
 F 3 "" H 1550 4350 50  0001 C CNN
 F 4 "SWD Programming Interface, Solder Pads" H 500 1150 50  0001 C CNN "Description"
 F 5 "N/A" H 500 1150 50  0001 C CNN "Digi-Key Part Number"
@@ -391,7 +391,7 @@ U 1 1 5E81E214
 P 9650 4200
 F 0 "MK101" H 9650 4600 50  0000 C CNN
 F 1 "SPH0641LM4H-1" H 9650 4500 50  0000 C CNN
-F 2 "" H 9650 4300 50  0001 L BNN
+F 2 "misc-footprints:MIC_SPH0641LM4H-1" H 9650 4300 50  0001 L BNN
 F 3 "" H 9650 4200 50  0001 L BNN
 F 4 "423-1395-1-ND" H 9650 4200 50  0001 C CNN "Digi-Key Part Number"
 F 5 "100Hz ~ 10kHz Digital, PDM Microphone MEMS (Silicon) 1.62V ~ 3.6V Omnidirectional (-26dB ±1dB @ 94dB SPL)" H 9650 4200 50  0001 C CNN "Description"
