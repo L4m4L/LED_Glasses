@@ -188,7 +188,7 @@ Text Label 6150 5600 1    50   ~ 0
 MIC_CLK
 Wire Wire Line
 	8800 4300 9150 4300
-Text Label 5850 5600 1    50   ~ 0
+Text Label 6050 2600 3    50   ~ 0
 LED_DATA
 $Comp
 L LED-Left-Glasses-Arm-(mcu)-rescue:CONN_SOLDER_1X3-misc-symbols J101
@@ -216,7 +216,7 @@ Wire Wire Line
 Text Label 8800 4300 0    50   ~ 0
 MIC_CLK
 Wire Wire Line
-	5850 5600 5850 5200
+	6050 2600 6050 3000
 Text Label 6650 2750 3    50   ~ 0
 SWCLK
 Text Label 7500 3900 2    50   ~ 0
