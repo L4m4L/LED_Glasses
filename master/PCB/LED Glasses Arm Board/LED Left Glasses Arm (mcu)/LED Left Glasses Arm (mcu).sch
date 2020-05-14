@@ -15,19 +15,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L LED-Left-Glasses-Arm-(mcu)-rescue:STM32G071KBU6-misc-symbols U102
-U 1 1 5E81D115
-P 5250 3900
-F 0 "U102" H 5350 4550 50  0000 R CNN
-F 1 "STM32G071KBU6" H 5350 4450 50  0000 R CNN
-F 2 "misc-footprints:QFN50P500X500X60-33N-D" H 7100 4600 50  0001 L CNN
-F 3 "" H 7100 4500 50  0001 L CNN
-F 4 "497-18357-ND" H 5250 3900 50  0001 C CNN "Digi-Key Part Number"
-F 5 "ARM Cortex-M0+ STM32G0 Microcontroller IC 32-Bit 64MHz 128KB (128K x 8) FLASH 32-UFQFPN (5x5)" H 7100 4400 50  0001 L CNN "Description"
-	1    5250 3900
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0112
 U 1 1 5E81D237
 P 4900 4200
@@ -446,11 +433,83 @@ Wire Wire Line
 Wire Wire Line
 	5100 4200 5250 4200
 Wire Wire Line
-	4500 4400 4700 4400
-Wire Wire Line
 	4700 4600 4700 4400
+Connection ~ 3000 1250
 Connection ~ 4700 4400
 Wire Wire Line
 	4700 4400 5250 4400
-Connection ~ 3000 1250
+Wire Wire Line
+	4500 4400 4700 4400
+$Comp
+L Device:C_Small C106
+U 1 1 5EBD3A85
+P 4300 3600
+F 0 "C106" H 4450 3650 50  0000 L CNN
+F 1 "100n, 25V" H 4450 3550 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 4300 3600 50  0001 C CNN
+F 3 "" H 4300 3600 50  0001 C CNN
+F 4 "0.1µF ±20% 50V Ceramic Capacitor X7R 0805 (2012 Metric)" H -400 -1100 50  0001 C CNN "Description"
+F 5 "1276-2450-1-ND" H -400 -1100 50  0001 C CNN "Digi-Key Part Number"
+	1    4300 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW102
+U 1 1 5EBD3A8E
+P 4100 3500
+F 0 "SW102" V 4150 3700 50  0000 L CNN
+F 1 "Push Button" V 4050 3700 50  0000 L CNN
+F 2 "Button_Switch_SMD:SW_SPST_CK_KXT3" H 4100 3700 50  0001 C CNN
+F 3 "" H 4100 3700 50  0001 C CNN
+F 4 "CKN10779CT-ND" V 4100 3500 50  0001 C CNN "Digi-Key Part Number"
+F 5 "Tactile Switch SPST-NO Top Actuated Surface Mount" V 4100 3500 50  0001 C CNN "Description"
+	1    4100 3500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0118
+U 1 1 5EBD3A95
+P 4300 3700
+F 0 "#PWR0118" H 4300 3450 50  0001 C CNN
+F 1 "GND" H 4300 3500 50  0000 C CNN
+F 2 "" H 4300 3700 50  0001 C CNN
+F 3 "" H 4300 3700 50  0001 C CNN
+	1    4300 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0117
+U 1 1 5EBD3A9B
+P 4100 3700
+F 0 "#PWR0117" H 4100 3450 50  0001 C CNN
+F 1 "GND" H 4100 3500 50  0000 C CNN
+F 2 "" H 4100 3700 50  0001 C CNN
+F 3 "" H 4100 3700 50  0001 C CNN
+	1    4100 3700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L LED-Left-Glasses-Arm-(mcu)-rescue:STM32G071KBU6-misc-symbols U102
+U 1 1 5E81D115
+P 5250 3900
+F 0 "U102" H 5300 4950 50  0000 R CNN
+F 1 "STM32G071KBU6" H 5300 4850 50  0000 R CNN
+F 2 "misc-footprints:QFN50P500X500X60-33N-D" H 7100 4600 50  0001 L CNN
+F 3 "" H 7100 4500 50  0001 L CNN
+F 4 "497-18357-ND" H 5250 3900 50  0001 C CNN "Digi-Key Part Number"
+F 5 "ARM Cortex-M0+ STM32G0 Microcontroller IC 32-Bit 64MHz 128KB (128K x 8) FLASH 32-UFQFPN (5x5)" H 7100 4400 50  0001 L CNN "Description"
+	1    5250 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 3300 4300 3300
+Wire Wire Line
+	5150 3900 5250 3900
+Wire Wire Line
+	4300 3500 4300 3300
+Connection ~ 4300 3300
+Wire Wire Line
+	5150 3300 5150 3900
+Wire Wire Line
+	4300 3300 5150 3300
 $EndSCHEMATC
