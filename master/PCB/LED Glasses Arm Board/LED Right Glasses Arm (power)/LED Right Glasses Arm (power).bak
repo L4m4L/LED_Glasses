@@ -47,17 +47,6 @@ F 3 "" H 3800 4850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0103
-U 1 1 5F4B6F97
-P 3250 4850
-F 0 "#PWR0103" H 3250 4600 50  0001 C CNN
-F 1 "GND" H 3255 4677 50  0000 C CNN
-F 2 "" H 3250 4850 50  0001 C CNN
-F 3 "" H 3250 4850 50  0001 C CNN
-	1    3250 4850
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0104
 U 1 1 5F4B6FC9
 P 4650 4850
@@ -66,17 +55,6 @@ F 1 "GND" H 4655 4677 50  0000 C CNN
 F 2 "" H 4650 4850 50  0001 C CNN
 F 3 "" H 4650 4850 50  0001 C CNN
 	1    4650 4850
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C1
-U 1 1 5F4B72C8
-P 3250 4200
-F 0 "C1" H 3342 4246 50  0000 L CNN
-F 1 "10uF" H 3342 4155 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 3250 4200 50  0001 C CNN
-F 3 "~" H 3250 4200 50  0001 C CNN
-	1    3250 4200
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -100,7 +78,7 @@ U 1 1 5F4B6990
 P 4750 4250
 F 0 "U1" H 4750 4917 50  0000 C CNN
 F 1 "TPS63060" H 4750 4826 50  0000 C CNN
-F 2 "Package_SON:Texas_S-PWSON-N10_ThermalVias" H 4750 3600 50  0001 C CNN
+F 2 "Package_SON:Texas_S-PWSON-N10" H 4750 3600 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tps63060.pdf" H 4750 4250 50  0001 C CNN
 	1    4750 4250
 	1    0    0    -1  
@@ -210,25 +188,14 @@ Wire Wire Line
 	6350 4500 6350 4800
 Connection ~ 6350 4050
 $Comp
-L Device:C_Small C4
-U 1 1 5F4BC943
-P 7100 4250
-F 0 "C4" H 7192 4296 50  0000 L CNN
-F 1 "22uF" H 7192 4205 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 7100 4250 50  0001 C CNN
-F 3 "~" H 7100 4250 50  0001 C CNN
-	1    7100 4250
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0108
 U 1 1 5F4BEA89
-P 7100 5300
-F 0 "#PWR0108" H 7100 5050 50  0001 C CNN
-F 1 "GND" H 7105 5127 50  0000 C CNN
-F 2 "" H 7100 5300 50  0001 C CNN
-F 3 "" H 7100 5300 50  0001 C CNN
-	1    7100 5300
+P 7100 4750
+F 0 "#PWR0108" H 7100 4500 50  0001 C CNN
+F 1 "GND" H 7105 4577 50  0000 C CNN
+F 2 "" H 7100 4750 50  0001 C CNN
+F 3 "" H 7100 4750 50  0001 C CNN
+	1    7100 4750
 	1    0    0    -1  
 $EndComp
 Text Label 8550 4050 0    50   ~ 0
@@ -249,8 +216,9 @@ U 1 1 5F4C134D
 P 3350 5400
 F 0 "SW1" H 3350 5635 50  0000 C CNN
 F 1 "SW_SPST" H 3350 5544 50  0000 C CNN
-F 2 "Button_Switch_SMD:SW_SPST_FSMSM" H 3350 5400 50  0001 C CNN
-F 3 "" H 3350 5400 50  0001 C CNN
+F 2 "digikey-footprints:Switch_Slide_JS202011SCQN" H 3350 5400 50  0001 C CNN
+F 3 "https://www.ckswitches.com/media/1422/js.pdf" H 3350 5400 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/c-k/JS202011SCQN/401-2002-1-ND/1640098" H 3350 5400 50  0001 C CNN "Digikey Link"
 	1    3350 5400
 	1    0    0    -1  
 $EndComp
@@ -391,49 +359,27 @@ Connection ~ 4650 4850
 $Comp
 L Device:C_Small C5
 U 1 1 604D825D
-P 3250 4600
-F 0 "C5" H 3342 4646 50  0000 L CNN
-F 1 "10uF" H 3342 4555 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 3250 4600 50  0001 C CNN
-F 3 "~" H 3250 4600 50  0001 C CNN
-	1    3250 4600
+P 3250 4450
+F 0 "C5" H 3342 4496 50  0000 L CNN
+F 1 "20uF" H 3342 4405 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 3250 4450 50  0001 C CNN
+F 3 "~" H 3250 4450 50  0001 C CNN
+	1    3250 4450
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	2850 4050 3250 4050
-Wire Wire Line
-	3250 4050 3250 4100
-Connection ~ 3250 4050
-Wire Wire Line
-	3250 4050 4350 4050
-Wire Wire Line
-	3250 4300 3250 4500
-Wire Wire Line
-	3250 4700 3250 4850
 Wire Wire Line
 	1050 4050 1700 4050
 Wire Wire Line
-	8050 4050 8900 4050
-$Comp
-L Device:C_Small C7
-U 1 1 604E036B
-P 7100 5000
-F 0 "C7" H 7192 5046 50  0000 L CNN
-F 1 "22uF" H 7192 4955 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 7100 5000 50  0001 C CNN
-F 3 "~" H 7100 5000 50  0001 C CNN
-	1    7100 5000
-	1    0    0    -1  
-$EndComp
+	8050 4050 8550 4050
 $Comp
 L Device:C_Small C6
 U 1 1 604E0D34
-P 7100 4600
-F 0 "C6" H 7192 4646 50  0000 L CNN
-F 1 "22uF" H 7192 4555 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 7100 4600 50  0001 C CNN
-F 3 "~" H 7100 4600 50  0001 C CNN
-	1    7100 4600
+P 7100 4250
+F 0 "C6" H 7192 4296 50  0000 L CNN
+F 1 "66uF" H 7192 4205 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 7100 4250 50  0001 C CNN
+F 3 "~" H 7100 4250 50  0001 C CNN
+	1    7100 4250
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -443,12 +389,6 @@ Wire Wire Line
 Connection ~ 7100 4050
 Wire Wire Line
 	7100 4050 8050 4050
-Wire Wire Line
-	7100 4350 7100 4500
-Wire Wire Line
-	7100 4700 7100 4900
-Wire Wire Line
-	7100 5100 7100 5300
 $Comp
 L Connector:Conn_01x02_Male J1
 U 1 1 604D70E4
@@ -478,38 +418,148 @@ $EndComp
 $Comp
 L Connector:Conn_01x01_Male J2
 U 1 1 604D92F9
-P 9100 4050
-F 0 "J2" H 9073 3980 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 9073 4071 50  0000 R CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 9100 4050 50  0001 C CNN
-F 3 "~" H 9100 4050 50  0001 C CNN
-	1    9100 4050
+P 10500 4050
+F 0 "J2" H 10473 3980 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 10473 4071 50  0000 R CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10500 4050 50  0001 C CNN
+F 3 "~" H 10500 4050 50  0001 C CNN
+	1    10500 4050
 	-1   0    0    1   
 $EndComp
 $Comp
 L power:GND #PWR0111
 U 1 1 604DB74C
-P 8850 5650
-F 0 "#PWR0111" H 8850 5400 50  0001 C CNN
-F 1 "GND" H 8855 5477 50  0000 C CNN
-F 2 "" H 8850 5650 50  0001 C CNN
-F 3 "" H 8850 5650 50  0001 C CNN
-	1    8850 5650
+P 8550 5650
+F 0 "#PWR0111" H 8550 5400 50  0001 C CNN
+F 1 "GND" H 8555 5477 50  0000 C CNN
+F 2 "" H 8550 5650 50  0001 C CNN
+F 3 "" H 8550 5650 50  0001 C CNN
+	1    8550 5650
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x01_Male J3
 U 1 1 604DC290
-P 9100 4200
-F 0 "J3" H 9073 4130 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 9073 4221 50  0000 R CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 9100 4200 50  0001 C CNN
-F 3 "~" H 9100 4200 50  0001 C CNN
-	1    9100 4200
+P 10500 4200
+F 0 "J3" H 10473 4130 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 10473 4221 50  0000 R CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10500 4200 50  0001 C CNN
+F 3 "~" H 10500 4200 50  0001 C CNN
+	1    10500 4200
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	8900 4200 8850 4200
+	2850 4050 3250 4050
+$Comp
+L power:GND #PWR0103
+U 1 1 5F4B6F97
+P 3250 4750
+F 0 "#PWR0103" H 3250 4500 50  0001 C CNN
+F 1 "GND" H 3255 4577 50  0000 C CNN
+F 2 "" H 3250 4750 50  0001 C CNN
+F 3 "" H 3250 4750 50  0001 C CNN
+	1    3250 4750
+	1    0    0    -1  
+$EndComp
+Connection ~ 3250 4050
 Wire Wire Line
-	8850 4200 8850 5650
+	3250 4050 4350 4050
+Wire Wire Line
+	3250 4550 3250 4750
+$Comp
+L Device:C_Small C
+U 1 1 60505078
+P 8550 4300
+F 0 "C" H 8642 4346 50  0000 L CNN
+F 1 "220uF" H 8642 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 8550 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 8550 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 8550 4300 50  0001 C CNN "Link"
+	1    8550 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8550 4200 8550 4050
+Connection ~ 8550 4050
+Wire Wire Line
+	8550 4400 8550 4700
+Wire Wire Line
+	8550 4700 8550 5650
+Wire Wire Line
+	3250 4050 3250 4350
+Wire Wire Line
+	7100 4350 7100 4750
+Wire Wire Line
+	10300 4700 10300 4200
+Connection ~ 8550 4700
+$Comp
+L Device:C_Small C?
+U 1 1 60562E44
+P 8950 4300
+F 0 "C?" H 9042 4346 50  0000 L CNN
+F 1 "220uF" H 9042 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 8950 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 8950 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 8950 4300 50  0001 C CNN "Link"
+	1    8950 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 605639D8
+P 9350 4300
+F 0 "C?" H 9442 4346 50  0000 L CNN
+F 1 "220uF" H 9442 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 9350 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 9350 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 9350 4300 50  0001 C CNN "Link"
+	1    9350 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 60564591
+P 9750 4300
+F 0 "C?" H 9842 4346 50  0000 L CNN
+F 1 "220uF" H 9842 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 9750 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 9750 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 9750 4300 50  0001 C CNN "Link"
+	1    9750 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8550 4700 8950 4700
+Wire Wire Line
+	8550 4050 8950 4050
+Wire Wire Line
+	8950 4200 8950 4050
+Connection ~ 8950 4050
+Wire Wire Line
+	8950 4050 9350 4050
+Wire Wire Line
+	8950 4400 8950 4700
+Connection ~ 8950 4700
+Wire Wire Line
+	8950 4700 9350 4700
+Wire Wire Line
+	9350 4200 9350 4050
+Connection ~ 9350 4050
+Wire Wire Line
+	9350 4050 9750 4050
+Wire Wire Line
+	9750 4200 9750 4050
+Connection ~ 9750 4050
+Wire Wire Line
+	9750 4050 10300 4050
+Wire Wire Line
+	9350 4400 9350 4700
+Connection ~ 9350 4700
+Wire Wire Line
+	9350 4700 9750 4700
+Wire Wire Line
+	9750 4400 9750 4700
+Connection ~ 9750 4700
+Wire Wire Line
+	9750 4700 10300 4700
 $EndSCHEMATC

@@ -58,17 +58,6 @@ F 3 "" H 4650 4850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C_Small C1
-U 1 1 5F4B72C8
-P 3050 4350
-F 0 "C1" H 3142 4396 50  0000 L CNN
-F 1 "10uF" H 3142 4305 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 3050 4350 50  0001 C CNN
-F 3 "~" H 3050 4350 50  0001 C CNN
-	1    3050 4350
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:C_Small C2
 U 1 1 5F4B8E20
 P 3800 4550
@@ -99,9 +88,10 @@ L pspice:INDUCTOR L1
 U 1 1 5F4B9710
 P 4750 3300
 F 0 "L1" H 4750 3515 50  0000 C CNN
-F 1 "1u" H 4750 3424 50  0000 C CNN
+F 1 "1uF" H 4750 3424 50  0000 C CNN
 F 2 "Inductor_SMD:L_Coilcraft_XxL4020" H 4750 3300 50  0001 C CNN
-F 3 "~" H 4750 3300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1682010.pdf" H 4750 3300 50  0001 C CNN
+F 4 "XFL4020-102MEC" H 4750 3300 50  0001 C CNN "Link"
 	1    4750 3300
 	1    0    0    -1  
 $EndComp
@@ -199,25 +189,14 @@ Wire Wire Line
 	6350 4500 6350 4800
 Connection ~ 6350 4050
 $Comp
-L Device:C_Small C4
-U 1 1 5F4BC943
-P 6750 4250
-F 0 "C4" H 6842 4296 50  0000 L CNN
-F 1 "22uF" H 6842 4205 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 6750 4250 50  0001 C CNN
-F 3 "~" H 6750 4250 50  0001 C CNN
-	1    6750 4250
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0108
 U 1 1 5F4BEA89
-P 7100 4500
-F 0 "#PWR0108" H 7100 4250 50  0001 C CNN
-F 1 "GND" H 7105 4327 50  0000 C CNN
-F 2 "" H 7100 4500 50  0001 C CNN
-F 3 "" H 7100 4500 50  0001 C CNN
-	1    7100 4500
+P 7100 4750
+F 0 "#PWR0108" H 7100 4500 50  0001 C CNN
+F 1 "GND" H 7105 4577 50  0000 C CNN
+F 2 "" H 7100 4750 50  0001 C CNN
+F 3 "" H 7100 4750 50  0001 C CNN
+	1    7100 4750
 	1    0    0    -1  
 $EndComp
 Text Label 8550 4050 0    50   ~ 0
@@ -363,7 +342,8 @@ P 1900 4150
 F 0 "Q1" H 2106 4196 50  0000 L CNN
 F 1 "TP0610T" H 2106 4105 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 2100 4075 50  0001 L CIN
-F 3 "http://www.vishay.com/docs/70209/70209.pdf" H 1900 4150 50  0001 L CNN
+F 3 "http://www.farnell.com/datasheets/2046951.pdf" H 1900 4150 50  0001 L CNN
+F 4 "https://au.element14.com/vishay/si2315bds-t1-ge3/p-channel-mosfet/dp/1867177?st=p%20channel%20mosfet" H 1900 4150 50  0001 C CNN "Link"
 	1    1900 4150
 	0    -1   -1   0   
 $EndComp
@@ -381,12 +361,12 @@ Connection ~ 4650 4850
 $Comp
 L Device:C_Small C5
 U 1 1 604D825D
-P 3400 4350
-F 0 "C5" H 3492 4396 50  0000 L CNN
-F 1 "10uF" H 3492 4305 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 3400 4350 50  0001 C CNN
-F 3 "~" H 3400 4350 50  0001 C CNN
-	1    3400 4350
+P 3250 4450
+F 0 "C5" H 3342 4496 50  0000 L CNN
+F 1 "20uF" H 3342 4405 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 3250 4450 50  0001 C CNN
+F 3 "~" H 3250 4450 50  0001 C CNN
+	1    3250 4450
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -394,22 +374,11 @@ Wire Wire Line
 Wire Wire Line
 	8050 4050 8550 4050
 $Comp
-L Device:C_Small C7
-U 1 1 604E036B
-P 7450 4250
-F 0 "C7" H 7542 4296 50  0000 L CNN
-F 1 "22uF" H 7542 4205 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 7450 4250 50  0001 C CNN
-F 3 "~" H 7450 4250 50  0001 C CNN
-	1    7450 4250
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:C_Small C6
 U 1 1 604E0D34
 P 7100 4250
 F 0 "C6" H 7192 4296 50  0000 L CNN
-F 1 "22uF" H 7192 4205 50  0000 L CNN
+F 1 "66uF" H 7192 4205 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 7100 4250 50  0001 C CNN
 F 3 "~" H 7100 4250 50  0001 C CNN
 	1    7100 4250
@@ -422,16 +391,15 @@ Wire Wire Line
 Connection ~ 7100 4050
 Wire Wire Line
 	7100 4050 8050 4050
-Wire Wire Line
-	7100 4350 7100 4500
 $Comp
 L Connector:Conn_01x02_Male J1
 U 1 1 604D70E4
 P 850 4050
 F 0 "J1" H 956 4228 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 956 4137 50  0000 C CNN
-F 2 "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal" H 850 4050 50  0001 C CNN
-F 3 "~" H 850 4050 50  0001 C CNN
+F 2 "Connector_JST:JST_PH_S2B-PH-SM4-TB_1x02-1MP_P2.00mm_Horizontal" H 850 4050 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1699381.pdf" H 850 4050 50  0001 C CNN
+F 4 "https://au.element14.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615" H 850 4050 50  0001 C CNN "Link"
 	1    850  4050
 	1    0    0    -1  
 $EndComp
@@ -453,89 +421,63 @@ $EndComp
 $Comp
 L Connector:Conn_01x01_Male J2
 U 1 1 604D92F9
-P 9100 4050
-F 0 "J2" H 9073 3980 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 9073 4071 50  0000 R CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 9100 4050 50  0001 C CNN
-F 3 "~" H 9100 4050 50  0001 C CNN
-	1    9100 4050
+P 10500 4050
+F 0 "J2" H 10473 3980 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 10473 4071 50  0000 R CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10500 4050 50  0001 C CNN
+F 3 "~" H 10500 4050 50  0001 C CNN
+	1    10500 4050
 	-1   0    0    1   
 $EndComp
 $Comp
 L power:GND #PWR0111
 U 1 1 604DB74C
-P 8850 5650
-F 0 "#PWR0111" H 8850 5400 50  0001 C CNN
-F 1 "GND" H 8855 5477 50  0000 C CNN
-F 2 "" H 8850 5650 50  0001 C CNN
-F 3 "" H 8850 5650 50  0001 C CNN
-	1    8850 5650
+P 8550 5650
+F 0 "#PWR0111" H 8550 5400 50  0001 C CNN
+F 1 "GND" H 8555 5477 50  0000 C CNN
+F 2 "" H 8550 5650 50  0001 C CNN
+F 3 "" H 8550 5650 50  0001 C CNN
+	1    8550 5650
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x01_Male J3
 U 1 1 604DC290
-P 9100 4200
-F 0 "J3" H 9073 4130 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 9073 4221 50  0000 R CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 9100 4200 50  0001 C CNN
-F 3 "~" H 9100 4200 50  0001 C CNN
-	1    9100 4200
+P 10500 4200
+F 0 "J3" H 10473 4130 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 10473 4221 50  0000 R CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10500 4200 50  0001 C CNN
+F 3 "~" H 10500 4200 50  0001 C CNN
+	1    10500 4200
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	8900 4200 8850 4200
-Wire Wire Line
-	8850 4200 8850 4700
-Wire Wire Line
-	3050 4250 3250 4250
-Connection ~ 3250 4250
-Wire Wire Line
-	3250 4250 3400 4250
-Wire Wire Line
 	2850 4050 3250 4050
-Wire Wire Line
-	3050 4450 3250 4450
 $Comp
 L power:GND #PWR0103
 U 1 1 5F4B6F97
-P 3250 4650
-F 0 "#PWR0103" H 3250 4400 50  0001 C CNN
-F 1 "GND" H 3255 4477 50  0000 C CNN
-F 2 "" H 3250 4650 50  0001 C CNN
-F 3 "" H 3250 4650 50  0001 C CNN
-	1    3250 4650
+P 3250 4750
+F 0 "#PWR0103" H 3250 4500 50  0001 C CNN
+F 1 "GND" H 3255 4577 50  0000 C CNN
+F 2 "" H 3250 4750 50  0001 C CNN
+F 3 "" H 3250 4750 50  0001 C CNN
+	1    3250 4750
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3250 4050 3250 4250
 Connection ~ 3250 4050
 Wire Wire Line
 	3250 4050 4350 4050
 Wire Wire Line
-	3250 4450 3250 4650
-Connection ~ 3250 4450
-Wire Wire Line
-	3250 4450 3400 4450
-Wire Wire Line
-	6750 4350 7100 4350
-Connection ~ 7100 4350
-Wire Wire Line
-	7100 4350 7450 4350
-Wire Wire Line
-	6750 4150 7100 4150
-Connection ~ 7100 4150
-Wire Wire Line
-	7100 4150 7450 4150
+	3250 4550 3250 4750
 $Comp
-L Device:C_Small C_need_to_create_footprint
+L Device:C_Small C1
 U 1 1 60505078
 P 8550 4300
-F 0 "C_need_to_create_footprint" H 8642 4346 50  0000 L CNN
-F 1 "1000uF" H 8642 4255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 8550 4300 50  0001 C CNN
-F 3 "https://www.vishay.com/docs/40012/591d.pdf" H 8550 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/vishay-sprague/591D108X96R3R2T20H/718-1619-1-ND/1973897" H 8550 4300 50  0001 C CNN "Link"
+F 0 "C1" H 8642 4346 50  0000 L CNN
+F 1 "220uF" H 8642 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 8550 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 8550 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 8550 4300 50  0001 C CNN "Link"
 	1    8550 4300
 	1    0    0    -1  
 $EndComp
@@ -543,12 +485,84 @@ Wire Wire Line
 	8550 4200 8550 4050
 Connection ~ 8550 4050
 Wire Wire Line
-	8550 4050 8900 4050
-Wire Wire Line
 	8550 4400 8550 4700
 Wire Wire Line
-	8550 4700 8850 4700
-Connection ~ 8850 4700
+	8550 4700 8550 5650
 Wire Wire Line
-	8850 4700 8850 5650
+	3250 4050 3250 4350
+Wire Wire Line
+	7100 4350 7100 4750
+Wire Wire Line
+	10300 4700 10300 4200
+Connection ~ 8550 4700
+$Comp
+L Device:C_Small C4
+U 1 1 60562E44
+P 8950 4300
+F 0 "C4" H 9042 4346 50  0000 L CNN
+F 1 "220uF" H 9042 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 8950 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 8950 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 8950 4300 50  0001 C CNN "Link"
+	1    8950 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C7
+U 1 1 605639D8
+P 9350 4300
+F 0 "C7" H 9442 4346 50  0000 L CNN
+F 1 "220uF" H 9442 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 9350 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 9350 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 9350 4300 50  0001 C CNN "Link"
+	1    9350 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C8
+U 1 1 60564591
+P 9750 4300
+F 0 "C8" H 9842 4346 50  0000 L CNN
+F 1 "220uF" H 9842 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 9750 4300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 9750 4300 50  0001 C CNN
+F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 9750 4300 50  0001 C CNN "Link"
+	1    9750 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8550 4700 8950 4700
+Wire Wire Line
+	8550 4050 8950 4050
+Wire Wire Line
+	8950 4200 8950 4050
+Connection ~ 8950 4050
+Wire Wire Line
+	8950 4050 9350 4050
+Wire Wire Line
+	8950 4400 8950 4700
+Connection ~ 8950 4700
+Wire Wire Line
+	8950 4700 9350 4700
+Wire Wire Line
+	9350 4200 9350 4050
+Connection ~ 9350 4050
+Wire Wire Line
+	9350 4050 9750 4050
+Wire Wire Line
+	9750 4200 9750 4050
+Connection ~ 9750 4050
+Wire Wire Line
+	9750 4050 10300 4050
+Wire Wire Line
+	9350 4400 9350 4700
+Connection ~ 9350 4700
+Wire Wire Line
+	9350 4700 9750 4700
+Wire Wire Line
+	9750 4400 9750 4700
+Connection ~ 9750 4700
+Wire Wire Line
+	9750 4700 10300 4700
 $EndSCHEMATC
