@@ -92,6 +92,7 @@ F 1 "1uF" H 4750 3424 50  0000 C CNN
 F 2 "Inductor_SMD:L_Coilcraft_XxL4020" H 4750 3300 50  0001 C CNN
 F 3 "http://www.farnell.com/datasheets/1682010.pdf" H 4750 3300 50  0001 C CNN
 F 4 "XFL4020-102MEC" H 4750 3300 50  0001 C CNN "Link"
+F 5 "https://au.element14.com/coilcraft/xfl4020-102mec/inductor-1uh-11a-20-pwr-64mhz/dp/2289214?st=xfl4020-102mec" H 4750 3300 50  0001 C CNN "element14"
 	1    4750 3300
 	1    0    0    -1  
 $EndComp
@@ -115,6 +116,7 @@ F 0 "R3" H 5318 4196 50  0000 L CNN
 F 1 "1M" H 5318 4105 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 5250 4150 50  0001 C CNN
 F 3 "~" H 5250 4150 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/yageo/RT0603BRD071ML/YAG4498CT-ND/6616654" H 5250 4150 50  0001 C CNN "Digikey Link"
 	1    5250 4150
 	1    0    0    -1  
 $EndComp
@@ -180,6 +182,7 @@ F 0 "R5" H 6418 4446 50  0000 L CNN
 F 1 "1MOhm" H 6418 4355 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 6350 4400 50  0001 C CNN
 F 3 "~" H 6350 4400 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/yageo/RT0603BRD071ML/YAG4498CT-ND/6616654" H 6350 4400 50  0001 C CNN "Digikey Link"
 	1    6350 4400
 	1    0    0    -1  
 $EndComp
@@ -344,6 +347,7 @@ F 1 "TP0610T" H 2106 4105 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 2100 4075 50  0001 L CIN
 F 3 "http://www.farnell.com/datasheets/2046951.pdf" H 1900 4150 50  0001 L CNN
 F 4 "https://au.element14.com/vishay/si2315bds-t1-ge3/p-channel-mosfet/dp/1867177?st=p%20channel%20mosfet" H 1900 4150 50  0001 C CNN "Link"
+F 5 "https://www.digikey.com.au/product-detail/en/vishay-siliconix/SI2315BDS-T1-GE3/SI2315BDS-T1-GE3CT-ND/6595280" H 1900 4150 50  0001 C CNN "Digikey Link"
 	1    1900 4150
 	0    -1   -1   0   
 $EndComp
@@ -400,6 +404,7 @@ F 1 "Conn_01x02_Male" H 956 4137 50  0000 C CNN
 F 2 "Connector_JST:JST_PH_S2B-PH-SM4-TB_1x02-1MP_P2.00mm_Horizontal" H 850 4050 50  0001 C CNN
 F 3 "http://www.farnell.com/datasheets/1699381.pdf" H 850 4050 50  0001 C CNN
 F 4 "https://au.element14.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615" H 850 4050 50  0001 C CNN "Link"
+F 5 "https://www.digikey.com.au/product-detail/en/jst-sales-america-inc/S2B-PH-SM4-TB-LF-SN/455-1749-2-ND/926655" H 850 4050 50  0001 C CNN "Digikey Link"
 	1    850  4050
 	1    0    0    -1  
 $EndComp
