@@ -63,8 +63,9 @@ U 1 1 5F4B8E20
 P 3800 4550
 F 0 "C2" H 3892 4596 50  0000 L CNN
 F 1 "0.1u" H 3892 4505 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 3800 4550 50  0001 C CNN
-F 3 "~" H 3800 4550 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 3800 4550 50  0001 C CNN
+F 3 "https://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL05A104KA5NNNC.pdf" H 3800 4550 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL05A104KA5NNNC/1276-1043-1-ND/3889129" H 3800 4550 50  0001 C CNN "Link"
 	1    3800 4550
 	1    0    0    -1  
 $EndComp
@@ -157,7 +158,8 @@ P 5950 4350
 F 0 "C3" H 6042 4396 50  0000 L CNN
 F 1 "10pF" H 6042 4305 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 5950 4350 50  0001 C CNN
-F 3 "~" H 5950 4350 50  0001 C CNN
+F 3 "https://datasheets.avx.com/C0GNP0-Dielectric.pdf" H 5950 4350 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/avx-corporation/06035A100JAT2A/478-1163-1-ND/564195" H 5950 4350 50  0001 C CNN "Link"
 	1    5950 4350
 	1    0    0    -1  
 $EndComp
@@ -300,10 +302,10 @@ Wire Wire Line
 Wire Wire Line
 	4400 5400 6350 5400
 $Comp
-L Device:D_Zener_Small D1
+L Device:D_Zener_Small D1-val1
 U 1 1 5F7F1725
 P 2100 4300
-F 0 "D1" V 2054 4368 50  0000 L CNN
+F 0 "D1-val1" V 2054 4368 50  0000 L CNN
 F 1 "D_Zener_Small" V 2145 4368 50  0000 L CNN
 F 2 "Diode_SMD:D_0603_1608Metric" V 2100 4300 50  0001 C CNN
 F 3 "~" V 2100 4300 50  0001 C CNN
@@ -311,10 +313,10 @@ F 3 "~" V 2100 4300 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R_Small_US R1
+L Device:R_Small_US R1-val1
 U 1 1 5F7F24DD
 P 1900 4600
-F 0 "R1" H 1968 4646 50  0000 L CNN
+F 0 "R1-val1" H 1968 4646 50  0000 L CNN
 F 1 "R_Small_US" H 1968 4555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 1900 4600 50  0001 C CNN
 F 3 "~" H 1900 4600 50  0001 C CNN
@@ -367,9 +369,10 @@ L Device:C_Small C5
 U 1 1 604D825D
 P 3250 4450
 F 0 "C5" H 3342 4496 50  0000 L CNN
-F 1 "20uF" H 3342 4405 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 3250 4450 50  0001 C CNN
-F 3 "~" H 3250 4450 50  0001 C CNN
+F 1 "22uF" H 3342 4405 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 3250 4450 50  0001 C CNN
+F 3 "https://content.kemet.com/datasheets/KEM_C1006_X5R_SMD.pdf" H 3250 4450 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/kemet/C0805C226M9PAC7210/399-C0805C226M9PAC7210CT-ND/12701503" H 3250 4450 50  0001 C CNN "Link"
 	1    3250 4450
 	1    0    0    -1  
 $EndComp
@@ -382,9 +385,10 @@ L Device:C_Small C6
 U 1 1 604E0D34
 P 7100 4250
 F 0 "C6" H 7192 4296 50  0000 L CNN
-F 1 "66uF" H 7192 4205 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 7100 4250 50  0001 C CNN
-F 3 "~" H 7100 4250 50  0001 C CNN
+F 1 "68uF" H 7192 4205 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 7100 4250 50  0001 C CNN
+F 3 "https://product.tdk.com/en/system/files?file=dam/doc/product/capacitor/ceramic/mlcc/catalog/mlcc_commercial_general_en.pdf" H 7100 4250 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/tdk-corporation/C3216JB1A686M160AC/445-11687-1-ND/3953353" H 7100 4250 50  0001 C CNN "Link"
 	1    7100 4250
 	1    0    0    -1  
 $EndComp
@@ -480,9 +484,9 @@ U 1 1 60505078
 P 8550 4300
 F 0 "C1" H 8642 4346 50  0000 L CNN
 F 1 "220uF" H 8642 4255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1206_3216Metric" H 8550 4300 50  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 8550 4300 50  0001 C CNN
-F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 8550 4300 50  0001 C CNN "Link"
+F 2 "Capacitor_SMD:C_1210_3225Metric" H 8550 4300 50  0001 C CNN
+F 3 "~" H 8550 4300 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 8550 4300 50  0001 C CNN "Link"
 	1    8550 4300
 	1    0    0    -1  
 $EndComp
@@ -500,66 +504,13 @@ Wire Wire Line
 Wire Wire Line
 	10300 4700 10300 4200
 Connection ~ 8550 4700
-$Comp
-L Device:C_Small C4
-U 1 1 60562E44
-P 8950 4300
-F 0 "C4" H 9042 4346 50  0000 L CNN
-F 1 "220uF" H 9042 4255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1206_3216Metric" H 8950 4300 50  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 8950 4300 50  0001 C CNN
-F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 8950 4300 50  0001 C CNN "Link"
-	1    8950 4300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C7
-U 1 1 605639D8
-P 9350 4300
-F 0 "C7" H 9442 4346 50  0000 L CNN
-F 1 "220uF" H 9442 4255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1206_3216Metric" H 9350 4300 50  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 9350 4300 50  0001 C CNN
-F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 9350 4300 50  0001 C CNN "Link"
-	1    9350 4300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C8
-U 1 1 60564591
-P 9750 4300
-F 0 "C8" H 9842 4346 50  0000 L CNN
-F 1 "220uF" H 9842 4255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1206_3216Metric" H 9750 4300 50  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/2867879.pdf" H 9750 4300 50  0001 C CNN
-F 4 "https://au.element14.com/murata/grm31cr60j227me11l/cap-220-f-6-3v-20-x5r-1206/dp/2494472" H 9750 4300 50  0001 C CNN "Link"
-	1    9750 4300
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8550 4700 8950 4700
-Wire Wire Line
-	8550 4050 8950 4050
-Wire Wire Line
-	8950 4200 8950 4050
-Connection ~ 8950 4050
-Wire Wire Line
-	8950 4050 9350 4050
 Wire Wire Line
 	8950 4400 8950 4700
 Connection ~ 8950 4700
 Wire Wire Line
 	8950 4700 9350 4700
-Wire Wire Line
-	9350 4200 9350 4050
-Connection ~ 9350 4050
-Wire Wire Line
-	9350 4050 9750 4050
-Wire Wire Line
-	9750 4200 9750 4050
-Connection ~ 9750 4050
-Wire Wire Line
-	9750 4050 10300 4050
 Wire Wire Line
 	9350 4400 9350 4700
 Connection ~ 9350 4700
@@ -570,4 +521,57 @@ Wire Wire Line
 Connection ~ 9750 4700
 Wire Wire Line
 	9750 4700 10300 4700
+Wire Wire Line
+	8550 4050 8950 4050
+$Comp
+L Device:C_Small C4
+U 1 1 60699D26
+P 8950 4300
+F 0 "C4" H 9042 4346 50  0000 L CNN
+F 1 "220uF" H 9042 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1210_3225Metric" H 8950 4300 50  0001 C CNN
+F 3 "~" H 8950 4300 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 8950 4300 50  0001 C CNN "Link"
+	1    8950 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C7
+U 1 1 6069AB23
+P 9350 4300
+F 0 "C7" H 9442 4346 50  0000 L CNN
+F 1 "220uF" H 9442 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1210_3225Metric" H 9350 4300 50  0001 C CNN
+F 3 "~" H 9350 4300 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 9350 4300 50  0001 C CNN "Link"
+	1    9350 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C8
+U 1 1 6069B97B
+P 9750 4300
+F 0 "C8" H 9842 4346 50  0000 L CNN
+F 1 "220uF" H 9842 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1210_3225Metric" H 9750 4300 50  0001 C CNN
+F 3 "~" H 9750 4300 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 9750 4300 50  0001 C CNN "Link"
+	1    9750 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8950 4050 8950 4200
+Connection ~ 8950 4050
+Wire Wire Line
+	8950 4050 9350 4050
+Wire Wire Line
+	9350 4200 9350 4050
+Connection ~ 9350 4050
+Wire Wire Line
+	9350 4050 9750 4050
+Wire Wire Line
+	9750 4050 9750 4200
+Connection ~ 9750 4050
+Wire Wire Line
+	9750 4050 10300 4050
 $EndSCHEMATC
