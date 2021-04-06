@@ -90,10 +90,10 @@ U 1 1 5F4B9710
 P 4750 3300
 F 0 "L1" H 4750 3515 50  0000 C CNN
 F 1 "1uF" H 4750 3424 50  0000 C CNN
-F 2 "Inductor_SMD:L_Coilcraft_XxL4020" H 4750 3300 50  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/1682010.pdf" H 4750 3300 50  0001 C CNN
-F 4 "XFL4020-102MEC" H 4750 3300 50  0001 C CNN "Link"
-F 5 "https://au.element14.com/coilcraft/xfl4020-102mec/inductor-1uh-11a-20-pwr-64mhz/dp/2289214?st=xfl4020-102mec" H 4750 3300 50  0001 C CNN "element14"
+F 2 "sft:SRN4018TA" H 4750 3300 50  0001 C CNN
+F 3 "https://www.bourns.com/docs/Product-Datasheets/SRN4018TA.pdf" H 4750 3300 50  0001 C CNN
+F 4 "XFL4020-102MEC" H 4750 3300 50  0001 C CNN "Old product"
+F 5 "https://www.digikey.com/en/products/detail/bourns-inc/SRN4018TA-1R0M/6565079" H 4750 3300 50  0001 C CNN "Digikey"
 	1    4750 3300
 	1    0    0    -1  
 $EndComp
@@ -116,7 +116,7 @@ P 5250 4150
 F 0 "R3" H 5318 4196 50  0000 L CNN
 F 1 "1M" H 5318 4105 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 5250 4150 50  0001 C CNN
-F 3 "~" H 5250 4150 50  0001 C CNN
+F 3 "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1-to-0.01_RoHS_L_12.pdf" H 5250 4150 50  0001 C CNN
 F 4 "https://www.digikey.com.au/product-detail/en/yageo/RT0603BRD071ML/YAG4498CT-ND/6616654" H 5250 4150 50  0001 C CNN "Digikey Link"
 	1    5250 4150
 	1    0    0    -1  
@@ -132,8 +132,9 @@ U 1 1 5F4BA598
 P 5250 4350
 F 0 "R4" H 5318 4396 50  0000 L CNN
 F 1 "111k" H 5318 4305 50  0000 L CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" H 5250 4350 50  0001 C CNN
-F 3 "~" H 5250 4350 50  0001 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" H 5250 4350 50  0001 C CNN
+F 3 "https://www.vishay.com/docs/60026/ptn.pdf" H 5250 4350 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/vishay-thin-film/PTN0805E1113BST1/764-1475-6-ND/7103531" H 5250 4350 50  0001 C CNN "Digikey Link"
 	1    5250 4350
 	1    0    0    -1  
 $EndComp
@@ -181,9 +182,9 @@ L Device:R_Small_US R5
 U 1 1 5F4BBDC6
 P 6350 4400
 F 0 "R5" H 6418 4446 50  0000 L CNN
-F 1 "1MOhm" H 6418 4355 50  0000 L CNN
+F 1 "1M" H 6418 4355 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 6350 4400 50  0001 C CNN
-F 3 "~" H 6350 4400 50  0001 C CNN
+F 3 "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1-to-0.01_RoHS_L_12.pdf" H 6350 4400 50  0001 C CNN
 F 4 "https://www.digikey.com.au/product-detail/en/yageo/RT0603BRD071ML/YAG4498CT-ND/6616654" H 6350 4400 50  0001 C CNN "Digikey Link"
 	1    6350 4400
 	1    0    0    -1  
@@ -237,7 +238,7 @@ L Device:LED D3
 U 1 1 5F4C82CF
 P 8050 4600
 F 0 "D3" H 8042 4816 50  0000 C CNN
-F 1 "LED" H 8042 4725 50  0000 C CNN
+F 1 "LED Green" H 8042 4725 50  0000 C CNN
 F 2 "LED_SMD:LED_0603_1608Metric" H 8050 4600 50  0001 C CNN
 F 3 "~" H 8050 4600 50  0001 C CNN
 	1    8050 4600
@@ -250,7 +251,8 @@ P 8050 5050
 F 0 "R6" H 8118 5096 50  0000 L CNN
 F 1 "2k2" H 8118 5005 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 8050 5050 50  0001 C CNN
-F 3 "~" H 8050 5050 50  0001 C CNN
+F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1773204-3&DocType=DS&DocLang=English" H 8050 5050 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/te-connectivity-passive-product/CRGCQ0603J2K2/A130093CT-ND/8577925" H 8050 5050 50  0001 C CNN "Digikey Link"
 	1    8050 5050
 	1    0    0    -1  
 $EndComp
@@ -277,7 +279,7 @@ L Device:LED D2
 U 1 1 5F4CC9A9
 P 3850 5400
 F 0 "D2" H 3842 5616 50  0000 C CNN
-F 1 "LED" H 3842 5525 50  0000 C CNN
+F 1 "LED Red" H 3842 5525 50  0000 C CNN
 F 2 "LED_SMD:LED_0603_1608Metric" H 3850 5400 50  0001 C CNN
 F 3 "~" H 3850 5400 50  0001 C CNN
 	1    3850 5400
@@ -290,7 +292,8 @@ P 4300 5400
 F 0 "R2" V 4505 5400 50  0000 C CNN
 F 1 "2k2" V 4414 5400 50  0000 C CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 4300 5400 50  0001 C CNN
-F 3 "~" H 4300 5400 50  0001 C CNN
+F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1773204-3&DocType=DS&DocLang=English" H 4300 5400 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/te-connectivity-passive-product/CRGCQ0603J2K2/A130093CT-ND/8577925" V 4300 5400 50  0001 C CNN "Digikey Link"
 	1    4300 5400
 	0    -1   -1   0   
 $EndComp
@@ -302,24 +305,26 @@ Wire Wire Line
 Wire Wire Line
 	4400 5400 6350 5400
 $Comp
-L Device:D_Zener_Small D1-val?
+L Device:D_Zener_Small 9.1V
 U 1 1 5F7F1725
 P 2100 4300
-F 0 "D1-val?" V 2054 4368 50  0000 L CNN
+F 0 "9.1V" V 2054 4368 50  0000 L CNN
 F 1 "D_Zener_Small" V 2145 4368 50  0000 L CNN
 F 2 "Diode_SMD:D_0603_1608Metric" V 2100 4300 50  0001 C CNN
-F 3 "~" V 2100 4300 50  0001 C CNN
+F 3 "https://media.digikey.com/pdf/Data%20Sheets/Comchip%20PDFs/CZRU52C2-CZRU52C39_DS.pdf" V 2100 4300 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/comchip-technology/CZRU52C9V1/641-1035-1-ND/1121157" V 2100 4300 50  0001 C CNN "Digikey link"
 	1    2100 4300
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R_Small_US R1-val?
+L Device:R_Small_US 100k
 U 1 1 5F7F24DD
 P 1900 4600
-F 0 "R1-val?" H 1968 4646 50  0000 L CNN
+F 0 "100k" H 1968 4646 50  0000 L CNN
 F 1 "R_Small_US" H 1968 4555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 1900 4600 50  0001 C CNN
-F 3 "~" H 1900 4600 50  0001 C CNN
+F 3 "https://www.susumu.co.jp/common/pdf/n_catalog_partition05_en.pdf" H 1900 4600 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/susumu/RR0816P-104-D/RR08P100KDCT-ND/432772" H 1900 4600 50  0001 C CNN "Digikey Link"
 	1    1900 4600
 	1    0    0    -1  
 $EndComp
@@ -347,9 +352,8 @@ P 1900 4150
 F 0 "Q1" H 2106 4196 50  0000 L CNN
 F 1 "TP0610T" H 2106 4105 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 2100 4075 50  0001 L CIN
-F 3 "http://www.farnell.com/datasheets/2046951.pdf" H 1900 4150 50  0001 L CNN
-F 4 "https://au.element14.com/vishay/si2315bds-t1-ge3/p-channel-mosfet/dp/1867177?st=p%20channel%20mosfet" H 1900 4150 50  0001 C CNN "Link"
-F 5 "https://www.digikey.com.au/product-detail/en/vishay-siliconix/SI2315BDS-T1-GE3/SI2315BDS-T1-GE3CT-ND/6595280" H 1900 4150 50  0001 C CNN "Digikey Link"
+F 3 "https://www.vishay.com/docs/72014/72014.pdf" H 1900 4150 50  0001 L CNN
+F 4 "https://www.digikey.com.au/product-detail/en/vishay-siliconix/SI2315BDS-T1-GE3/SI2315BDS-T1-GE3CT-ND/6595280" H 1900 4150 50  0001 C CNN "Digikey Link"
 	1    1900 4150
 	0    -1   -1   0   
 $EndComp
@@ -524,10 +528,10 @@ Wire Wire Line
 Wire Wire Line
 	8550 4050 8950 4050
 $Comp
-L Device:C_Small C?
+L Device:C_Small C4
 U 1 1 60699D26
 P 8950 4300
-F 0 "C?" H 9042 4346 50  0000 L CNN
+F 0 "C4" H 9042 4346 50  0000 L CNN
 F 1 "220uF" H 9042 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 8950 4300 50  0001 C CNN
 F 3 "~" H 8950 4300 50  0001 C CNN
@@ -536,10 +540,10 @@ F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C_Small C?
+L Device:C_Small C7
 U 1 1 6069AB23
 P 9350 4300
-F 0 "C?" H 9442 4346 50  0000 L CNN
+F 0 "C7" H 9442 4346 50  0000 L CNN
 F 1 "220uF" H 9442 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 9350 4300 50  0001 C CNN
 F 3 "~" H 9350 4300 50  0001 C CNN
@@ -548,10 +552,10 @@ F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C_Small C?
+L Device:C_Small C8
 U 1 1 6069B97B
 P 9750 4300
-F 0 "C?" H 9842 4346 50  0000 L CNN
+F 0 "C8" H 9842 4346 50  0000 L CNN
 F 1 "220uF" H 9842 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 9750 4300 50  0001 C CNN
 F 3 "~" H 9750 4300 50  0001 C CNN
