@@ -240,7 +240,8 @@ P 8050 4600
 F 0 "D3" H 8042 4816 50  0000 C CNN
 F 1 "LED Green" H 8042 4725 50  0000 C CNN
 F 2 "LED_SMD:LED_0603_1608Metric" H 8050 4600 50  0001 C CNN
-F 3 "~" H 8050 4600 50  0001 C CNN
+F 3 "https://optoelectronics.liteon.com/upload/download/DS22-2000-226/LTST-S270KGKT.pdf" H 8050 4600 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/lite-on-inc/LTST-S270KGKT/160-1478-1-ND/386892" H 8050 4600 50  0001 C CNN "Digikey Link"
 	1    8050 4600
 	0    1    -1   0   
 $EndComp
@@ -281,7 +282,8 @@ P 3850 5400
 F 0 "D2" H 3842 5616 50  0000 C CNN
 F 1 "LED Red" H 3842 5525 50  0000 C CNN
 F 2 "LED_SMD:LED_0603_1608Metric" H 3850 5400 50  0001 C CNN
-F 3 "~" H 3850 5400 50  0001 C CNN
+F 3 "https://optoelectronics.liteon.com/upload/download/DS22-2000-210/LTST-S270KRKT.pdf" H 3850 5400 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/lite-on-inc/LTST-S270KRKT/160-1479-1-ND/386894" H 3850 5400 50  0001 C CNN "Digikey Link"
 	1    3850 5400
 	-1   0    0    -1  
 $EndComp
@@ -305,10 +307,10 @@ Wire Wire Line
 Wire Wire Line
 	4400 5400 6350 5400
 $Comp
-L Device:D_Zener_Small 9.1V
+L Device:D_Zener_Small 9.1V1
 U 1 1 5F7F1725
 P 2100 4300
-F 0 "9.1V" V 2054 4368 50  0000 L CNN
+F 0 "9.1V1" V 2054 4368 50  0000 L CNN
 F 1 "D_Zener_Small" V 2145 4368 50  0000 L CNN
 F 2 "Diode_SMD:D_0603_1608Metric" V 2100 4300 50  0001 C CNN
 F 3 "https://media.digikey.com/pdf/Data%20Sheets/Comchip%20PDFs/CZRU52C2-CZRU52C39_DS.pdf" V 2100 4300 50  0001 C CNN
@@ -317,10 +319,10 @@ F 4 "https://www.digikey.com.au/product-detail/en/comchip-technology/CZRU52C9V1/
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R_Small_US 100k
+L Device:R_Small_US 100k1
 U 1 1 5F7F24DD
 P 1900 4600
-F 0 "100k" H 1968 4646 50  0000 L CNN
+F 0 "100k1" H 1968 4646 50  0000 L CNN
 F 1 "R_Small_US" H 1968 4555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 1900 4600 50  0001 C CNN
 F 3 "https://www.susumu.co.jp/common/pdf/n_catalog_partition05_en.pdf" H 1900 4600 50  0001 C CNN
