@@ -81,6 +81,7 @@ F 0 "U1" H 4750 4917 50  0000 C CNN
 F 1 "TPS63060" H 4750 4826 50  0000 C CNN
 F 2 "Package_SON:Texas_S-PWSON-N10" H 4750 3600 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tps63060.pdf" H 4750 4250 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/texas-instruments/TPS63060DSCR/296-30204-1-ND/2834996" H 4750 4250 50  0001 C CNN "Digikey Link"
 	1    4750 4250
 	1    0    0    -1  
 $EndComp
