@@ -78,10 +78,10 @@ L Regulator_Switching:TPS63060 U1
 U 1 1 5F4B6990
 P 4750 4250
 F 0 "U1" H 4750 4917 50  0000 C CNN
-F 1 "TPS63060" H 4750 4826 50  0000 C CNN
+F 1 "TPS63061DSCT" H 4750 4826 50  0000 C CNN
 F 2 "Package_SON:Texas_S-PWSON-N10" H 4750 3600 50  0001 C CNN
-F 3 "http://www.ti.com/lit/ds/symlink/tps63060.pdf" H 4750 4250 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/texas-instruments/TPS63060DSCR/296-30204-1-ND/2834996" H 4750 4250 50  0001 C CNN "Digikey Link"
+F 3 "https://www.ti.com/lit/ds/symlink/tps63061.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&ts=1618215570038&ref_url=https%253A%252F%252Fwww.digikey.com.au%252F" H 4750 4250 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/texas-instruments/TPS63061DSCT/296-30179-1-ND/2812734" H 4750 4250 50  0001 C CNN "Digikey Link"
 	1    4750 4250
 	1    0    0    -1  
 $EndComp
@@ -308,23 +308,23 @@ Wire Wire Line
 Wire Wire Line
 	4400 5400 6350 5400
 $Comp
-L Device:D_Zener_Small 9.1V1
+L Device:D_Zener_Small D_Zener_Small1
 U 1 1 5F7F1725
 P 2100 4300
-F 0 "9.1V1" V 2054 4368 50  0000 L CNN
-F 1 "D_Zener_Small" V 2145 4368 50  0000 L CNN
-F 2 "Diode_SMD:D_0603_1608Metric" V 2100 4300 50  0001 C CNN
-F 3 "https://media.digikey.com/pdf/Data%20Sheets/Comchip%20PDFs/CZRU52C2-CZRU52C39_DS.pdf" V 2100 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/comchip-technology/CZRU52C9V1/641-1035-1-ND/1121157" V 2100 4300 50  0001 C CNN "Digikey link"
+F 0 "D_Zener_Small1" V 2054 4368 50  0000 L CNN
+F 1 "6V" V 2145 4368 50  0000 L CNN
+F 2 "Diode_SMD:D_SOD-123" V 2100 4300 50  0001 C CNN
+F 3 "https://www.vishay.com/docs/85774/mmsz5225.pdf" V 2100 4300 50  0001 C CNN
+F 4 "https://www.digikey.com.au/product-detail/en/vishay-general-semiconductor-diodes-division/MMSZ5233B-E3-08/112-MMSZ5233B-E3-08CT-ND/8565146" V 2100 4300 50  0001 C CNN "Digikey link"
 	1    2100 4300
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R_Small_US 100k1
+L Device:R_Small_US R_Small_US1
 U 1 1 5F7F24DD
 P 1900 4600
-F 0 "100k1" H 1968 4646 50  0000 L CNN
-F 1 "R_Small_US" H 1968 4555 50  0000 L CNN
+F 0 "R_Small_US1" H 1968 4646 50  0000 L CNN
+F 1 "100k1" H 1968 4555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 1900 4600 50  0001 C CNN
 F 3 "https://www.susumu.co.jp/common/pdf/n_catalog_partition05_en.pdf" H 1900 4600 50  0001 C CNN
 F 4 "https://www.digikey.com.au/product-detail/en/susumu/RR0816P-104-D/RR08P100KDCT-ND/432772" H 1900 4600 50  0001 C CNN "Digikey Link"
@@ -346,8 +346,6 @@ Wire Wire Line
 	1900 4700 1900 4950
 Wire Wire Line
 	1900 4500 2100 4500
-Wire Wire Line
-	2100 4500 2100 4400
 $Comp
 L Transistor_FET:TP0610T Q1
 U 1 1 5F7F3597
@@ -362,9 +360,6 @@ F 4 "https://www.digikey.com.au/product-detail/en/vishay-siliconix/SI2315BDS-T1-
 $EndComp
 Wire Wire Line
 	2100 4050 2850 4050
-Wire Wire Line
-	2100 4200 2100 4050
-Connection ~ 2100 4050
 Wire Wire Line
 	1900 4350 1900 4500
 Connection ~ 1900 4500
@@ -480,7 +475,6 @@ F 3 "" H 3250 4750 50  0001 C CNN
 	1    3250 4750
 	1    0    0    -1  
 $EndComp
-Connection ~ 3250 4050
 Wire Wire Line
 	3250 4050 4350 4050
 Wire Wire Line
@@ -580,5 +574,47 @@ Wire Wire Line
 	9750 4050 9750 4200
 Connection ~ 9750 4050
 Wire Wire Line
-	9750 4050 10300 4050
+	9750 4050 10000 4050
+Connection ~ 3250 4050
+$Comp
+L Connector:TestPoint TP_output_voltage1
+U 1 1 60740989
+P 10000 4050
+F 0 "TP_output_voltage1" H 10058 4170 50  0000 L CNN
+F 1 "TestPoint" H 10058 4079 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10200 4050 50  0001 C CNN
+F 3 "~" H 10200 4050 50  0001 C CNN
+	1    10000 4050
+	1    0    0    -1  
+$EndComp
+Connection ~ 10000 4050
+Wire Wire Line
+	10000 4050 10300 4050
+$Comp
+L Connector:TestPoint TP_input_voltage1
+U 1 1 60741617
+P 2350 4050
+F 0 "TP_input_voltage1" H 2408 4170 50  0000 L CNN
+F 1 "TestPoint" H 2408 4079 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 2550 4050 50  0001 C CNN
+F 3 "~" H 2550 4050 50  0001 C CNN
+	1    2350 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP_gnd1
+U 1 1 60742752
+P 5050 5400
+F 0 "TP_gnd1" H 5108 5520 50  0000 L CNN
+F 1 "TestPoint" H 5108 5429 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 5250 5400 50  0001 C CNN
+F 3 "~" H 5250 5400 50  0001 C CNN
+	1    5050 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 4500 2100 4400
+Connection ~ 2100 4050
+Wire Wire Line
+	2100 4200 2100 4050
 $EndSCHEMATC
