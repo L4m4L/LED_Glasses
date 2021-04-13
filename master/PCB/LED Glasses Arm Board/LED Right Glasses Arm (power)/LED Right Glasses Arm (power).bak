@@ -208,8 +208,7 @@ F 3 "" H 7100 4750 50  0001 C CNN
 $EndComp
 Text Label 8550 4050 0    50   ~ 0
 VOUT_5V
-Connection ~ 6350 4800
-Text Label 6350 5000 0    50   ~ 0
+Text Label 6200 4800 0    50   ~ 0
 PG
 Wire Wire Line
 	4350 4150 3700 4150
@@ -304,9 +303,7 @@ Wire Wire Line
 	4000 5400 4200 5400
 Connection ~ 3700 5400
 Wire Wire Line
-	6350 4800 6350 5400
-Wire Wire Line
-	4400 5400 6350 5400
+	4400 5400 5050 5400
 $Comp
 L Device:D_Zener_Small D_Zener_Small1
 U 1 1 5F7F1725
@@ -359,7 +356,7 @@ F 4 "https://www.digikey.com.au/product-detail/en/vishay-siliconix/SI2315BDS-T1-
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	2100 4050 2850 4050
+	2100 4050 2350 4050
 Wire Wire Line
 	1900 4350 1900 4500
 Connection ~ 1900 4500
@@ -593,23 +590,23 @@ Wire Wire Line
 $Comp
 L Connector:TestPoint TP_input_voltage1
 U 1 1 60741617
-P 2350 4050
-F 0 "TP_input_voltage1" H 2408 4170 50  0000 L CNN
-F 1 "TestPoint" H 2408 4079 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 2550 4050 50  0001 C CNN
-F 3 "~" H 2550 4050 50  0001 C CNN
-	1    2350 4050
+P 2350 4000
+F 0 "TP_input_voltage1" H 2408 4120 50  0000 L CNN
+F 1 "TestPoint" H 2408 4029 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 2550 4000 50  0001 C CNN
+F 3 "~" H 2550 4000 50  0001 C CNN
+	1    2350 4000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:TestPoint TP_gnd1
 U 1 1 60742752
-P 5050 5400
-F 0 "TP_gnd1" H 5108 5520 50  0000 L CNN
-F 1 "TestPoint" H 5108 5429 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 5250 5400 50  0001 C CNN
-F 3 "~" H 5250 5400 50  0001 C CNN
-	1    5050 5400
+P 5050 5350
+F 0 "TP_gnd1" H 5108 5470 50  0000 L CNN
+F 1 "TestPoint" H 5108 5379 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 5250 5350 50  0001 C CNN
+F 3 "~" H 5250 5350 50  0001 C CNN
+	1    5050 5350
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -617,4 +614,25 @@ Wire Wire Line
 Connection ~ 2100 4050
 Wire Wire Line
 	2100 4200 2100 4050
+Wire Wire Line
+	2350 4000 2350 4050
+Connection ~ 2350 4050
+Wire Wire Line
+	2350 4050 2850 4050
+$Comp
+L power:GND #PWR?
+U 1 1 6075711B
+P 5050 5750
+F 0 "#PWR?" H 5050 5500 50  0001 C CNN
+F 1 "GND" H 5055 5577 50  0000 C CNN
+F 2 "" H 5050 5750 50  0001 C CNN
+F 3 "" H 5050 5750 50  0001 C CNN
+	1    5050 5750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 5350 5050 5400
+Connection ~ 5050 5400
+Wire Wire Line
+	5050 5400 5050 5750
 $EndSCHEMATC

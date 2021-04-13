@@ -107,8 +107,6 @@ Wire Wire Line
 Wire Wire Line
 	5150 3300 5150 3850
 Wire Wire Line
-	5150 4800 6350 4800
-Wire Wire Line
 	5150 4050 5250 4050
 $Comp
 L Device:R_Small_US R3
@@ -124,8 +122,6 @@ F 4 "https://www.digikey.com.au/product-detail/en/yageo/RT0603BRD071ML/YAG4498CT
 $EndComp
 Connection ~ 5250 4050
 Wire Wire Line
-	5250 4050 6350 4050
-Wire Wire Line
 	5150 4250 5250 4250
 $Comp
 L Device:R_Small_US R4
@@ -139,8 +135,6 @@ F 4 "https://www.digikey.com.au/product-detail/en/vishay-thin-film/PTN0805E1113B
 	1    5250 4350
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	5150 4550 5150 4800
 $Comp
 L power:GND #PWR0106
 U 1 1 5F4BAEF0
@@ -179,23 +173,6 @@ F 3 "" H 5950 4450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R_Small_US R5
-U 1 1 5F4BBDC6
-P 6350 4400
-F 0 "R5" H 6418 4446 50  0000 L CNN
-F 1 "1M" H 6418 4355 50  0000 L CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" H 6350 4400 50  0001 C CNN
-F 3 "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1-to-0.01_RoHS_L_12.pdf" H 6350 4400 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/yageo/RT0603BRD071ML/YAG4498CT-ND/6616654" H 6350 4400 50  0001 C CNN "Digikey Link"
-	1    6350 4400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6350 4050 6350 4300
-Wire Wire Line
-	6350 4500 6350 4800
-Connection ~ 6350 4050
-$Comp
 L power:GND #PWR0108
 U 1 1 5F4BEA89
 P 7100 4750
@@ -208,9 +185,6 @@ F 3 "" H 7100 4750 50  0001 C CNN
 $EndComp
 Text Label 8550 4050 0    50   ~ 0
 VOUT_5V
-Connection ~ 6350 4800
-Text Label 6350 5000 0    50   ~ 0
-PG
 Wire Wire Line
 	4350 4150 3700 4150
 Wire Wire Line
@@ -304,8 +278,6 @@ Wire Wire Line
 	4000 5400 4200 5400
 Connection ~ 3700 5400
 Wire Wire Line
-	6350 4800 6350 5400
-Wire Wire Line
 	4400 5400 5050 5400
 $Comp
 L Device:D_Zener_Small D_Zener_Small1
@@ -394,8 +366,6 @@ F 4 "https://www.digikey.com.au/product-detail/en/tdk-corporation/C3216JB1A686M1
 	1    7100 4250
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	6350 4050 7100 4050
 Wire Wire Line
 	7100 4050 7100 4150
 Connection ~ 7100 4050
@@ -622,9 +592,22 @@ Wire Wire Line
 Connection ~ 2350 4050
 Wire Wire Line
 	2350 4050 2850 4050
+$Comp
+L power:GND #PWR0112
+U 1 1 6075711B
+P 5050 5750
+F 0 "#PWR0112" H 5050 5500 50  0001 C CNN
+F 1 "GND" H 5055 5577 50  0000 C CNN
+F 2 "" H 5050 5750 50  0001 C CNN
+F 3 "" H 5050 5750 50  0001 C CNN
+	1    5050 5750
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
 	5050 5350 5050 5400
 Connection ~ 5050 5400
 Wire Wire Line
-	5050 5400 6350 5400
+	5050 5400 5050 5750
+Wire Wire Line
+	5250 4050 7100 4050
 $EndSCHEMATC
