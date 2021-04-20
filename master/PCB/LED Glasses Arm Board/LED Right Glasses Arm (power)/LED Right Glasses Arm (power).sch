@@ -552,7 +552,7 @@ U 1 1 60740989
 P 10000 4050
 F 0 "TP_output_voltage1" H 10058 4170 50  0000 L CNN
 F 1 "TestPoint" H 10058 4079 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10200 4050 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 10200 4050 50  0001 C CNN
 F 3 "~" H 10200 4050 50  0001 C CNN
 	1    10000 4050
 	1    0    0    -1  
@@ -566,7 +566,7 @@ U 1 1 60741617
 P 2350 4000
 F 0 "TP_input_voltage1" H 2408 4120 50  0000 L CNN
 F 1 "TestPoint" H 2408 4029 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 2550 4000 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 2550 4000 50  0001 C CNN
 F 3 "~" H 2550 4000 50  0001 C CNN
 	1    2350 4000
 	1    0    0    -1  
@@ -577,7 +577,7 @@ U 1 1 60742752
 P 5050 5350
 F 0 "TP_gnd1" H 5108 5470 50  0000 L CNN
 F 1 "TestPoint" H 5108 5379 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 5250 5350 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 5250 5350 50  0001 C CNN
 F 3 "~" H 5250 5350 50  0001 C CNN
 	1    5050 5350
 	1    0    0    -1  
