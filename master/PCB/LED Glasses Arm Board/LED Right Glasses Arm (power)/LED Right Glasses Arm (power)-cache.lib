@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.4
 #encoding utf-8
 #
-# Connector_Conn_01x01_Male
+# Connector:Conn_01x01_Male
 #
-DEF Connector_Conn_01x01_Male J 0 40 Y N 1 F N
+DEF Connector:Conn_01x01_Male J 0 40 Y N 1 F N
 F0 "J" 0 100 50 H V C CNN
-F1 "Connector_Conn_01x01_Male" 0 -100 50 H V C CNN
+F1 "Connector:Conn_01x01_Male" 0 -100 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -18,11 +18,11 @@ X Pin_1 1 200 0 150 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Connector_Conn_01x02_Male
+# Connector:Conn_01x02_Male
 #
-DEF Connector_Conn_01x02_Male J 0 40 Y N 1 F N
+DEF Connector:Conn_01x02_Male J 0 40 Y N 1 F N
 F0 "J" 0 100 50 H V C CNN
-F1 "Connector_Conn_01x02_Male" 0 -200 50 H V C CNN
+F1 "Connector:Conn_01x02_Male" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -38,11 +38,11 @@ X Pin_2 2 200 -100 150 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Connector_TestPoint
+# Connector:TestPoint
 #
-DEF Connector_TestPoint TP 0 30 N N 1 F N
+DEF Connector:TestPoint TP 0 30 N N 1 F N
 F0 "TP" 0 270 50 H V C CNN
-F1 "Connector_TestPoint" 0 200 50 H V C CNN
+F1 "Connector:TestPoint" 0 200 50 H V C CNN
 F2 "" 200 0 50 H I C CNN
 F3 "" 200 0 50 H I C CNN
 $FPLIST
@@ -55,11 +55,11 @@ X 1 1 0 0 100 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Device_C_Small
+# Device:C_Small
 #
-DEF Device_C_Small C 0 10 N N 1 F N
+DEF Device:C_Small C 0 10 N N 1 F N
 F0 "C" 10 70 50 H V L CNN
-F1 "Device_C_Small" 10 -80 50 H V L CNN
+F1 "Device:C_Small" 10 -80 50 H V L CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -73,11 +73,11 @@ X ~ 2 0 -100 80 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Device_D_Zener_Small
+# Device:D_Zener_Small
 #
-DEF Device_D_Zener_Small D 0 10 N N 1 F N
+DEF Device:D_Zener_Small D 0 10 N N 1 F N
 F0 "D" 0 90 50 H V C CNN
-F1 "Device_D_Zener_Small" 0 -90 50 H V C CNN
+F1 "Device:D_Zener_Small" 0 -90 50 H V C CNN
 F2 "" 0 0 50 V I C CNN
 F3 "" 0 0 50 V I C CNN
 $FPLIST
@@ -95,11 +95,11 @@ X A 2 100 0 70 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Device_LED
+# Device:LED
 #
-DEF Device_LED D 0 40 N N 1 F N
+DEF Device:LED D 0 40 N N 1 F N
 F0 "D" 0 100 50 H V C CNN
-F1 "Device_LED" 0 -100 50 H V C CNN
+F1 "Device:LED" 0 -100 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -118,11 +118,11 @@ X A 2 150 0 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Device_R_Small_US
+# LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device
 #
-DEF Device_R_Small_US R 0 10 N N 1 F N
+DEF LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device R 0 10 N N 1 F N
 F0 "R" 30 20 50 H V L CNN
-F1 "Device_R_Small_US" 30 -40 50 H V L CNN
+F1 "LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device" 30 -40 50 H V L CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -136,11 +136,11 @@ X ~ 2 0 -100 40 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Regulator_Switching_TPS63060
+# Regulator_Switching:TPS63060
 #
-DEF Regulator_Switching_TPS63060 U 0 20 Y Y 1 F N
+DEF Regulator_Switching:TPS63060 U 0 20 Y Y 1 F N
 F0 "U" -300 550 50 H V L CNN
-F1 "Regulator_Switching_TPS63060" 100 550 50 H V C CNN
+F1 "Regulator_Switching:TPS63060" 100 550 50 H V C CNN
 F2 "Package_SON:Texas_S-PWSON-N10_ThermalVias" 0 -650 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -162,11 +162,11 @@ X VOUT 9 400 200 100 L 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# Switch_SW_SPST
+# Switch:SW_SPST
 #
-DEF Switch_SW_SPST SW 0 0 Y N 1 F N
+DEF Switch:SW_SPST SW 0 0 Y N 1 F N
 F0 "SW" 0 125 50 H V C CNN
-F1 "Switch_SW_SPST" 0 -100 50 H V C CNN
+F1 "Switch:SW_SPST" 0 -100 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -178,11 +178,11 @@ X B 2 200 0 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Transistor_FET_TP0610T
+# Transistor_FET:TP0610T
 #
-DEF Transistor_FET_TP0610T Q 0 0 Y N 1 F N
+DEF Transistor_FET:TP0610T Q 0 0 Y N 1 F N
 F0 "Q" 200 75 50 H V L CNN
-F1 "Transistor_FET_TP0610T" 200 0 50 H V L CNN
+F1 "Transistor_FET:TP0610T" 200 0 50 H V L CNN
 F2 "Package_TO_SOT_SMD:SOT-23" 200 -75 50 H I L CIN
 F3 "" 0 0 50 H I L CNN
 ALIAS VP0610T BSS84 NTR2101P BSS83P Si2319CDS IRLML6402
@@ -214,11 +214,11 @@ X D 3 100 200 100 D 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# power_GND
+# power:GND
 #
-DEF power_GND #PWR 0 0 Y Y 1 F P
+DEF power:GND #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -250 50 H I C CNN
-F1 "power_GND" 0 -150 50 H V C CNN
+F1 "power:GND" 0 -150 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -227,11 +227,11 @@ X GND 1 0 0 0 D 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# pspice_INDUCTOR
+# pspice:INDUCTOR
 #
-DEF pspice_INDUCTOR L 0 0 N Y 1 F N
+DEF pspice:INDUCTOR L 0 0 N Y 1 F N
 F0 "L" 0 100 50 H V C CNN
-F1 "pspice_INDUCTOR" 0 -50 50 H V C CNN
+F1 "pspice:INDUCTOR" 0 -50 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW

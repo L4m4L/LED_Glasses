@@ -65,7 +65,7 @@ F 0 "C2" H 3892 4596 50  0000 L CNN
 F 1 "0.1u" H 3892 4505 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 3800 4550 50  0001 C CNN
 F 3 "https://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL05A104KA5NNNC.pdf" H 3800 4550 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL05A104KA5NNNC/1276-1043-1-ND/3889129" H 3800 4550 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL05A104KA5NNNC/1276-1043-1-ND/3889129" H 3800 4550 50  0001 C CNN "Digikey Link"
 	1    3800 4550
 	1    0    0    -1  
 $EndComp
@@ -90,11 +90,11 @@ L pspice:INDUCTOR L1
 U 1 1 5F4B9710
 P 4750 3300
 F 0 "L1" H 4750 3515 50  0000 C CNN
-F 1 "1uF" H 4750 3424 50  0000 C CNN
+F 1 "1u" H 4750 3424 50  0000 C CNN
 F 2 "sft:SRN4018TA" H 4750 3300 50  0001 C CNN
 F 3 "https://www.bourns.com/docs/Product-Datasheets/SRN4018TA.pdf" H 4750 3300 50  0001 C CNN
 F 4 "XFL4020-102MEC" H 4750 3300 50  0001 C CNN "Old product"
-F 5 "https://www.digikey.com/en/products/detail/bourns-inc/SRN4018TA-1R0M/6565079" H 4750 3300 50  0001 C CNN "Digikey"
+F 5 "https://www.digikey.com/en/products/detail/bourns-inc/SRN4018TA-1R0M/6565079" H 4750 3300 50  0001 C CNN "Digikey Link"
 	1    4750 3300
 	1    0    0    -1  
 $EndComp
@@ -109,7 +109,7 @@ Wire Wire Line
 Wire Wire Line
 	5150 4050 5250 4050
 $Comp
-L Device:R_Small_US R3
+L LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device R3
 U 1 1 5F4BA20C
 P 5250 4150
 F 0 "R3" H 5318 4196 50  0000 L CNN
@@ -124,7 +124,7 @@ Connection ~ 5250 4050
 Wire Wire Line
 	5150 4250 5250 4250
 $Comp
-L Device:R_Small_US R4
+L LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device R4
 U 1 1 5F4BA598
 P 5250 4350
 F 0 "R4" H 5318 4396 50  0000 L CNN
@@ -152,10 +152,10 @@ L Device:C_Small C3
 U 1 1 5F4BB248
 P 5950 4350
 F 0 "C3" H 6042 4396 50  0000 L CNN
-F 1 "10pF" H 6042 4305 50  0000 L CNN
+F 1 "10p" H 6042 4305 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 5950 4350 50  0001 C CNN
 F 3 "https://datasheets.avx.com/C0GNP0-Dielectric.pdf" H 5950 4350 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/avx-corporation/06035A100JAT2A/478-1163-1-ND/564195" H 5950 4350 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/avx-corporation/06035A100JAT2A/478-1163-1-ND/564195" H 5950 4350 50  0001 C CNN "Digikey Link"
 	1    5950 4350
 	1    0    0    -1  
 $EndComp
@@ -197,7 +197,7 @@ L Switch:SW_SPST SW1
 U 1 1 5F4C134D
 P 3350 5400
 F 0 "SW1" H 3350 5635 50  0000 C CNN
-F 1 "SW_SPST" H 3350 5544 50  0000 C CNN
+F 1 "EN" H 3350 5544 50  0000 C CNN
 F 2 "digikey-footprints:Switch_Slide_JS202011SCQN" H 3350 5400 50  0001 C CNN
 F 3 "https://www.ckswitches.com/media/1422/js.pdf" H 3350 5400 50  0001 C CNN
 F 4 "https://www.digikey.com.au/product-detail/en/c-k/JS202011SCQN/401-2002-1-ND/1640098" H 3350 5400 50  0001 C CNN "Digikey Link"
@@ -213,7 +213,7 @@ L Device:LED D3
 U 1 1 5F4C82CF
 P 8050 4600
 F 0 "D3" H 8042 4816 50  0000 C CNN
-F 1 "LED Green" H 8042 4725 50  0000 C CNN
+F 1 "P_OUT" H 8042 4725 50  0000 C CNN
 F 2 "LED_SMD:LED_0603_1608Metric" H 8050 4600 50  0001 C CNN
 F 3 "https://optoelectronics.liteon.com/upload/download/DS22-2000-226/LTST-S270KGKT.pdf" H 8050 4600 50  0001 C CNN
 F 4 "https://www.digikey.com.au/product-detail/en/lite-on-inc/LTST-S270KGKT/160-1478-1-ND/386892" H 8050 4600 50  0001 C CNN "Digikey Link"
@@ -221,7 +221,7 @@ F 4 "https://www.digikey.com.au/product-detail/en/lite-on-inc/LTST-S270KGKT/160-
 	0    1    -1   0   
 $EndComp
 $Comp
-L Device:R_Small_US R6
+L LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device R6
 U 1 1 5F4C82D6
 P 8050 5050
 F 0 "R6" H 8118 5096 50  0000 L CNN
@@ -255,7 +255,7 @@ L Device:LED D2
 U 1 1 5F4CC9A9
 P 3850 5400
 F 0 "D2" H 3842 5616 50  0000 C CNN
-F 1 "LED Red" H 3842 5525 50  0000 C CNN
+F 1 "P_IN" H 3842 5525 50  0000 C CNN
 F 2 "LED_SMD:LED_0603_1608Metric" H 3850 5400 50  0001 C CNN
 F 3 "https://optoelectronics.liteon.com/upload/download/DS22-2000-210/LTST-S270KRKT.pdf" H 3850 5400 50  0001 C CNN
 F 4 "https://www.digikey.com.au/product-detail/en/lite-on-inc/LTST-S270KRKT/160-1479-1-ND/386894" H 3850 5400 50  0001 C CNN "Digikey Link"
@@ -263,7 +263,7 @@ F 4 "https://www.digikey.com.au/product-detail/en/lite-on-inc/LTST-S270KRKT/160-
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Device:R_Small_US R2
+L LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device R2
 U 1 1 5F4CC9B0
 P 4300 5400
 F 0 "R2" V 4505 5400 50  0000 C CNN
@@ -280,22 +280,22 @@ Connection ~ 3700 5400
 Wire Wire Line
 	4400 5400 5050 5400
 $Comp
-L Device:D_Zener_Small D_Zener_Small1
+L Device:D_Zener_Small D1
 U 1 1 5F7F1725
 P 2100 4300
-F 0 "D_Zener_Small1" V 2054 4368 50  0000 L CNN
+F 0 "D1" V 2054 4368 50  0000 L CNN
 F 1 "6V" V 2145 4368 50  0000 L CNN
 F 2 "Diode_SMD:D_SOD-123" V 2100 4300 50  0001 C CNN
 F 3 "https://www.vishay.com/docs/85774/mmsz5225.pdf" V 2100 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/vishay-general-semiconductor-diodes-division/MMSZ5233B-E3-08/112-MMSZ5233B-E3-08CT-ND/8565146" V 2100 4300 50  0001 C CNN "Digikey link"
+F 4 "https://www.digikey.com.au/product-detail/en/vishay-general-semiconductor-diodes-division/MMSZ5233B-E3-08/112-MMSZ5233B-E3-08CT-ND/8565146" V 2100 4300 50  0001 C CNN "Digikey Link"
 	1    2100 4300
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R_Small_US R_Small_US1
+L LED-Right-Glasses-Arm-(power)-rescue:R_Small_US-Device R1
 U 1 1 5F7F24DD
 P 1900 4600
-F 0 "R_Small_US1" H 1968 4646 50  0000 L CNN
+F 0 "R1" H 1968 4646 50  0000 L CNN
 F 1 "100k1" H 1968 4555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" H 1900 4600 50  0001 C CNN
 F 3 "https://www.susumu.co.jp/common/pdf/n_catalog_partition05_en.pdf" H 1900 4600 50  0001 C CNN
@@ -343,10 +343,10 @@ L Device:C_Small C5
 U 1 1 604D825D
 P 3250 4450
 F 0 "C5" H 3342 4496 50  0000 L CNN
-F 1 "22uF" H 3342 4405 50  0000 L CNN
+F 1 "22u" H 3342 4405 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric" H 3250 4450 50  0001 C CNN
 F 3 "https://content.kemet.com/datasheets/KEM_C1006_X5R_SMD.pdf" H 3250 4450 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/kemet/C0805C226M9PAC7210/399-C0805C226M9PAC7210CT-ND/12701503" H 3250 4450 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/kemet/C0805C226M9PAC7210/399-C0805C226M9PAC7210CT-ND/12701503" H 3250 4450 50  0001 C CNN "Digikey Link"
 	1    3250 4450
 	1    0    0    -1  
 $EndComp
@@ -359,10 +359,10 @@ L Device:C_Small C6
 U 1 1 604E0D34
 P 7100 4250
 F 0 "C6" H 7192 4296 50  0000 L CNN
-F 1 "68uF" H 7192 4205 50  0000 L CNN
+F 1 "68u" H 7192 4205 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1206_3216Metric" H 7100 4250 50  0001 C CNN
 F 3 "https://product.tdk.com/en/system/files?file=dam/doc/product/capacitor/ceramic/mlcc/catalog/mlcc_commercial_general_en.pdf" H 7100 4250 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/tdk-corporation/C3216JB1A686M160AC/445-11687-1-ND/3953353" H 7100 4250 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/tdk-corporation/C3216JB1A686M160AC/445-11687-1-ND/3953353" H 7100 4250 50  0001 C CNN "Digikey Link"
 	1    7100 4250
 	1    0    0    -1  
 $EndComp
@@ -376,7 +376,7 @@ L Connector:Conn_01x02_Male J1
 U 1 1 604D70E4
 P 850 4050
 F 0 "J1" H 956 4228 50  0000 C CNN
-F 1 "Conn_01x02_Male" H 956 4137 50  0000 C CNN
+F 1 "PWR IN" H 956 4137 50  0000 C CNN
 F 2 "Connector_JST:JST_PH_S2B-PH-SM4-TB_1x02-1MP_P2.00mm_Horizontal" H 850 4050 50  0001 C CNN
 F 3 "http://www.farnell.com/datasheets/1699381.pdf" H 850 4050 50  0001 C CNN
 F 4 "https://au.element14.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615" H 850 4050 50  0001 C CNN "Link"
@@ -404,7 +404,7 @@ L Connector:Conn_01x01_Male J2
 U 1 1 604D92F9
 P 10500 4050
 F 0 "J2" H 10473 3980 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 10473 4071 50  0000 R CNN
+F 1 "PWR OUT +" H 10473 4071 50  0000 R CNN
 F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10500 4050 50  0001 C CNN
 F 3 "~" H 10500 4050 50  0001 C CNN
 	1    10500 4050
@@ -426,7 +426,7 @@ L Connector:Conn_01x01_Male J3
 U 1 1 604DC290
 P 10500 4200
 F 0 "J3" H 10473 4130 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 10473 4221 50  0000 R CNN
+F 1 "PWR OUT -" H 10473 4221 50  0000 R CNN
 F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical_SMD_CUSTOM" H 10500 4200 50  0001 C CNN
 F 3 "~" H 10500 4200 50  0001 C CNN
 	1    10500 4200
@@ -454,10 +454,10 @@ L Device:C_Small C1
 U 1 1 60505078
 P 8550 4300
 F 0 "C1" H 8642 4346 50  0000 L CNN
-F 1 "220uF" H 8642 4255 50  0000 L CNN
+F 1 "220u" H 8642 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 8550 4300 50  0001 C CNN
 F 3 "~" H 8550 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 8550 4300 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 8550 4300 50  0001 C CNN "Digikey Link"
 	1    8550 4300
 	1    0    0    -1  
 $EndComp
@@ -499,10 +499,10 @@ L Device:C_Small C4
 U 1 1 60699D26
 P 8950 4300
 F 0 "C4" H 9042 4346 50  0000 L CNN
-F 1 "220uF" H 9042 4255 50  0000 L CNN
+F 1 "220u" H 9042 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 8950 4300 50  0001 C CNN
 F 3 "~" H 8950 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 8950 4300 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 8950 4300 50  0001 C CNN "Digikey Link"
 	1    8950 4300
 	1    0    0    -1  
 $EndComp
@@ -511,10 +511,10 @@ L Device:C_Small C7
 U 1 1 6069AB23
 P 9350 4300
 F 0 "C7" H 9442 4346 50  0000 L CNN
-F 1 "220uF" H 9442 4255 50  0000 L CNN
+F 1 "220u" H 9442 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 9350 4300 50  0001 C CNN
 F 3 "~" H 9350 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 9350 4300 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 9350 4300 50  0001 C CNN "Digikey Link"
 	1    9350 4300
 	1    0    0    -1  
 $EndComp
@@ -523,10 +523,10 @@ L Device:C_Small C8
 U 1 1 6069B97B
 P 9750 4300
 F 0 "C8" H 9842 4346 50  0000 L CNN
-F 1 "220uF" H 9842 4255 50  0000 L CNN
+F 1 "220u" H 9842 4255 50  0000 L CNN
 F 2 "Capacitor_SMD:C_1210_3225Metric" H 9750 4300 50  0001 C CNN
 F 3 "~" H 9750 4300 50  0001 C CNN
-F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 9750 4300 50  0001 C CNN "Link"
+F 4 "https://www.digikey.com.au/product-detail/en/samsung-electro-mechanics/CL32A227MQVNNNE/1276-3375-1-ND/3891461" H 9750 4300 50  0001 C CNN "Digikey Link"
 	1    9750 4300
 	1    0    0    -1  
 $EndComp
@@ -547,11 +547,11 @@ Wire Wire Line
 	9750 4050 10000 4050
 Connection ~ 3250 4050
 $Comp
-L Connector:TestPoint TP_output_voltage1
+L Connector:TestPoint TP3
 U 1 1 60740989
 P 10000 4050
-F 0 "TP_output_voltage1" H 10058 4170 50  0000 L CNN
-F 1 "TestPoint" H 10058 4079 50  0000 L CNN
+F 0 "TP3" H 10058 4170 50  0000 L CNN
+F 1 "VOUT" H 10058 4079 50  0000 L CNN
 F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 10200 4050 50  0001 C CNN
 F 3 "~" H 10200 4050 50  0001 C CNN
 	1    10000 4050
@@ -561,22 +561,22 @@ Connection ~ 10000 4050
 Wire Wire Line
 	10000 4050 10300 4050
 $Comp
-L Connector:TestPoint TP_input_voltage1
+L Connector:TestPoint TP1
 U 1 1 60741617
 P 2350 4000
-F 0 "TP_input_voltage1" H 2408 4120 50  0000 L CNN
-F 1 "TestPoint" H 2408 4029 50  0000 L CNN
+F 0 "TP1" H 2408 4120 50  0000 L CNN
+F 1 "VIN" H 2408 4029 50  0000 L CNN
 F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 2550 4000 50  0001 C CNN
 F 3 "~" H 2550 4000 50  0001 C CNN
 	1    2350 4000
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:TestPoint TP_gnd1
+L Connector:TestPoint TP2
 U 1 1 60742752
 P 5050 5350
-F 0 "TP_gnd1" H 5108 5470 50  0000 L CNN
-F 1 "TestPoint" H 5108 5379 50  0000 L CNN
+F 0 "TP2" H 5108 5470 50  0000 L CNN
+F 1 "GND" H 5108 5379 50  0000 L CNN
 F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 5250 5350 50  0001 C CNN
 F 3 "~" H 5250 5350 50  0001 C CNN
 	1    5050 5350
