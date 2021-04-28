@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name Connectors_JST)(type KiCad)(uri ${KICAD_USER_DIR}/Connectors_JST.pretty-master/Connectors_JST.pretty-master)(options "")(descr ""))
-)
