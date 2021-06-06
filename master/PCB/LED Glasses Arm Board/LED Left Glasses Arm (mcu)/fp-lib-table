@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name misc-footprints)(type KiCad)(uri "E:/Git Projects/LED_Glasses/master/PCB/misc-footprints.pretty")(options "")(descr ""))
-)

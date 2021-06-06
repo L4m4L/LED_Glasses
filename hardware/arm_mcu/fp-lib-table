@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name rave_shades)(type KiCad)(uri ${KIPRJMOD}/../rave_shades.pretty)(options "")(descr ""))
+)

@@ -1,4 +1,0 @@
-(sym_lib_table
-  (lib (name misc-symbols)(type Legacy)(uri D:/repo/LED_Glasses/master/PCB/misc-symbols.lib)(options "")(descr ""))
-  (lib (name "LED-Left-Glasses-Arm-(mcu)-rescue")(type Legacy)(uri "${KIPRJMOD}/LED Left Glasses Arm (mcu)-rescue.lib")(options "")(descr ""))
-)
