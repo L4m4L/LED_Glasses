@@ -1,11 +1,7 @@
 #ifndef LED_H
 #define LED_H
 
-#define LED_COUNT (66)
-#define LED_ROWS   (7)
-#define LED_COLS  (10)
-
-typedef struct _led_colour_t {
+typedef struct led_colour_t_ {
     uint8_t r;
     uint8_t g;
     uint8_t b;
@@ -13,9 +9,10 @@ typedef struct _led_colour_t {
 
 void led_init(void);
 void led_flush(void);
-void led_clear(void);
-void led_set(uint32_t led, led_colour_t c);
-void led_set_all(led_colour_t c);
-void led_set_pixel(int x, int y, led_colour_t c);
+void led_reset(void);
+uint32_t led_clear(void);
+uint32_t led_set(uint32_t led, led_colour_t c);
+uint32_t led_set_all(led_colour_t c);
+uint32_t led_set_pixel(uint32_t x, uint32_t y, led_colour_t c);
 
 #endif // #ifndef LED_H

@@ -4,5 +4,15 @@
 			"name": "firmware",
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"files.associations": {
+			"spi.h": "c",
+			"rcc.h": "c",
+			"system.h": "c",
+			"display.h": "c",
+			"gpio.h": "c",
+			"fft.h": "c"
+		}
+	}
 }
