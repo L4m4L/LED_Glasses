@@ -8,6 +8,10 @@
 /******************************************************************************
 * GLOBAL DEFINITIONS **********************************************************
 *******************************************************************************/
+#define BUTTON_RCC_GPIO   RCC_GPIOB
+#define BUTTON_GPIO_PORT  GPIOB
+#define BUTTON_GPIO_PIN   GPIO9
+
 #define LED_RCC_GPIO      RCC_GPIOB
 #define LED_GPIO_PORT     GPIOB
 #define LED_GPIO_PIN_MOSI GPIO7
@@ -30,18 +34,23 @@
 *******************************************************************************/
 typedef enum display_mode_e_
 {
-    DISPLAY_MODE_LINES,
-    DISPLAY_MODE_PK2PK,
-    DISPLAY_MODE_FFT,
-    DISPLAY_MODE_SCROLL
+    DISPLAY_MODE_DEFAULT,
+    DISPLAY_MODE_ANIMATION,
+    DISPLAY_MODE_HEATMAP
 } display_mode_e;
+
+typedef struct colour_t_ {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} colour_t;
 
 typedef struct context_t_
 {
-    char display_text[50];
-    uint8_t mic_pk2pk;
-    uint8_t mic_fft[LED_COUNT];
-    display_mode_e display_mode;
+    float            bass; // [0,1) value representing bass loudness
+    display_mode_e   mode;
+    uint32_t         length;
+    const colour_t (*animation)[][LED_COUNT]; // A pointer to an array of arrays of const colour_t haha
 } context_t;
 
 #endif // #ifndef UTIL_H

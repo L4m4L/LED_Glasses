@@ -1,10 +1,8 @@
 #ifndef MIC_H
 #define MIC_H
 
-#include "util.h"
+#include "stdint.h"
 
-void mic_init(void);
-void mic_task(context_t* context);
-void mic_test(void);
+void mic_init(void (*mic_receive_callback)(uint8_t));
 
 #endif // #ifndef MIC_H

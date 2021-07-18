@@ -1,277 +1,101 @@
-#include <stdint.h>
-#include <stdlib.h>
-
 #include "display.h"
 #include "led.h"
-#include "system.h"
-#include "util.h"
-
-#define DISPLAY_TASK_PERIOD (0.02)
-#define DISPLAY_MODE_LINES_PERIOD (1)
-
-#define DISPLAY_ANIMATION_HEART_LENGTH (8U)
-static const led_colour_t display_animation_heart[DISPLAY_ANIMATION_HEART_LENGTH][LED_COUNT] = {{ // frame 1
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}
-    }, { // frame 2
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}
-    }, { // frame 3
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}
-    }, { // frame 4
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}
-    }, { // frame 5
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}
-    }, { // frame 6
-        {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  0,   0,   0}, {  0,   0,   0}
-    }, { // frame 7
-        {  0,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  0,   0,   0},
-        {  4,   0,   0}, {  0,   0,   0}
-    }, { // frame 8
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  0,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0}, {  4,   0,   0},
-        {  4,   0,   0}, {  4,   0,   0}
-}};
-
-
-
-static enum display_state_e
-{
-    DISPLAY_STATE_INIT,
-    DISPLAY_STATE_RUN
-} display_state = DISPLAY_STATE_INIT;
-
-static void display_run(context_t* context);
-static void display_draw_line(int x1, int y1, int x2, int y2, led_colour_t c);
-static void display_draw_line_rand(void);
-
-void display_task(context_t* context)
-{
-    static double next = 0;
-    if (system_get_sec() > next)
-    {
-        switch (display_state)
-        {
-        case DISPLAY_STATE_INIT:
-            display_init();
-            break;
-        case DISPLAY_STATE_RUN:
-            display_run(context);
-            break;
-        }
-        next += DISPLAY_TASK_PERIOD;
-    }
-}
 
 void display_init(void)
 {
     led_init();
-    display_state = DISPLAY_STATE_RUN;
 }
 
-void display_heart(float size)
+void display_run(context_t* context)
 {
-    size = size < 0 ? 0 : size;
-    size = size > 1 ? 1 : size;
-    uint8_t frame_idx = DISPLAY_ANIMATION_HEART_LENGTH * size;
-    frame_idx = frame_idx > DISPLAY_ANIMATION_HEART_LENGTH - 1 ? DISPLAY_ANIMATION_HEART_LENGTH - 1 : frame_idx;
-    //uint8_t frame_idx = 1;
-    for (uint32_t led_idx = 0; led_idx < LED_COUNT; led_idx++)
-    {
-        led_set(led_idx, display_animation_heart[frame_idx][led_idx]);
-    }
-    led_flush();
-    // uint8_t led_idx = ((uint32_t)(size) * LED_COUNT) / 256;
-    // led_set(led_idx-1, (led_colour_t){0, 0, 0});
-    // led_set(led_idx, (led_colour_t){4, 0, 0});
+    uint32_t frame = 0;
+    colour_t c;
+    float f;
 
-    // if (size < 85)
-    // {
-    //     led_set_all((led_colour_t){size/7+1, 0, 0});
-    // }
-    // else if (size < 170)
-    // {
-    //     size -= 85;
-    //     led_set_all((led_colour_t){0, size/7+1, 0});
-    // }
-    // else
-    // {
-    //     size -= 170;
-    //     led_set_all((led_colour_t){0, 0, size/7+1});
-    // }
-    
-    // led_flush();
-}
-
-static void display_run(context_t* context)
-{
-    static double display_mode_lines_next = 0;
-    uint8_t display_update = 0;
-    uint8_t min, max;
-    uint32_t i = 0;
-    switch (context->display_mode)
+    switch (context->mode)
     {
-    case DISPLAY_MODE_LINES:
-        if (system_get_sec() > display_mode_lines_next)
-        {
-            led_clear();
-            display_draw_line_rand();
-            display_update = 1;
-            display_mode_lines_next += DISPLAY_MODE_LINES_PERIOD;
+    case DISPLAY_MODE_DEFAULT:
+        led_clear();
+        break;
+    case DISPLAY_MODE_ANIMATION:
+        frame = context->bass * context->length;
+        frame = frame < context->length ? frame : context->length;
+        for (uint32_t led_idx = 0; led_idx < LED_COUNT; led_idx++) {
+            led_set(led_idx, (*context->animation)[frame][led_idx]);
         }
         break;
-    case DISPLAY_MODE_PK2PK:
-        break;
-    case DISPLAY_MODE_FFT:
-        // for (i = 0; i < LED_COUNT; i++)
-        // {
-        //     led_set(i, (led_colour_t){0, 0, i});
-        // }
-        // led_set(i, (led_colour_t){0, 0, 0}); i++;
-        // led_set(i, (led_colour_t){1, 0, 0}); i++;
-        // led_set(i, (led_colour_t){2, 0, 0}); i++;
-        // led_set(i, (led_colour_t){3, 0, 0}); i++;
-        // led_set(i, (led_colour_t){4, 0, 0}); i++;
-        // led_set(i, (led_colour_t){5, 0, 0}); i++;
-        // led_set(i, (led_colour_t){6, 0, 0}); i++;
-        // led_set(i, (led_colour_t){7, 0, 0}); i++;
-        // led_set(i, (led_colour_t){8, 0, 0}); i++;
-        // led_set(i, (led_colour_t){9, 0, 0}); i++;
-        // led_set(i, (led_colour_t){10, 0, 0}); i++;
-        // led_set(i, (led_colour_t){11, 0, 0}); i++;
-        // led_set(i, (led_colour_t){12, 0, 0}); i++;
-        // led_set(i, (led_colour_t){14, 0, 0}); i++;
-        // led_set(i, (led_colour_t){15, 0, 0}); i++;
-        // display_update = 1;
-        break;
-    case DISPLAY_MODE_SCROLL:
+    case DISPLAY_MODE_HEATMAP:
+        c.r = 255 * context->bass;
+        c.g = 0;
+        c.b = 255 * (1 - context->bass);
+        f = context->bass / 0.4f;
+        c.r *= f;
+        c.b *= f;
+        led_set_all(c);
         break;
     }
-
-    if (display_update)
-    {
-        led_flush();
-    }
+    led_flush();
 }
 
-static void display_draw_line(int x1, int y1, int x2, int y2, led_colour_t c)
-{
-    int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
-    int dy = -abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
-    int err = dx + dy, e2;
+// static void display_draw_line(int x1, int y1, int x2, int y2, led_colour_t c)
+// {
+//     int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+//     int dy = -abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
+//     int err = dx + dy, e2;
 
-    for (;;){
-        led_set_pixel(x1, y1, c);
+//     for (;;){
+//         led_set_pixel(x1, y1, c);
 
-        if (x1==x2 && y1==y2) break;
+//         if (x1==x2 && y1==y2) break;
 
-        e2 = 2*err;
-        if (e2 >= dy) { err += dy; x1 += sx; }
-        if (e2 <= dx) { err += dx; y1 += sy; }
-    }
-    // int dx = abs(x2 - x1);
-    // int dy = abs(y2 - y1);
-    // int sx = x1 < x2 ? 1 : -1;
-    // int sy = y1 < y2 ? 1 : -1;
-    // int err = dx + dy;
-    // int e2;
+//         e2 = 2*err;
+//         if (e2 >= dy) { err += dy; x1 += sx; }
+//         if (e2 <= dx) { err += dx; y1 += sy; }
+//     }
+//     // int dx = abs(x2 - x1);
+//     // int dy = abs(y2 - y1);
+//     // int sx = x1 < x2 ? 1 : -1;
+//     // int sy = y1 < y2 ? 1 : -1;
+//     // int err = dx + dy;
+//     // int e2;
 
-    // led_set_pixel(x1, y1, c);
+//     // led_set_pixel(x1, y1, c);
 
-    // while((x1 != x2) || (y1 != y2))
-    // {
-    //     e2 = 2 * err;
-    //     if (e2 >= dy)
-    //     {
-    //         err += dy;
-    //         x1 += sx;
-    //     }
-    //     if (e2 <= dx)
-    //     {
-    //         err += dx;
-    //         y1 += sy;
-    //     }
+//     // while((x1 != x2) || (y1 != y2))
+//     // {
+//     //     e2 = 2 * err;
+//     //     if (e2 >= dy)
+//     //     {
+//     //         err += dy;
+//     //         x1 += sx;
+//     //     }
+//     //     if (e2 <= dx)
+//     //     {
+//     //         err += dx;
+//     //         y1 += sy;
+//     //     }
 
-    //     led_set_pixel(x1, y1, c);
-    // }
-}
+//     //     led_set_pixel(x1, y1, c);
+//     // }
+// }
 
-static void display_draw_line_rand(void)
-{
-    int y1 = rand() % LED_ROWS;
-    int y2 = rand() % LED_ROWS;
-    // led_colour_t c = {3,3,4};
-    // display_draw_line(0, y1, LED_COLS-1, y2, c);
-    static uint32_t i = 0;
-    led_colour_t c[] = {
-        {4, 0, 0}, // red
-        {0, 4, 0}, // green
-        {0, 0, 4}, // blue
-        {4, 4, 0}, // yellow
-        {4, 0, 4}, // magenta
-        {0, 4, 4}, // cyan
-        {4, 4, 4}
-    };
-    display_draw_line(0, y1, LED_COLS-1, y2, c[i]);
-    i += 1;
-    i = i < sizeof(c)/sizeof(c[0]) ? i : 0;
-}
+// static void display_draw_line_rand(void)
+// {
+//     int y1 = rand() % LED_ROWS;
+//     int y2 = rand() % LED_ROWS;
+//     // led_colour_t c = {3,3,4};
+//     // display_draw_line(0, y1, LED_COLS-1, y2, c);
+//     static uint32_t i = 0;
+//     led_colour_t c[] = {
+//         {4, 0, 0}, // red
+//         {0, 4, 0}, // green
+//         {0, 0, 4}, // blue
+//         {4, 4, 0}, // yellow
+//         {4, 0, 4}, // magenta
+//         {0, 4, 4}, // cyan
+//         {4, 4, 4}
+//     };
+//     display_draw_line(0, y1, LED_COLS-1, y2, c[i]);
+//     i += 1;
+//     i = i < sizeof(c)/sizeof(c[0]) ? i : 0;
+// }

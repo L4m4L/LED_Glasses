@@ -3,8 +3,7 @@
 
 #include "util.h"
 
-void display_task(context_t* context);
 void display_init(void);
-void display_heart(float size);
+void display_run(context_t* context);
 
 #endif // #ifndef DISPLAY_H

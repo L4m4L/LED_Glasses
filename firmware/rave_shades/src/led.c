@@ -1,15 +1,3 @@
-/******************************************************************************
-** This module it designed to work with the SK6812MINI smart LED. Each LED   **
-** is individually addressable, and can display 24bit colours in full RGB.   **
-** The data interface uses PWM to represent bits with a period of 1.2us per  **
-** bit, a pulse width of 0.3us for 0 and 0.6us for 1. The LEDs are connected **
-** in serial and each LED along strips the first 24 bits off of the data     **
-** stream and relays the remainder to the next led. We use the SPI interface **
-** to communicate with the LEDs. To achieve this we set the spi clock rate   **
-** to be 4x the PWM frequency (3.333MHz) and represent a single PWM cycle or **
-** LED bit as 4 spi bits (0 -> 1000 and 1 -> 1100).                          **
-*******************************************************************************/
-
 #include <stdint.h>
 
 #include <libopencm3/stm32/gpio.h>
@@ -24,7 +12,7 @@
 #define LED_GPIO_PIN_AF        GPIO_AF1
 #define LED_GPIO_PIN_CLK_TYPE  GPIO_OTYPE_PP
 #define LED_GPIO_PIN_CLK_SPEED GPIO_OSPEED_50MHZ
-// sysclk == 53.333MHz, sysclk / 16 == 3.333MHz
+// (sysclk == 53.333MHz) / 16 == 3.333MHz
 #define LED_SPI_DIV            SPI_CR1_BAUDRATE_FPCLK_DIV_16
 #define LED_SPI_POL            SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE
 #define LED_SPI_PHA            SPI_CR1_CPHA_CLK_TRANSITION_1
@@ -41,7 +29,7 @@
 #define LED_TX_PER             (LED_COLOURS * LED_TX_PER_COLOUR)
 #define LED_BUFFER_SIZE        (LED_TX_PER * LED_COUNT)
 // reset low pulse is 80us, each spi transfer is 4.8us
-// TODO: the reset doesn't seem to do anything, investigate further with LA
+// reset required at the end fo each transfer??
 #define LED_RESET_TX_COUNT     (30U)//(16U)
 
 #define LED_RESET (0x0000U)
@@ -139,21 +127,21 @@ static const uint16_t led_addresses[LED_ROWS][LED_COLS] = {
     {9999,   65,   64,   63, 9999,      9999,    2,    1,    0, 9999},
 };
 
+static uint32_t led_buffer_modified = 0;
 static uint16_t led_buffer[LED_BUFFER_SIZE];
 
-inline static uint32_t led_buffer_modify(uint32_t index, uint16_t value)
+static inline void led_buffer_modify(uint32_t index, uint16_t value)
 {
-    uint32_t modified = (led_buffer[index] != value);
+    led_buffer_modified |= (led_buffer[index] != value);
     led_buffer[index] = value;
-    return modified;
 }
 
-inline static uint16_t led_colour_lo(uint32_t c)
+static inline uint16_t led_colour_lo(uint32_t c)
 {
     return led_colour_map[LED_TX_PER_COLOUR * c];
 }
 
-inline static uint16_t led_colour_hi(uint32_t c)
+static inline uint16_t led_colour_hi(uint32_t c)
 {
     return led_colour_map[LED_TX_PER_COLOUR * c + 1];
 }
@@ -181,72 +169,58 @@ void led_init(void)
 
 void led_flush(void)
 {
+    if (led_buffer_modified)
+    {
+        led_buffer_modified = 0;
+        
+        for (uint32_t i = 0; i < LED_BUFFER_SIZE; i++)
+        {
+            spi_send(LED_SPI, led_buffer[i]);
+        }
+
+        for (uint32_t i = 0; i < LED_RESET_TX_COUNT; i++)
+        {
+            spi_send(LED_SPI, LED_RESET);
+        }
+    }
+}
+
+void led_clear(void)
+{
     for (uint32_t i = 0; i < LED_BUFFER_SIZE; i++)
     {
-        spi_send(LED_SPI, led_buffer[i]);
-    }
-    led_reset();
-}
-
-void led_reset(void)
-{
-    for (uint32_t i = 0; i < LED_RESET_TX_COUNT; i++)
-    {
-        spi_send(LED_SPI, LED_RESET);
+        led_buffer_modify(i, LED_0000);
     }
 }
 
-uint32_t led_clear(void)
-{
-    uint32_t modified = 0;
-
-    for (uint32_t i = 0; i < LED_BUFFER_SIZE; i++)
-    {
-        modified |= led_buffer_modify(i, LED_0000);
-    }
-
-    return modified;
-}
-
-uint32_t led_set(uint32_t led, led_colour_t c)
+void led_set(uint32_t led, colour_t c)
 {
     uint32_t base_addr;
-    uint32_t modified = 0;
 
     if (led < LED_COUNT)
     {
         base_addr = LED_TX_PER * led;
-        modified |= led_buffer_modify(base_addr + 0, led_colour_lo(c.g)); // green
-        modified |= led_buffer_modify(base_addr + 1, led_colour_hi(c.g)); // green
-        modified |= led_buffer_modify(base_addr + 2, led_colour_lo(c.r)); // red
-        modified |= led_buffer_modify(base_addr + 3, led_colour_hi(c.r)); // red
-        modified |= led_buffer_modify(base_addr + 4, led_colour_lo(c.b)); // blue
-        modified |= led_buffer_modify(base_addr + 5, led_colour_hi(c.b)); // blue
+        led_buffer_modify(base_addr + 0, led_colour_lo(c.g)); // green
+        led_buffer_modify(base_addr + 1, led_colour_hi(c.g)); // green
+        led_buffer_modify(base_addr + 2, led_colour_lo(c.r)); // red
+        led_buffer_modify(base_addr + 3, led_colour_hi(c.r)); // red
+        led_buffer_modify(base_addr + 4, led_colour_lo(c.b)); // blue
+        led_buffer_modify(base_addr + 5, led_colour_hi(c.b)); // blue
     }
-
-    return modified;
 }
 
-uint32_t led_set_all(led_colour_t c)
+void led_set_all(colour_t c)
 {
-    uint32_t modified = 0;
-
     for (uint32_t led = 0; led < LED_COUNT; led++)
     {
-        modified |= led_set(led, c);
+        led_set(led, c);
     }
-
-    return modified;
 }
 
-uint32_t led_set_pixel(uint32_t x, uint32_t y, led_colour_t c)
+void led_set_pixel(uint32_t x, uint32_t y, colour_t c)
 {
-    uint32_t modified = 0;
-
     if ((x < LED_COLS) && (y < LED_ROWS))
     {
-        modified |= led_set(led_addresses[y][x], c);
+        led_set(led_addresses[y][x], c);
     }
-
-    return modified;
 }
