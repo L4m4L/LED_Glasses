@@ -17,6 +17,7 @@
 
 void led_init(void);
 void led_flush(void);
+void led_flush_dma(void);
 void led_clear(void);
 void led_set(uint32_t led, colour_t c);
 void led_set_all(colour_t c);

@@ -29,6 +29,8 @@
 #define MIC_RCC_SPI       RCC_SPI1
 #define MIC_SPI           SPI1
 
+#define AUDIO_FREQUENCY_BINS LED_COLS
+
 /******************************************************************************
 * GLOBAL TYPE DEFINITIONS *****************************************************
 *******************************************************************************/
@@ -36,7 +38,7 @@ typedef enum display_mode_e_
 {
     DISPLAY_MODE_DEFAULT,
     DISPLAY_MODE_ANIMATION,
-    DISPLAY_MODE_HEATMAP
+    DISPLAY_MODE_WATERFALL
 } display_mode_e;
 
 typedef struct colour_t_ {
@@ -47,10 +49,11 @@ typedef struct colour_t_ {
 
 typedef struct context_t_
 {
-    float            bass; // [0,1) value representing bass loudness
-    display_mode_e   mode;
-    uint32_t         length;
-    const colour_t (*animation)[][LED_COUNT]; // A pointer to an array of arrays of const colour_t haha
+    uint32_t         audio_updated;
+    float            audio_volume[AUDIO_FREQUENCY_BINS];
+    display_mode_e   display_mode;
+    uint32_t         display_animation_len;
+    const colour_t (*display_animation)[][LED_COUNT]; // A pointer to the current animation.
 } context_t;
 
 #endif // #ifndef UTIL_H

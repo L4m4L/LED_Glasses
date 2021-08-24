@@ -23,9 +23,9 @@ void button_init(void (*button_pressed_callback)(context_t*))
 
 void button_run(context_t* context)
 {
-    button_history <<= 1;
+    button_history <<= 1U;
     // Invert the reading because the button signal is active low.
-    button_history |= ~(gpio_port_read(BUTTON_GPIO_PORT) >> BUTTON_SHIFT) & 1;
+    button_history |= (uint8_t)(~(gpio_port_read(BUTTON_GPIO_PORT) >> BUTTON_SHIFT) & 1);
     
     if (button_state)
     {

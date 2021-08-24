@@ -13,23 +13,23 @@ typedef struct filter_instance_t_
 {
     uint8_t  warm;
     uint8_t  step[FILTER_STAGES];
-    uint16_t result[FILTER_STAGES];
+    int16_t result[FILTER_STAGES];
 } filter_instance_t;
 
 typedef struct filter_result_t_
 {
     uint8_t  ready;
-    uint16_t result;
+    int16_t result;
 } filter_result_t;
 
-extern const uint8_t filter_lookup_table[FILTER_TAPS8][256];
+extern const int8_t filter_lookup_table[FILTER_TAPS8][256];
 
 static inline void filter_init(filter_instance_t* instance)
 {
     instance->warm = 0;
     for (uint32_t i = 0; i < FILTER_STAGES; i++)
     {
-        instance->step[i]   = (FILTER_TAPS8 - i * FILTER_DEC8) % FILTER_TAPS8;
+        instance->step[i]   = (uint8_t)((FILTER_TAPS8 - i * FILTER_DEC8) % FILTER_TAPS8);
         instance->result[i] = 0;
     }
 }
@@ -43,7 +43,7 @@ static inline filter_result_t filter_apply(filter_instance_t* instance, uint8_t 
 
     for (uint32_t i = 0; i < FILTER_STAGES; i++)
     {
-        instance->result[i] += filter_lookup_table[instance->step[i]++][input];
+        instance->result[i] += (int16_t)(filter_lookup_table[instance->step[i]++][input]);
         if (instance->step[i] == FILTER_TAPS8)
         {
             instance->step[i] = 0;

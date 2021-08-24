@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#include <libopencm3/stm32/dma.h>
+#include <libopencm3/stm32/dmamux.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/spi.h>
@@ -17,20 +19,25 @@
 #define LED_SPI_POL            SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE
 #define LED_SPI_PHA            SPI_CR1_CPHA_CLK_TRANSITION_1
 #define LED_SPI_END            SPI_CR1_MSBFIRST
-// 16bit transfers will save some cpu time
+// 16bit transfers will (hopefully) save on tx overhead
 #define LED_SPI_SIZE           SPI_CR2_DS_16BIT
 
 #define LED_COLOUR_DEPTH       (8U)
-#define LED_COLOUR_BITS_PER_TX (4U)
+#if LED_SPI_SIZE == SPI_CR2_DS_8BIT
+    #define LED_COLOUR_BITS_PER_TX (2U)
+#elif LED_SPI_SIZE == SPI_CR2_DS_16BIT
+    #define LED_COLOUR_BITS_PER_TX (4U)
+#endif
 #define LED_TX_PER_COLOUR      (LED_COLOUR_DEPTH / LED_COLOUR_BITS_PER_TX)
 #define LED_COLOUR_MAP_SIZE    (LED_TX_PER_COLOUR * (1U << LED_COLOUR_DEPTH))
 #define LED_COLOURS            (3U)
-// spi transmissions per led
+// Spi transmissions per led.
 #define LED_TX_PER             (LED_COLOURS * LED_TX_PER_COLOUR)
 #define LED_BUFFER_SIZE        (LED_TX_PER * LED_COUNT)
-// reset low pulse is 80us, each spi transfer is 4.8us
-// reset required at the end fo each transfer??
-#define LED_RESET_TX_COUNT     (30U)//(16U)
+// Reset low pulse is 80us, each spi transfer is 4.8us.
+// Experimentally a reset length of 144us seems to work best.
+// TODO: Could possibly be refined further.
+#define LED_RESET_TX_COUNT     (30U)
 
 #define LED_RESET (0x0000U)
 #define LED_0000  (0x8888U)
@@ -127,8 +134,9 @@ static const uint16_t led_addresses[LED_ROWS][LED_COLS] = {
     {9999,   65,   64,   63, 9999,      9999,    2,    1,    0, 9999},
 };
 
-static uint32_t led_buffer_modified = 0;
-static uint16_t led_buffer[LED_BUFFER_SIZE];
+static uint32_t led_buffer_modified = 1;
+// We can store reset values at the end of the buffer to simplify DMA transfers.
+static uint16_t led_buffer[LED_BUFFER_SIZE+LED_RESET_TX_COUNT];
 
 static inline void led_buffer_modify(uint32_t index, uint16_t value)
 {
@@ -148,9 +156,14 @@ static inline uint16_t led_colour_hi(uint32_t c)
 
 void led_init(void)
 {
-    for (uint32_t i = 0; i < LED_BUFFER_SIZE; i++)
+    uint32_t i = 0;
+    for (; i < LED_BUFFER_SIZE; i++)
     {
         led_buffer[i] = LED_0000;
+    }
+    for (; i < LED_BUFFER_SIZE + LED_RESET_TX_COUNT; i++)
+    {
+        led_buffer[i] = LED_RESET;
     }
 
     rcc_periph_clock_enable(LED_RCC_GPIO);
@@ -161,10 +174,23 @@ void led_init(void)
     rcc_periph_clock_enable(LED_RCC_SPI);
     spi_reset(LED_SPI);
     spi_init_master(LED_SPI, LED_SPI_DIV, LED_SPI_POL, LED_SPI_PHA, LED_SPI_END);
-    SPI_CR2(LED_SPI) |= LED_SPI_SIZE;
+    spi_set_data_size(LED_SPI, LED_SPI_SIZE);
     spi_enable(LED_SPI);
 
-    led_flush();
+    rcc_periph_clock_enable(RCC_DMA1);
+    dma_channel_reset(DMA1, DMA_CHANNEL1);
+    dma_set_peripheral_address(DMA1, DMA_CHANNEL1, (uint32_t)(&SPI_DR(LED_SPI)));
+    dma_set_peripheral_size(DMA1, DMA_CHANNEL1, DMA_CCR_PSIZE_16BIT);
+    dma_set_memory_address(DMA1, DMA_CHANNEL1, (uint32_t)(led_buffer));
+    dma_set_memory_size(DMA1, DMA_CHANNEL1, DMA_CCR_MSIZE_16BIT);
+    dma_set_read_from_memory(DMA1, DMA_CHANNEL1);
+    dma_enable_memory_increment_mode(DMA1, DMA_CHANNEL1);
+    dma_set_priority(DMA1, DMA_CHANNEL1, DMA_CCR_PL_VERY_HIGH);
+
+    dmamux_reset_dma_channel(DMAMUX1, DMA_CHANNEL1);
+    dmamux_set_dma_channel_request(DMAMUX1, DMA_CHANNEL1, DMAMUX_CxCR_DMAREQ_ID_SPI2_TX);
+
+    led_flush_dma();
 }
 
 void led_flush(void)
@@ -173,15 +199,35 @@ void led_flush(void)
     {
         led_buffer_modified = 0;
         
-        for (uint32_t i = 0; i < LED_BUFFER_SIZE; i++)
+        for (uint32_t i = 0; i < LED_BUFFER_SIZE + LED_RESET_TX_COUNT; i++)
         {
             spi_send(LED_SPI, led_buffer[i]);
         }
+    }
+}
 
-        for (uint32_t i = 0; i < LED_RESET_TX_COUNT; i++)
-        {
-            spi_send(LED_SPI, LED_RESET);
-        }
+void led_flush_dma(void)
+{
+    uint16_t dma_tx_remaining = dma_get_number_of_data(DMA1, DMA_CHANNEL1);
+    uint32_t dma_enabled = DMA_CCR(DMA1, DMA_CHANNEL1) & DMA_CCR_EN;
+
+    // Make sure the DMA transfer is either complete (number of transfers remaining is 0) or the
+    // DMA is disabled (presumably caused by a DMA error) before trying to start a new transfer.
+    // TODO: come up with a better solution, this wastes a whole frame worth of processing.
+    if ((led_buffer_modified) && ((dma_tx_remaining == 0) || !(dma_enabled)))
+    {
+        // while ((dma_tx_remaining > 0) && dma_enabled)
+        led_buffer_modified = 0;
+        
+        // DMA_CNDTRx (number of transfers remaining) is decremented until 0 with each successful
+        // transfer. To begin another transfer this must be set to the buffer length again. The
+        // DMA channel must be disabled to write to DMA_CNDTRx, and the peripherial must be
+        // disabled to disable the DMA.
+        spi_disable_tx_dma(LED_SPI);
+        dma_disable_channel(DMA1, DMA_CHANNEL1);
+        dma_set_number_of_data(DMA1, DMA_CHANNEL1, LED_BUFFER_SIZE + LED_RESET_TX_COUNT);
+        dma_enable_channel(DMA1, DMA_CHANNEL1);
+        spi_enable_tx_dma(LED_SPI);
     }
 }
 

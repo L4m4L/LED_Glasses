@@ -15,13 +15,13 @@ static double system_tick2sec = 1 / 16e6;
 
 void system_init_pll_hsi16_53(void)
 {
-    int pllm_div = 1;
-    int plln_mul = 10;
-    int pllp_div = 3;
-    int pllq_div = 3;
-    int pllr_div = 3;
-    int hclk_div = 1;
-    int pclk_div = 1;
+    uint32_t pllm_div = 1;
+    uint32_t plln_mul = 10;
+    uint32_t pllp_div = 3;
+    uint32_t pllq_div = 3;
+    uint32_t pllr_div = 3;
+    uint32_t hclk_div = 1;
+    uint32_t pclk_div = 1;
 
     system_sysclk   = ((16e6 / pllm_div) * plln_mul) / pllp_div;
     system_hclk     = system_sysclk / hclk_div;
@@ -31,11 +31,11 @@ void system_init_pll_hsi16_53(void)
     struct rcc_clock_scale clock_config = {
         .sysclock_source  = RCC_PLL,
         .pll_source       = RCC_PLLCFGR_PLLSRC_HSI16,
-        .pll_div          = RCC_PLLCFGR_PLLM_DIV(pllm_div),
-        .pll_mul          = RCC_PLLCFGR_PLLN_MUL(plln_mul),
-        .pllp_div         = RCC_PLLCFGR_PLLP_DIV(pllp_div),
-        .pllq_div         = RCC_PLLCFGR_PLLQ_DIV(pllq_div),
-        .pllr_div         = RCC_PLLCFGR_PLLR_DIV(pllr_div),
+        .pll_div          = (uint8_t)(RCC_PLLCFGR_PLLM_DIV(pllm_div)),
+        .pll_mul          = (uint8_t)(RCC_PLLCFGR_PLLN_MUL(plln_mul)),
+        .pllp_div         = (uint8_t)(RCC_PLLCFGR_PLLP_DIV(pllp_div)),
+        .pllq_div         = (uint8_t)(RCC_PLLCFGR_PLLQ_DIV(pllq_div)),
+        .pllr_div         = (uint8_t)(RCC_PLLCFGR_PLLR_DIV(pllr_div)),
         .hpre             = RCC_CFGR_HPRE_NODIV,
         .ppre             = RCC_CFGR_PPRE_NODIV,
         .flash_waitstates = FLASH_ACR_LATENCY_2WS,
@@ -83,7 +83,7 @@ uint64_t system_get_tick(void)
 
 double system_get_sec(void)
 {
-    return system_get_tick() * system_tick2sec;
+    return (double)(system_get_tick()) * system_tick2sec;
 }
 
 void system_wait_tick(uint64_t tick)
