@@ -1,5 +1,5 @@
 # LED_Glasses
-A hobby project aimed at making sound reactive LED glasses that you could take clubbing.
+A hobby project aimed at making sound reactive LED glasses that you should take clubbing.
 
 ## Hardware
 
