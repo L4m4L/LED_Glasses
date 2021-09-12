@@ -19,6 +19,10 @@ static void button_pressed_callback(context_t* context)
     }
     else if (context->display_mode == DISPLAY_MODE_WATERFALL)
     {
+        context->display_mode = DISPLAY_MODE_LACHLAN;
+    }
+    else if (context->display_mode == DISPLAY_MODE_LACHLAN)
+    {
         context->display_mode = DISPLAY_MODE_DEFAULT;
     }
 }

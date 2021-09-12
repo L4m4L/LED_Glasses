@@ -38,7 +38,8 @@ typedef enum display_mode_e_
 {
     DISPLAY_MODE_DEFAULT,
     DISPLAY_MODE_ANIMATION,
-    DISPLAY_MODE_WATERFALL
+    DISPLAY_MODE_WATERFALL,
+    DISPLAY_MODE_LACHLAN
 } display_mode_e;
 
 typedef struct colour_t_ {

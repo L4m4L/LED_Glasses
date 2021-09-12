@@ -16,6 +16,13 @@ static void display_mode_waterfall(context_t* context);
 static void display_volume_history_update(uint32_t volume_history_len, float volume, float* volume_history, uint32_t* volume_history_idx);
 static float display_volume_history_scale(uint32_t volume_history_len, float volume, const float* volume_history, float volume_range_min);
 
+// lachlans functions
+static void display_mode_lachlan(context_t* context);
+static void plot_4_points(uint32_t x_coord, uint32_t y_coord, uint32_t x, uint32_t y, colour_t c);
+static void plot_8_points(uint32_t x_coord, uint32_t y_coord, uint32_t x, uint32_t y, colour_t c);
+static void draw_circle(uint32_t x_coord, uint32_t y_coord, uint32_t rad, colour_t c);
+// End lachlans functions
+
 void display_init(void)
 {
     // Used to map floats to a [0, 1) range which is handy for maping to a range of integers when
@@ -57,6 +64,9 @@ void display_run(context_t* context)
             display_mode_waterfall(context);
         }
         break;
+    case DISPLAY_MODE_LACHLAN:
+        display_mode_lachlan(context);
+        break;
     default:
         led_clear();
     }
@@ -97,6 +107,8 @@ static void display_mode_animation(context_t* context)
 
     // Display the animation frame corresponding to the scaled bass value.
     for (uint32_t led_idx = 0; led_idx < LED_COUNT; led_idx++) {
+        // LM:  (*context->display_animation)[frame][led_idx] gets the colour_t c value from the animation.c file
+        //      loops through the whole 66 LEDs as the animation arrays define that 
         led_set(led_idx, (*context->display_animation)[frame][led_idx]);
     }
     
@@ -183,6 +195,57 @@ static float display_volume_history_scale(uint32_t volume_history_len, float vol
     return volume_scaled;
 }
 
+// Lachlans Test!
+static void display_mode_lachlan(context_t* context){
+    led_clear();
+    
+    // lens 1
+    draw_circle(2, 3, 2, (colour_t){10, 0, 0});
+
+    // lens 2
+    draw_circle(7, 3, 2, (colour_t){10, 0, 0});
+}
+
+// Plot 4 points
+static void plot_4_points(uint32_t x_coord, uint32_t y_coord, uint32_t x, uint32_t y, colour_t c){
+    led_set_pixel(x_coord+x, y_coord+y, c);
+
+    if (x != 0){
+        led_set_pixel(x_coord-x, y_coord+y, c);
+        led_set_pixel(x_coord+x, y_coord-y, c);
+    }
+    
+    led_set_pixel(x_coord-x, y_coord-y, c);
+}
+
+// Plot 8 points
+static void plot_8_points(uint32_t x_coord, uint32_t y_coord, uint32_t x, uint32_t y, colour_t c){
+    plot_4_points(x_coord, y_coord, x, y, c);
+
+    if (x != y){
+        plot_4_points(x_coord, y_coord, y, x, c);
+    }
+}
+
+// Draw circle  
+static void draw_circle(uint32_t x_coord, uint32_t y_coord, uint32_t rad, colour_t c){
+    int32_t error = -rad;
+    int32_t x = rad;
+    int32_t y = 0;
+
+    while (x >= y){
+        plot_8_points(x_coord, y_coord, x, y, c);
+        error += y;
+        ++y;
+        error += y;
+
+        if (error >= 0){
+            --x;
+            error -= x;
+            error -= x;
+        }
+    }
+}
 
 // static void display_draw_line(int x1, int y1, int x2, int y2, led_colour_t c)
 // {
