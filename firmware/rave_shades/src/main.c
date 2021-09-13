@@ -1,4 +1,3 @@
-#include "animation.h"
 #include "audio.h"
 #include "button.h"
 #include "display.h"
@@ -7,22 +6,21 @@
 
 static void button_pressed_callback(context_t* context)
 {
-    if (context->display_mode == DISPLAY_MODE_DEFAULT)
+    switch(context->display_mode)
     {
-        context->display_mode          = DISPLAY_MODE_ANIMATION;
-        context->display_animation_len = ANIMATION_HEART_LEN;
-        context->display_animation     = &animation_heart;
-    }
-    else if (context->display_mode == DISPLAY_MODE_ANIMATION)
-    {
+    case DISPLAY_MODE_DEFAULT:
+        context->display_mode = DISPLAY_MODE_HEART;
+        break;
+    case DISPLAY_MODE_HEART:
         context->display_mode = DISPLAY_MODE_WATERFALL;
-    }
-    else if (context->display_mode == DISPLAY_MODE_WATERFALL)
-    {
+        break;
+    case DISPLAY_MODE_WATERFALL:
         context->display_mode = DISPLAY_MODE_LACHLAN;
-    }
-    else if (context->display_mode == DISPLAY_MODE_LACHLAN)
-    {
+        break;
+	case DISPLAY_MODE_LACHLAN:
+		context->display_mode = DISPLAY_MODE_DEFAULT;
+		break;
+    default:
         context->display_mode = DISPLAY_MODE_DEFAULT;
     }
 }
@@ -30,11 +28,9 @@ static void button_pressed_callback(context_t* context)
 int main(void)
 {
     context_t context = {
-        .audio_updated         = 0,
-        .audio_volume          = {0},
-        .display_mode          = DISPLAY_MODE_WATERFALL,
-        .display_animation_len = ANIMATION_HEART_LEN,
-        .display_animation     = &animation_heart
+        .audio_updated = 0,
+        .audio_volume  = {0},
+        .display_mode  = DISPLAY_MODE_DEFAULT,
     };
 
     system_init_pll_hsi16_53();

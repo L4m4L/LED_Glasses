@@ -1,3 +1,6 @@
+/* A minimal fixed precision library.
+*/
+
 #ifndef FIXED_H
 #define FIXED_H
 
@@ -18,7 +21,7 @@
 #endif // #ifdef FIXED_SIZE_16
 
 #ifdef FIXED_SIZE_32
-    #define FIXED_Q (29)
+    #define FIXED_Q (28)
 
     typedef int32_t fixed_t;
     typedef int64_t fixed_big_t;

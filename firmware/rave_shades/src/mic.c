@@ -17,10 +17,13 @@
 #define MIC_SPI_POL        SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE
 #define MIC_SPI_PHA        SPI_CR1_CPHA_CLK_TRANSITION_2
 #define MIC_SPI_END        SPI_CR1_LSBFIRST
+// Using 16bit reads means we can half the number of callback function calls which should save us a
+// bit of time.
+#define MIC_SPI_SIZE       SPI_CR2_DS_16BIT
 
-void (*spi_rxne_callback)(uint8_t) = 0;
+void (*spi_rxne_callback)(uint16_t) = 0;
 
-void mic_init(void (*mic_receive_callback)(uint8_t))
+void mic_init(void (*mic_receive_callback)(uint16_t))
 {
     spi_rxne_callback = mic_receive_callback;
 
@@ -32,14 +35,16 @@ void mic_init(void (*mic_receive_callback)(uint8_t))
     rcc_periph_clock_enable(MIC_RCC_SPI);
     spi_reset(MIC_SPI);
     spi_init_master(MIC_SPI, MIC_SPI_DIV, MIC_SPI_POL, MIC_SPI_PHA, MIC_SPI_END);
+    spi_set_data_size(MIC_SPI, MIC_SPI_SIZE);
     spi_set_receive_only_mode(MIC_SPI);
     
-    nvic_enable_irq(NVIC_SPI1_IRQ);
+    nvic_enable_irq(MIC_NVIC);
 
     // In master receive only mode, the SPI clock is always on when enabled.
     // SPH0641LM4H-1 takes 50 ms to power up and reach normal operation.
     // We enable the clock and leave it enabled so that the mic is always fully operational for
     // when we want to collect data.
+    // TODO: This could be power hungry but I suspect the LED current draw is much higher.
     spi_enable(MIC_SPI);
 }
 
@@ -83,32 +88,27 @@ double mic_get_sample_rate(void)
 
 void mic_enable(void)
 {
-    // // Clear any possible pending RXNE interrupts by emptying the RX FIFO then clearing the NVIC
-    // // pending interrupt.
-    // while (SPI_SR(MIC_SPI) & SPI_SR_RXNE)
-    // {
-    //     // By casting to void we read the register without actually doing anything with it, and
-    //     // the compiler doesn't optimise it away.
-    //     (void)SPI_DR8(MIC_SPI);
-    // }
-    // nvic_clear_pending_irq(NVIC_SPI1_IRQ);
-    // nvic_enable_irq(NVIC_SPI1_IRQ);
+    // Flush stale microphone data if the overrun flag is set.
+    while (SPI_SR(MIC_SPI) & SPI_SR_OVR)
+    {
+        (void)SPI_DR(MIC_SPI);
+    }
+
     spi_enable_rx_buffer_not_empty_interrupt(MIC_SPI);
 }
 
 void mic_disable(void)
 {
     spi_disable_rx_buffer_not_empty_interrupt(MIC_SPI);
-    // nvic_disable_irq(NVIC_SPI1_IRQ);
 }
 
-void spi1_isr(void)
+MIC_INTERRUPT()
 {
     while (SPI_SR(MIC_SPI) & SPI_SR_RXNE)
     {
         if (spi_rxne_callback)
         {
-            spi_rxne_callback(SPI_DR8(MIC_SPI));
+            spi_rxne_callback(SPI_DR(MIC_SPI));
         }
     }
 }

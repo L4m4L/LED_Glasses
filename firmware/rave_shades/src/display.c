@@ -1,17 +1,18 @@
 #include <math.h>
 
+#include "animation.h"
 #include "display.h"
 #include "led.h"
 
 #define DISPLAY_HISTORY_LEN (100U)
 #define DISPLAY_BASS_BINS (4U)
-#define DISPLAY_BASS_RANGE_MIN (0.0015f)
-#define DISPLAY_BASS_RATE_LIMIT (0.03f)
+#define DISPLAY_BASS_RANGE_MIN (3e-5f)
+#define DISPLAY_BASS_RATE_LIMIT (0.06f)
 #define DISPLAY_WATERFALL_RANGE_MIN (0.0000001f)
 
-static float display_less_than_1 = 0;
+static float display_less_than_1 = 0.9;
 
-static void display_mode_animation(context_t* context);
+static void display_mode_heart(context_t* context);
 static void display_mode_waterfall(context_t* context);
 static void display_volume_history_update(uint32_t volume_history_len, float volume, float* volume_history, uint32_t* volume_history_idx);
 static float display_volume_history_scale(uint32_t volume_history_len, float volume, const float* volume_history, float volume_range_min);
@@ -26,7 +27,7 @@ static void draw_circle(uint32_t x_coord, uint32_t y_coord, uint32_t rad, colour
 void display_init(void)
 {
     // Used to map floats to a [0, 1) range which is handy for maping to a range of integers when
-    // you don't want to include the last number.
+    // you don't want to include the last number (i.e. when you have the length of an array).
     display_less_than_1 = nextafterf(1, 0);
 
     led_init();
@@ -50,11 +51,11 @@ void display_run(context_t* context)
         //     }
         // }
         break;
-    case DISPLAY_MODE_ANIMATION:
+    case DISPLAY_MODE_HEART:
         if (context->audio_updated)
         {
             context->audio_updated = 0;
-            display_mode_animation(context);
+            display_mode_heart(context);
         }
         break;
     case DISPLAY_MODE_WATERFALL:
@@ -70,11 +71,11 @@ void display_run(context_t* context)
     default:
         led_clear();
     }
-    //led_flush();
+    
     led_flush_dma();
 }
 
-static void display_mode_animation(context_t* context)
+static void display_mode_heart(context_t* context)
 {
     static uint32_t bass_history_idx = 0;
     static float bass_previous = 0;
@@ -82,14 +83,8 @@ static void display_mode_animation(context_t* context)
     uint32_t frame;
     float bass, bass_scaled, bass_rate_limited;
 
-    // Calculate bass using the average of the lowest DISPLAY_BASS_BINS. This should correspond to
-    // audio energy below ~250Hz.
-    bass = 0;
-    for (uint32_t bin = 0; bin < DISPLAY_BASS_BINS; bin++)
-    {
-        bass += context->audio_volume[bin];
-    }
-    bass /= DISPLAY_BASS_BINS;
+    // See audio.c for which frequencies correspond to which index in the audio_volume array.
+    bass = context->audio_volume[0];
     
     // Using recent bass values determine a minimum and maximum range to scale the bass within.
     // This should hopefully keep the display reacting even if the volume is reduced.
@@ -102,14 +97,14 @@ static void display_mode_animation(context_t* context)
         bass_rate_limited = bass_previous - DISPLAY_BASS_RATE_LIMIT;
     }
 
-    frame = (uint32_t)(bass_rate_limited * (float)(context->display_animation_len));
-    frame = frame < context->display_animation_len ? frame : context->display_animation_len;
+    frame = (uint32_t)(bass_rate_limited * (float)(ANIMATION_HEART_LEN));
+    frame = frame < ANIMATION_HEART_LEN ? frame : ANIMATION_HEART_LEN;
 
-    // Display the animation frame corresponding to the scaled bass value.
+    // Display the animation frame corresponding to the scaled bass value. Loop through
+	// animation_heart[][], led by led and get the colour_t value from the animation.c file for
+	// each 66 LEDs as defined by the animation array.
     for (uint32_t led_idx = 0; led_idx < LED_COUNT; led_idx++) {
-        // LM:  (*context->display_animation)[frame][led_idx] gets the colour_t c value from the animation.c file
-        //      loops through the whole 66 LEDs as the animation arrays define that 
-        led_set(led_idx, (*context->display_animation)[frame][led_idx]);
+        led_set(led_idx, animation_heart[frame][led_idx]);
     }
     
     bass_previous = bass_rate_limited;
@@ -117,44 +112,65 @@ static void display_mode_animation(context_t* context)
 
 static void display_mode_waterfall(context_t* context)
 {
-    static uint32_t volume_history_idx = 0;
-    static float volume_history[DISPLAY_HISTORY_LEN] = {0};
-    uint32_t volume_row_height = 0;
-    float volume_scaled;
-    float volume[AUDIO_FREQUENCY_BINS];
-
-    for (uint32_t bin = 0; bin < AUDIO_FREQUENCY_BINS; bin++)
-    {
-        // Using a log scale for volume, this may or may not work nicely.
-        if (context->audio_volume[bin] > 0)
-        {
-            volume[bin] = log2f(context->audio_volume[bin]);
-        }
-        else
-        {
-            volume[bin] = -20;
-        }
-
-        display_volume_history_update(DISPLAY_HISTORY_LEN, volume[bin], volume_history, &volume_history_idx);
-    }
+    //static const float volume_offset[] = {2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6};
+    static const float volume_offset[AUDIO_FREQUENCY_BIN_COUNT] = {1.9e-6, 1.7e-6, 1.7e-6, 1.7e-6, 1.7e-6, 1.9e-6, 1.9e-6, 1.9e-6, 1.9e-6, 1.9e-6};
+    static const float volume_scale[AUDIO_FREQUENCY_BIN_COUNT]  = {1.1e-5, 4.0e-5, 4.0e-5, 4.0e-5, 2.0e-5, 1.1e-5, 1.1e-5, 8.0e-6, 6.0e-6, 4.0e-6};
+    static float volume_previous[AUDIO_FREQUENCY_BIN_COUNT] = {0};
 
     led_clear();
 
-    for (uint32_t x = 0; x < AUDIO_FREQUENCY_BINS; x++)
+    for (uint32_t x = 0; x < AUDIO_FREQUENCY_BIN_COUNT; x++)
     {
-        //volume_scaled = display_volume_history_scale(DISPLAY_HISTORY_LEN, volume[x], volume_history, DISPLAY_WATERFALL_RANGE_MIN);
-        volume_scaled = (volume[x] - (-11)) / 2.0;
-        volume_scaled = volume_scaled > 0                   ? volume_scaled : 0;
-        volume_scaled = volume_scaled < display_less_than_1 ? volume_scaled : display_less_than_1;
+        float volume = (context->audio_volume[x] - volume_offset[x]) / volume_scale[x];
+        volume = volume > 0                   ? volume : 0;
+        volume = volume < display_less_than_1 ? volume : display_less_than_1;
 
-        volume_row_height = (uint32_t)((float)(LED_ROWS + 1) * volume_scaled);
+        float volume_rate_limited = volume;
+        if (volume_rate_limited < volume_previous[x] - 0.08)
+        {
+            volume_rate_limited = volume_previous[x] - 0.08;
+        }
+        volume_previous[x] = volume_rate_limited;
+
+        uint32_t volume_row_height = (uint32_t)((float)(LED_ROWS + 1) * volume_rate_limited);
+        uint8_t brightness = (volume_row_height / 2) + 1;
         
         for (uint32_t y = 0; y < volume_row_height; y++)
         {
-            led_set_pixel(x, LED_ROWS - y - 1, (colour_t){0, 0, 4});
+            colour_t c = {0, 0, 0};
+
+            switch(y)
+            {
+            case 0:
+                c = (colour_t){0, 0, 6};
+                break;
+            case 1:
+                c = (colour_t){1, 0, 5};
+                break;
+            case 2:
+                c = (colour_t){2, 0, 4};
+                break;
+            case 3:
+                c = (colour_t){3, 0, 3};
+                break;
+            case 4:
+                c = (colour_t){4, 0, 2};
+                break;
+            case 5:
+                c = (colour_t){5, 0, 1};
+                break;
+            case 6:
+                c = (colour_t){6, 0, 0};
+                break;
+            }
+
+            c.r *= brightness;
+            c.g *= brightness;
+            c.b *= brightness;
+
+            led_set_pixel(x, LED_ROWS - y - 1, c);
         }
     }
-
 }
 
 static void display_volume_history_update(uint32_t volume_history_len, float volume, float* volume_history, uint32_t* volume_history_idx)

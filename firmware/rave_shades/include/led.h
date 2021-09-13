@@ -15,12 +15,25 @@
 
 #include "util.h"
 
+// Clears the display buffer, initialises peripherals, and flushes the display buffer to the LEDs.
 void led_init(void);
+// Flushes the display buffer in a loop.
 void led_flush(void);
+// Begins a DMA transfer to flush the display buffer.
 void led_flush_dma(void);
+// Zeros the display buffer.
 void led_clear(void);
+// Sets a particular LED to the specified colour.
+// \param[in]  led  The index of the LED as dictated by the electrical layout.
+// \param[in]  c    The desired RGB colour of the LED.
 void led_set(uint32_t led, colour_t c);
+// Sets all LEDs to the desired colour.
+// \param[in]  c  The desired RGB colour.
 void led_set_all(colour_t c);
+// Sets the led at location (x, y) to the desired colour.
+// \param[in]  x  The number of columns from the left.
+// \param[in]  y  The number of rows from the top.
+// \param[in]  c  The desired RGB colour.
 void led_set_pixel(uint32_t x, uint32_t y, colour_t c);
 
 #endif // #ifndef LED_H

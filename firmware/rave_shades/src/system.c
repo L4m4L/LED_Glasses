@@ -8,8 +8,11 @@
 
 static volatile uint32_t systick_overflow_counter = 0;
 
+// Systick clock.
 static double system_sysclk   = 16e6;
+// AHB bus clock.
 static double system_hclk     = 16e6;
+// APB bus clock.
 static double system_pclk     = 16e6;
 static double system_tick2sec = 1 / 16e6;
 
@@ -45,6 +48,8 @@ void system_init_pll_hsi16_53(void)
     };
 
     rcc_clock_setup(&clock_config);
+    // This should speed things up a little since we have two wait states for each flash read.
+    flash_prefetch_enable();
     // TODO: consider disabling PPL[Q/P]CLK to save power
 
     systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);

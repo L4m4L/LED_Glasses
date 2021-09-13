@@ -20,7 +20,13 @@
 #define LED_SPI_PHA            SPI_CR1_CPHA_CLK_TRANSITION_1
 #define LED_SPI_END            SPI_CR1_MSBFIRST
 // 16bit transfers will (hopefully) save on tx overhead
+// Maybe not so much now that we use DMA but ah well.
 #define LED_SPI_SIZE           SPI_CR2_DS_16BIT
+#define LED_DMA_SIZE_PERIPH    DMA_CCR_PSIZE_16BIT
+#define LED_DMA_SIZE_MEMORY    DMA_CCR_MSIZE_16BIT
+#define LED_DMA_PRIORITY       DMA_CCR_PL_VERY_HIGH
+#define LED_DMAMUX_REQUEST     DMAMUX_CxCR_DMAREQ_ID_SPI2_TX 
+
 
 #define LED_COLOUR_DEPTH       (8U)
 #if LED_SPI_SIZE == SPI_CR2_DS_8BIT
@@ -138,17 +144,23 @@ static uint32_t led_buffer_modified = 1;
 // We can store reset values at the end of the buffer to simplify DMA transfers.
 static uint16_t led_buffer[LED_BUFFER_SIZE+LED_RESET_TX_COUNT];
 
+// Modifies the display buffer and tracks if the buffer has actually been changed. Useful if we
+// want to avoid "updating" the display if we don't have to.
+// \param[in]  index  The display buffer index.
+// \param[in]  value  The value to save.
 static inline void led_buffer_modify(uint32_t index, uint16_t value)
 {
     led_buffer_modified |= (led_buffer[index] != value);
     led_buffer[index] = value;
 }
 
+// Converts a colour to the first half of a 32bit transfer required for each colour.
 static inline uint16_t led_colour_lo(uint32_t c)
 {
     return led_colour_map[LED_TX_PER_COLOUR * c];
 }
 
+// Converts a colour to the second half of a 32bit transfer required for each colour.
 static inline uint16_t led_colour_hi(uint32_t c)
 {
     return led_colour_map[LED_TX_PER_COLOUR * c + 1];
@@ -177,18 +189,18 @@ void led_init(void)
     spi_set_data_size(LED_SPI, LED_SPI_SIZE);
     spi_enable(LED_SPI);
 
-    rcc_periph_clock_enable(RCC_DMA1);
-    dma_channel_reset(DMA1, DMA_CHANNEL1);
-    dma_set_peripheral_address(DMA1, DMA_CHANNEL1, (uint32_t)(&SPI_DR(LED_SPI)));
-    dma_set_peripheral_size(DMA1, DMA_CHANNEL1, DMA_CCR_PSIZE_16BIT);
-    dma_set_memory_address(DMA1, DMA_CHANNEL1, (uint32_t)(led_buffer));
-    dma_set_memory_size(DMA1, DMA_CHANNEL1, DMA_CCR_MSIZE_16BIT);
-    dma_set_read_from_memory(DMA1, DMA_CHANNEL1);
-    dma_enable_memory_increment_mode(DMA1, DMA_CHANNEL1);
-    dma_set_priority(DMA1, DMA_CHANNEL1, DMA_CCR_PL_VERY_HIGH);
+    rcc_periph_clock_enable(LED_RCC_DMA);
+    dma_channel_reset(LED_DMA, LED_DMA_CHANNEL);
+    dma_set_peripheral_address(LED_DMA, LED_DMA_CHANNEL, (uint32_t)(&SPI_DR(LED_SPI)));
+    dma_set_peripheral_size(LED_DMA, LED_DMA_CHANNEL, LED_DMA_SIZE_PERIPH);
+    dma_set_memory_address(LED_DMA, LED_DMA_CHANNEL, (uint32_t)(led_buffer));
+    dma_set_memory_size(LED_DMA, LED_DMA_CHANNEL, LED_DMA_SIZE_MEMORY);
+    dma_set_read_from_memory(LED_DMA, LED_DMA_CHANNEL);
+    dma_enable_memory_increment_mode(LED_DMA, LED_DMA_CHANNEL);
+    dma_set_priority(LED_DMA, LED_DMA_CHANNEL, LED_DMA_PRIORITY);
 
-    dmamux_reset_dma_channel(DMAMUX1, DMA_CHANNEL1);
-    dmamux_set_dma_channel_request(DMAMUX1, DMA_CHANNEL1, DMAMUX_CxCR_DMAREQ_ID_SPI2_TX);
+    dmamux_reset_dma_channel(LED_DMAMUX, LED_DMA_CHANNEL);
+    dmamux_set_dma_channel_request(LED_DMAMUX, LED_DMA_CHANNEL, LED_DMAMUX_REQUEST);
 
     led_flush_dma();
 }
