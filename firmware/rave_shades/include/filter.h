@@ -81,7 +81,7 @@ static inline void filter_init(filter_instance_t* instance)
 
 // Takes the next 8 samples, performs a table lookup and updates the filter instance.
 // \param[in]  instace  The filter instance.
-// \param[in]  input    Eigth 1-bit microphone samples.
+// \param[in]  input    Eight 1-bit microphone samples.
 // \return              The ready flag will be set if there is a valid filter result ready.
 static inline filter_result_t filter_apply(filter_instance_t* instance, uint8_t input)
 {

@@ -69,6 +69,18 @@ double system_get_pclk(void)
     return system_pclk;
 }
 
+double system_get_timpclk(void)
+{
+    double timpclk = system_pclk;
+
+    if (system_pclk < system_hclk)
+    {
+        timpclk *= 2;
+    }
+
+    return timpclk;
+}
+
 uint64_t system_sec2tick(double sec)
 {
     return (uint64_t)(sec / system_tick2sec);

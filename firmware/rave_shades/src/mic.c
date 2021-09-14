@@ -1,7 +1,7 @@
+#include <libopencm3/cm3/nvic.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/spi.h>
-#include <libopencm3/cm3/nvic.h>
 
 #include "mic.h"
 #include "system.h"
@@ -38,7 +38,7 @@ void mic_init(void (*mic_receive_callback)(uint16_t))
     spi_set_data_size(MIC_SPI, MIC_SPI_SIZE);
     spi_set_receive_only_mode(MIC_SPI);
     
-    nvic_enable_irq(MIC_NVIC);
+    nvic_enable_irq(MIC_SPI_NVIC);
 
     // In master receive only mode, the SPI clock is always on when enabled.
     // SPH0641LM4H-1 takes 50 ms to power up and reach normal operation.
@@ -102,7 +102,7 @@ void mic_disable(void)
     spi_disable_rx_buffer_not_empty_interrupt(MIC_SPI);
 }
 
-MIC_INTERRUPT()
+MIC_SPI_INTERRUPT()
 {
     while (SPI_SR(MIC_SPI) & SPI_SR_RXNE)
     {

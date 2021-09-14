@@ -10,7 +10,7 @@
 #define DISPLAY_BASS_RATE_LIMIT (0.06f)
 #define DISPLAY_WATERFALL_RANGE_MIN (0.0000001f)
 
-static float display_less_than_1 = 0.9;
+static float display_less_than_1 = 0.9f;
 
 static void display_mode_heart(context_t* context);
 static void display_mode_waterfall(context_t* context);
@@ -96,25 +96,24 @@ static void display_mode_heart(context_t* context)
     {
         bass_rate_limited = bass_previous - DISPLAY_BASS_RATE_LIMIT;
     }
+    bass_previous = bass_rate_limited;
 
     frame = (uint32_t)(bass_rate_limited * (float)(ANIMATION_HEART_LEN));
-    frame = frame < ANIMATION_HEART_LEN ? frame : ANIMATION_HEART_LEN;
+    frame = frame < ANIMATION_HEART_LEN ? frame : ANIMATION_HEART_LEN - 1;
 
     // Display the animation frame corresponding to the scaled bass value. Loop through
-	// animation_heart[][], led by led and get the colour_t value from the animation.c file for
-	// each 66 LEDs as defined by the animation array.
+    // animation_heart[][], led by led and get the colour_t value from the animation.c file for
+    // each 66 LEDs as defined by the animation array.
     for (uint32_t led_idx = 0; led_idx < LED_COUNT; led_idx++) {
         led_set(led_idx, animation_heart[frame][led_idx]);
     }
-    
-    bass_previous = bass_rate_limited;
 }
 
 static void display_mode_waterfall(context_t* context)
 {
     //static const float volume_offset[] = {2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6, 2.5e-6};
     static const float volume_offset[AUDIO_FREQUENCY_BIN_COUNT] = {1.9e-6, 1.7e-6, 1.7e-6, 1.7e-6, 1.7e-6, 1.9e-6, 1.9e-6, 1.9e-6, 1.9e-6, 1.9e-6};
-    static const float volume_scale[AUDIO_FREQUENCY_BIN_COUNT]  = {1.1e-5, 4.0e-5, 4.0e-5, 4.0e-5, 2.0e-5, 1.1e-5, 1.1e-5, 8.0e-6, 6.0e-6, 4.0e-6};
+    static const float volume_scale[AUDIO_FREQUENCY_BIN_COUNT]  = {1.1e-5, 4.0e-5, 4.0e-5, 4.0e-5, 2.0e-5, 1.1e-5, 1.1e-5, 6.0e-6, 6.0e-6, 4.0e-6};
     static float volume_previous[AUDIO_FREQUENCY_BIN_COUNT] = {0};
 
     led_clear();
@@ -126,9 +125,9 @@ static void display_mode_waterfall(context_t* context)
         volume = volume < display_less_than_1 ? volume : display_less_than_1;
 
         float volume_rate_limited = volume;
-        if (volume_rate_limited < volume_previous[x] - 0.08)
+        if (volume_rate_limited < volume_previous[x] - 0.08f)
         {
-            volume_rate_limited = volume_previous[x] - 0.08;
+            volume_rate_limited = volume_previous[x] - 0.08f;
         }
         volume_previous[x] = volume_rate_limited;
 
@@ -213,6 +212,7 @@ static float display_volume_history_scale(uint32_t volume_history_len, float vol
 
 // Lachlans Test!
 static void display_mode_lachlan(context_t* context){
+    (void)(context); // Get's rid of "unused variable" warning.
     led_clear();
     
     // lens 1
@@ -250,6 +250,8 @@ static void draw_circle(uint32_t x_coord, uint32_t y_coord, uint32_t rad, colour
     int32_t y = 0;
 
     while (x >= y){
+        // x and y converted to unsigned from signed, might want to consider changing the
+        // function arguments so you don't get funniness with negative numbers.
         plot_8_points(x_coord, y_coord, x, y, c);
         error += y;
         ++y;

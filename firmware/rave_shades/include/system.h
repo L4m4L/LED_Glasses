@@ -10,10 +10,12 @@
 // Phase-Locked Loop which brings the frequency up to 53.333MHz. Note this frequency was chosen
 // so the LED interface can derive a 3.333MHz clock from the PCLK.
 void system_init_pll_hsi16_53(void);
-// Returns the HCLK in Hz.
+// Returns the AHB (read core systems) bus clock in Hz.
 double system_get_hclk(void);
-// Returns the PCLK in Hz.
+// Returns the APB (read peripherals) bus clock in Hz.
 double system_get_pclk(void);
+// Returns the timer peripheral clock in Hz.
+double system_get_timpclk(void);
 // Converts seconds to system ticks (~18ns per tick).
 uint64_t system_sec2tick(double sec);
 // Returns ticks since system_init_pll_hsi16_53() was called.
