@@ -9,126 +9,124 @@
 #include "led.h"
 #include "util.h"
 
-#define LED_GPIO_PIN_MODE      GPIO_MODE_AF
-#define LED_GPIO_PIN_PULL      GPIO_PUPD_NONE
-#define LED_GPIO_PIN_AF        GPIO_AF1
-#define LED_GPIO_PIN_CLK_TYPE  GPIO_OTYPE_PP
+#define LED_BUFFER_MODIFIED_CHECK
+
+#define LED_GPIO_PIN_MODE GPIO_MODE_AF
+#define LED_GPIO_PIN_PULL GPIO_PUPD_NONE
+#define LED_GPIO_PIN_AF GPIO_AF1
+#define LED_GPIO_PIN_CLK_TYPE GPIO_OTYPE_PP
 #define LED_GPIO_PIN_CLK_SPEED GPIO_OSPEED_50MHZ
-// (sysclk == 53.333MHz) / 16 == 3.333MHz
-#define LED_SPI_DIV            SPI_CR1_BAUDRATE_FPCLK_DIV_16
-#define LED_SPI_POL            SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE
-#define LED_SPI_PHA            SPI_CR1_CPHA_CLK_TRANSITION_1
-#define LED_SPI_END            SPI_CR1_MSBFIRST
-// 16bit transfers will (hopefully) save on tx overhead
-// Maybe not so much now that we use DMA but ah well.
-#define LED_SPI_SIZE           SPI_CR2_DS_16BIT
-#define LED_DMA_SIZE_PERIPH    DMA_CCR_PSIZE_16BIT
-#define LED_DMA_SIZE_MEMORY    DMA_CCR_MSIZE_16BIT
-#define LED_DMA_PRIORITY       DMA_CCR_PL_VERY_HIGH
-#define LED_DMAMUX_REQUEST     DMAMUX_CxCR_DMAREQ_ID_SPI2_TX 
+/** (sysclk == 53.333MHz) / 16 == 3.333MHz */
+#define LED_SPI_DIV SPI_CR1_BAUDRATE_FPCLK_DIV_16
+#define LED_SPI_POL SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE
+#define LED_SPI_PHA SPI_CR1_CPHA_CLK_TRANSITION_1
+#define LED_SPI_END SPI_CR1_MSBFIRST
+#define LED_SPI_SIZE SPI_CR2_DS_16BIT
+#define LED_DMA_SIZE_PERIPH DMA_CCR_PSIZE_16BIT
+#define LED_DMA_SIZE_MEMORY DMA_CCR_MSIZE_16BIT
 
-
-#define LED_COLOUR_DEPTH       (8U)
+#define LED_COLOUR_DEPTH (8U)
 #if LED_SPI_SIZE == SPI_CR2_DS_8BIT
-    #define LED_COLOUR_BITS_PER_TX (2U)
+#define LED_COLOUR_BITS_PER_TX (2U)
 #elif LED_SPI_SIZE == SPI_CR2_DS_16BIT
-    #define LED_COLOUR_BITS_PER_TX (4U)
+#define LED_COLOUR_BITS_PER_TX (4U)
 #endif
-#define LED_TX_PER_COLOUR      (LED_COLOUR_DEPTH / LED_COLOUR_BITS_PER_TX)
-#define LED_COLOUR_MAP_SIZE    (LED_TX_PER_COLOUR * (1U << LED_COLOUR_DEPTH))
-#define LED_COLOURS            (3U)
-// Spi transmissions per led.
-#define LED_TX_PER             (LED_COLOURS * LED_TX_PER_COLOUR)
-#define LED_BUFFER_SIZE        (LED_TX_PER * LED_COUNT)
-// Reset low pulse is 80us, each spi transfer is 4.8us.
-// Experimentally a reset length of 144us seems to work best.
-// TODO: Could possibly be refined further.
-#define LED_RESET_TX_COUNT     (30U)
+#define LED_TX_PER_COLOUR (LED_COLOUR_DEPTH / LED_COLOUR_BITS_PER_TX)
+#define LED_COLOUR_MAP_SIZE (LED_TX_PER_COLOUR * (1U << LED_COLOUR_DEPTH))
+#define LED_COLOURS (3U)
+/** SPI transmissions per led. */
+#define LED_TX_PER (LED_COLOURS * LED_TX_PER_COLOUR)
+#define LED_BUFFER_SIZE (LED_TX_PER * LED_COUNT)
+/**
+ * Reset low pulse is 80us, each SPI transfer is 4.8us. Experimentally a reset length of 144us
+ * seems to work best.
+ * TODO: Could possibly be refined further.
+ */
+#define LED_RESET_TX_COUNT (30U)
 
 #define LED_RESET (0x0000U)
-#define LED_0000  (0x8888U)
-#define LED_0001  (0x888CU)
-#define LED_0010  (0x88C8U)
-#define LED_0011  (0x88CCU)
-#define LED_0100  (0x8C88U)
-#define LED_0101  (0x8C8CU)
-#define LED_0110  (0x8CC8U)
-#define LED_0111  (0x8CCCU)
-#define LED_1000  (0xC888U)
-#define LED_1001  (0xC88CU)
-#define LED_1010  (0xC8C8U)
-#define LED_1011  (0xC8CCU)
-#define LED_1100  (0xCC88U)
-#define LED_1101  (0xCC8CU)
-#define LED_1110  (0xCCC8U)
-#define LED_1111  (0xCCCCU)
+#define LED_0000 (0x8888U)
+#define LED_0001 (0x888CU)
+#define LED_0010 (0x88C8U)
+#define LED_0011 (0x88CCU)
+#define LED_0100 (0x8C88U)
+#define LED_0101 (0x8C8CU)
+#define LED_0110 (0x8CC8U)
+#define LED_0111 (0x8CCCU)
+#define LED_1000 (0xC888U)
+#define LED_1001 (0xC88CU)
+#define LED_1010 (0xC8C8U)
+#define LED_1011 (0xC8CCU)
+#define LED_1100 (0xCC88U)
+#define LED_1101 (0xCC8CU)
+#define LED_1110 (0xCCC8U)
+#define LED_1111 (0xCCCCU)
 
 static const uint16_t led_colour_map[LED_COLOUR_MAP_SIZE] = {
-    LED_0000, LED_0000,   LED_0000, LED_0001,   LED_0000, LED_0010,   LED_0000, LED_0011,
-    LED_0000, LED_0100,   LED_0000, LED_0101,   LED_0000, LED_0110,   LED_0000, LED_0111,
-    LED_0000, LED_1000,   LED_0000, LED_1001,   LED_0000, LED_1010,   LED_0000, LED_1011,
-    LED_0000, LED_1100,   LED_0000, LED_1101,   LED_0000, LED_1110,   LED_0000, LED_1111,
-    LED_0001, LED_0000,   LED_0001, LED_0001,   LED_0001, LED_0010,   LED_0001, LED_0011,
-    LED_0001, LED_0100,   LED_0001, LED_0101,   LED_0001, LED_0110,   LED_0001, LED_0111,
-    LED_0001, LED_1000,   LED_0001, LED_1001,   LED_0001, LED_1010,   LED_0001, LED_1011,
-    LED_0001, LED_1100,   LED_0001, LED_1101,   LED_0001, LED_1110,   LED_0001, LED_1111,
-    LED_0010, LED_0000,   LED_0010, LED_0001,   LED_0010, LED_0010,   LED_0010, LED_0011,
-    LED_0010, LED_0100,   LED_0010, LED_0101,   LED_0010, LED_0110,   LED_0010, LED_0111,
-    LED_0010, LED_1000,   LED_0010, LED_1001,   LED_0010, LED_1010,   LED_0010, LED_1011,
-    LED_0010, LED_1100,   LED_0010, LED_1101,   LED_0010, LED_1110,   LED_0010, LED_1111,
-    LED_0011, LED_0000,   LED_0011, LED_0001,   LED_0011, LED_0010,   LED_0011, LED_0011,
-    LED_0011, LED_0100,   LED_0011, LED_0101,   LED_0011, LED_0110,   LED_0011, LED_0111,
-    LED_0011, LED_1000,   LED_0011, LED_1001,   LED_0011, LED_1010,   LED_0011, LED_1011,
-    LED_0011, LED_1100,   LED_0011, LED_1101,   LED_0011, LED_1110,   LED_0011, LED_1111,
-    LED_0100, LED_0000,   LED_0100, LED_0001,   LED_0100, LED_0010,   LED_0100, LED_0011,
-    LED_0100, LED_0100,   LED_0100, LED_0101,   LED_0100, LED_0110,   LED_0100, LED_0111,
-    LED_0100, LED_1000,   LED_0100, LED_1001,   LED_0100, LED_1010,   LED_0100, LED_1011,
-    LED_0100, LED_1100,   LED_0100, LED_1101,   LED_0100, LED_1110,   LED_0100, LED_1111,
-    LED_0101, LED_0000,   LED_0101, LED_0001,   LED_0101, LED_0010,   LED_0101, LED_0011,
-    LED_0101, LED_0100,   LED_0101, LED_0101,   LED_0101, LED_0110,   LED_0101, LED_0111,
-    LED_0101, LED_1000,   LED_0101, LED_1001,   LED_0101, LED_1010,   LED_0101, LED_1011,
-    LED_0101, LED_1100,   LED_0101, LED_1101,   LED_0101, LED_1110,   LED_0101, LED_1111,
-    LED_0110, LED_0000,   LED_0110, LED_0001,   LED_0110, LED_0010,   LED_0110, LED_0011,
-    LED_0110, LED_0100,   LED_0110, LED_0101,   LED_0110, LED_0110,   LED_0110, LED_0111,
-    LED_0110, LED_1000,   LED_0110, LED_1001,   LED_0110, LED_1010,   LED_0110, LED_1011,
-    LED_0110, LED_1100,   LED_0110, LED_1101,   LED_0110, LED_1110,   LED_0110, LED_1111,
-    LED_0111, LED_0000,   LED_0111, LED_0001,   LED_0111, LED_0010,   LED_0111, LED_0011,
-    LED_0111, LED_0100,   LED_0111, LED_0101,   LED_0111, LED_0110,   LED_0111, LED_0111,
-    LED_0111, LED_1000,   LED_0111, LED_1001,   LED_0111, LED_1010,   LED_0111, LED_1011,
-    LED_0111, LED_1100,   LED_0111, LED_1101,   LED_0111, LED_1110,   LED_0111, LED_1111,
-    LED_1000, LED_0000,   LED_1000, LED_0001,   LED_1000, LED_0010,   LED_1000, LED_0011,
-    LED_1000, LED_0100,   LED_1000, LED_0101,   LED_1000, LED_0110,   LED_1000, LED_0111,
-    LED_1000, LED_1000,   LED_1000, LED_1001,   LED_1000, LED_1010,   LED_1000, LED_1011,
-    LED_1000, LED_1100,   LED_1000, LED_1101,   LED_1000, LED_1110,   LED_1000, LED_1111,
-    LED_1001, LED_0000,   LED_1001, LED_0001,   LED_1001, LED_0010,   LED_1001, LED_0011,
-    LED_1001, LED_0100,   LED_1001, LED_0101,   LED_1001, LED_0110,   LED_1001, LED_0111,
-    LED_1001, LED_1000,   LED_1001, LED_1001,   LED_1001, LED_1010,   LED_1001, LED_1011,
-    LED_1001, LED_1100,   LED_1001, LED_1101,   LED_1001, LED_1110,   LED_1001, LED_1111,
-    LED_1010, LED_0000,   LED_1010, LED_0001,   LED_1010, LED_0010,   LED_1010, LED_0011,
-    LED_1010, LED_0100,   LED_1010, LED_0101,   LED_1010, LED_0110,   LED_1010, LED_0111,
-    LED_1010, LED_1000,   LED_1010, LED_1001,   LED_1010, LED_1010,   LED_1010, LED_1011,
-    LED_1010, LED_1100,   LED_1010, LED_1101,   LED_1010, LED_1110,   LED_1010, LED_1111,
-    LED_1011, LED_0000,   LED_1011, LED_0001,   LED_1011, LED_0010,   LED_1011, LED_0011,
-    LED_1011, LED_0100,   LED_1011, LED_0101,   LED_1011, LED_0110,   LED_1011, LED_0111,
-    LED_1011, LED_1000,   LED_1011, LED_1001,   LED_1011, LED_1010,   LED_1011, LED_1011,
-    LED_1011, LED_1100,   LED_1011, LED_1101,   LED_1011, LED_1110,   LED_1011, LED_1111,
-    LED_1100, LED_0000,   LED_1100, LED_0001,   LED_1100, LED_0010,   LED_1100, LED_0011,
-    LED_1100, LED_0100,   LED_1100, LED_0101,   LED_1100, LED_0110,   LED_1100, LED_0111,
-    LED_1100, LED_1000,   LED_1100, LED_1001,   LED_1100, LED_1010,   LED_1100, LED_1011,
-    LED_1100, LED_1100,   LED_1100, LED_1101,   LED_1100, LED_1110,   LED_1100, LED_1111,
-    LED_1101, LED_0000,   LED_1101, LED_0001,   LED_1101, LED_0010,   LED_1101, LED_0011,
-    LED_1101, LED_0100,   LED_1101, LED_0101,   LED_1101, LED_0110,   LED_1101, LED_0111,
-    LED_1101, LED_1000,   LED_1101, LED_1001,   LED_1101, LED_1010,   LED_1101, LED_1011,
-    LED_1101, LED_1100,   LED_1101, LED_1101,   LED_1101, LED_1110,   LED_1101, LED_1111,
-    LED_1110, LED_0000,   LED_1110, LED_0001,   LED_1110, LED_0010,   LED_1110, LED_0011,
-    LED_1110, LED_0100,   LED_1110, LED_0101,   LED_1110, LED_0110,   LED_1110, LED_0111,
-    LED_1110, LED_1000,   LED_1110, LED_1001,   LED_1110, LED_1010,   LED_1110, LED_1011,
-    LED_1110, LED_1100,   LED_1110, LED_1101,   LED_1110, LED_1110,   LED_1110, LED_1111,
-    LED_1111, LED_0000,   LED_1111, LED_0001,   LED_1111, LED_0010,   LED_1111, LED_0011,
-    LED_1111, LED_0100,   LED_1111, LED_0101,   LED_1111, LED_0110,   LED_1111, LED_0111,
-    LED_1111, LED_1000,   LED_1111, LED_1001,   LED_1111, LED_1010,   LED_1111, LED_1011,
-    LED_1111, LED_1100,   LED_1111, LED_1101,   LED_1111, LED_1110,   LED_1111, LED_1111
-};
+    LED_0000, LED_0000, LED_0000, LED_0001, LED_0000, LED_0010, LED_0000, LED_0011,
+    LED_0000, LED_0100, LED_0000, LED_0101, LED_0000, LED_0110, LED_0000, LED_0111,
+    LED_0000, LED_1000, LED_0000, LED_1001, LED_0000, LED_1010, LED_0000, LED_1011,
+    LED_0000, LED_1100, LED_0000, LED_1101, LED_0000, LED_1110, LED_0000, LED_1111,
+    LED_0001, LED_0000, LED_0001, LED_0001, LED_0001, LED_0010, LED_0001, LED_0011,
+    LED_0001, LED_0100, LED_0001, LED_0101, LED_0001, LED_0110, LED_0001, LED_0111,
+    LED_0001, LED_1000, LED_0001, LED_1001, LED_0001, LED_1010, LED_0001, LED_1011,
+    LED_0001, LED_1100, LED_0001, LED_1101, LED_0001, LED_1110, LED_0001, LED_1111,
+    LED_0010, LED_0000, LED_0010, LED_0001, LED_0010, LED_0010, LED_0010, LED_0011,
+    LED_0010, LED_0100, LED_0010, LED_0101, LED_0010, LED_0110, LED_0010, LED_0111,
+    LED_0010, LED_1000, LED_0010, LED_1001, LED_0010, LED_1010, LED_0010, LED_1011,
+    LED_0010, LED_1100, LED_0010, LED_1101, LED_0010, LED_1110, LED_0010, LED_1111,
+    LED_0011, LED_0000, LED_0011, LED_0001, LED_0011, LED_0010, LED_0011, LED_0011,
+    LED_0011, LED_0100, LED_0011, LED_0101, LED_0011, LED_0110, LED_0011, LED_0111,
+    LED_0011, LED_1000, LED_0011, LED_1001, LED_0011, LED_1010, LED_0011, LED_1011,
+    LED_0011, LED_1100, LED_0011, LED_1101, LED_0011, LED_1110, LED_0011, LED_1111,
+    LED_0100, LED_0000, LED_0100, LED_0001, LED_0100, LED_0010, LED_0100, LED_0011,
+    LED_0100, LED_0100, LED_0100, LED_0101, LED_0100, LED_0110, LED_0100, LED_0111,
+    LED_0100, LED_1000, LED_0100, LED_1001, LED_0100, LED_1010, LED_0100, LED_1011,
+    LED_0100, LED_1100, LED_0100, LED_1101, LED_0100, LED_1110, LED_0100, LED_1111,
+    LED_0101, LED_0000, LED_0101, LED_0001, LED_0101, LED_0010, LED_0101, LED_0011,
+    LED_0101, LED_0100, LED_0101, LED_0101, LED_0101, LED_0110, LED_0101, LED_0111,
+    LED_0101, LED_1000, LED_0101, LED_1001, LED_0101, LED_1010, LED_0101, LED_1011,
+    LED_0101, LED_1100, LED_0101, LED_1101, LED_0101, LED_1110, LED_0101, LED_1111,
+    LED_0110, LED_0000, LED_0110, LED_0001, LED_0110, LED_0010, LED_0110, LED_0011,
+    LED_0110, LED_0100, LED_0110, LED_0101, LED_0110, LED_0110, LED_0110, LED_0111,
+    LED_0110, LED_1000, LED_0110, LED_1001, LED_0110, LED_1010, LED_0110, LED_1011,
+    LED_0110, LED_1100, LED_0110, LED_1101, LED_0110, LED_1110, LED_0110, LED_1111,
+    LED_0111, LED_0000, LED_0111, LED_0001, LED_0111, LED_0010, LED_0111, LED_0011,
+    LED_0111, LED_0100, LED_0111, LED_0101, LED_0111, LED_0110, LED_0111, LED_0111,
+    LED_0111, LED_1000, LED_0111, LED_1001, LED_0111, LED_1010, LED_0111, LED_1011,
+    LED_0111, LED_1100, LED_0111, LED_1101, LED_0111, LED_1110, LED_0111, LED_1111,
+    LED_1000, LED_0000, LED_1000, LED_0001, LED_1000, LED_0010, LED_1000, LED_0011,
+    LED_1000, LED_0100, LED_1000, LED_0101, LED_1000, LED_0110, LED_1000, LED_0111,
+    LED_1000, LED_1000, LED_1000, LED_1001, LED_1000, LED_1010, LED_1000, LED_1011,
+    LED_1000, LED_1100, LED_1000, LED_1101, LED_1000, LED_1110, LED_1000, LED_1111,
+    LED_1001, LED_0000, LED_1001, LED_0001, LED_1001, LED_0010, LED_1001, LED_0011,
+    LED_1001, LED_0100, LED_1001, LED_0101, LED_1001, LED_0110, LED_1001, LED_0111,
+    LED_1001, LED_1000, LED_1001, LED_1001, LED_1001, LED_1010, LED_1001, LED_1011,
+    LED_1001, LED_1100, LED_1001, LED_1101, LED_1001, LED_1110, LED_1001, LED_1111,
+    LED_1010, LED_0000, LED_1010, LED_0001, LED_1010, LED_0010, LED_1010, LED_0011,
+    LED_1010, LED_0100, LED_1010, LED_0101, LED_1010, LED_0110, LED_1010, LED_0111,
+    LED_1010, LED_1000, LED_1010, LED_1001, LED_1010, LED_1010, LED_1010, LED_1011,
+    LED_1010, LED_1100, LED_1010, LED_1101, LED_1010, LED_1110, LED_1010, LED_1111,
+    LED_1011, LED_0000, LED_1011, LED_0001, LED_1011, LED_0010, LED_1011, LED_0011,
+    LED_1011, LED_0100, LED_1011, LED_0101, LED_1011, LED_0110, LED_1011, LED_0111,
+    LED_1011, LED_1000, LED_1011, LED_1001, LED_1011, LED_1010, LED_1011, LED_1011,
+    LED_1011, LED_1100, LED_1011, LED_1101, LED_1011, LED_1110, LED_1011, LED_1111,
+    LED_1100, LED_0000, LED_1100, LED_0001, LED_1100, LED_0010, LED_1100, LED_0011,
+    LED_1100, LED_0100, LED_1100, LED_0101, LED_1100, LED_0110, LED_1100, LED_0111,
+    LED_1100, LED_1000, LED_1100, LED_1001, LED_1100, LED_1010, LED_1100, LED_1011,
+    LED_1100, LED_1100, LED_1100, LED_1101, LED_1100, LED_1110, LED_1100, LED_1111,
+    LED_1101, LED_0000, LED_1101, LED_0001, LED_1101, LED_0010, LED_1101, LED_0011,
+    LED_1101, LED_0100, LED_1101, LED_0101, LED_1101, LED_0110, LED_1101, LED_0111,
+    LED_1101, LED_1000, LED_1101, LED_1001, LED_1101, LED_1010, LED_1101, LED_1011,
+    LED_1101, LED_1100, LED_1101, LED_1101, LED_1101, LED_1110, LED_1101, LED_1111,
+    LED_1110, LED_0000, LED_1110, LED_0001, LED_1110, LED_0010, LED_1110, LED_0011,
+    LED_1110, LED_0100, LED_1110, LED_0101, LED_1110, LED_0110, LED_1110, LED_0111,
+    LED_1110, LED_1000, LED_1110, LED_1001, LED_1110, LED_1010, LED_1110, LED_1011,
+    LED_1110, LED_1100, LED_1110, LED_1101, LED_1110, LED_1110, LED_1110, LED_1111,
+    LED_1111, LED_0000, LED_1111, LED_0001, LED_1111, LED_0010, LED_1111, LED_0011,
+    LED_1111, LED_0100, LED_1111, LED_0101, LED_1111, LED_0110, LED_1111, LED_0111,
+    LED_1111, LED_1000, LED_1111, LED_1001, LED_1111, LED_1010, LED_1111, LED_1011,
+    LED_1111, LED_1100, LED_1111, LED_1101, LED_1111, LED_1110, LED_1111, LED_1111};
 
 static const uint16_t led_addresses[LED_ROWS][LED_COLS] = {
     {  37,   36,   35,   34,   33,        32,   31,   30,   29,   28},
@@ -141,26 +139,28 @@ static const uint16_t led_addresses[LED_ROWS][LED_COLS] = {
 };
 
 static uint32_t led_buffer_modified = 1;
-// We can store reset values at the end of the buffer to simplify DMA transfers.
-static uint16_t led_buffer[LED_BUFFER_SIZE+LED_RESET_TX_COUNT];
+/** We can store reset values at the end of the buffer to simplify DMA transfers. */
+static uint16_t led_buffer[LED_BUFFER_SIZE + LED_RESET_TX_COUNT];
 
-// Modifies the display buffer and tracks if the buffer has actually been changed. Useful if we
-// want to avoid "updating" the display if we don't have to.
-// \param[in]  index  The display buffer index.
-// \param[in]  value  The value to save.
+/**
+ * Modifies the display buffer and tracks if the buffer has actually been changed. Useful if we
+ * want to avoid "updating" the display if we don't have to.
+ * \param[in]  index  The display buffer index.
+ * \param[in]  value  The value to save.
+ */
 static inline void led_buffer_modify(uint32_t index, uint16_t value)
 {
     led_buffer_modified |= (led_buffer[index] != value);
     led_buffer[index] = value;
 }
 
-// Converts a colour to the first half of a 32bit transfer required for each colour.
+/** Converts a colour to the first half of a 32bit transfer required for each colour. */
 static inline uint16_t led_colour_lo(uint32_t c)
 {
     return led_colour_map[LED_TX_PER_COLOUR * c];
 }
 
-// Converts a colour to the second half of a 32bit transfer required for each colour.
+/** Converts a colour to the second half of a 32bit transfer required for each colour. */
 static inline uint16_t led_colour_hi(uint32_t c)
 {
     return led_colour_map[LED_TX_PER_COLOUR * c + 1];
@@ -210,7 +210,7 @@ void led_flush(void)
     if (led_buffer_modified)
     {
         led_buffer_modified = 0;
-        
+
         for (uint32_t i = 0; i < LED_BUFFER_SIZE + LED_RESET_TX_COUNT; i++)
         {
             spi_send(LED_SPI, led_buffer[i]);
@@ -220,25 +220,28 @@ void led_flush(void)
 
 void led_flush_dma(void)
 {
-    uint16_t dma_tx_remaining = dma_get_number_of_data(DMA1, DMA_CHANNEL1);
-    uint32_t dma_enabled = DMA_CCR(DMA1, DMA_CHANNEL1) & DMA_CCR_EN;
+    uint16_t dma_tx_remaining = dma_get_number_of_data(LED_DMA, LED_DMA_CHANNEL);
+    uint32_t dma_enabled = DMA_CCR(LED_DMA, LED_DMA_CHANNEL) & DMA_CCR_EN;
 
-    // Make sure the DMA transfer is either complete (number of transfers remaining is 0) or the
-    // DMA is disabled (presumably caused by a DMA error) before trying to start a new transfer.
-    // TODO: come up with a better solution, this wastes a whole frame worth of processing.
+    /**
+     * Make sure the DMA transfer is either complete (number of transfers remaining is 0) or the
+     * DMA is disabled (presumably caused by a DMA error) before trying to start a new transfer.
+     * TODO: come up with a better solution, this wastes a whole frame worth of processing.
+     */
     if ((led_buffer_modified) && ((dma_tx_remaining == 0) || !(dma_enabled)))
     {
-        // while ((dma_tx_remaining > 0) && dma_enabled)
         led_buffer_modified = 0;
-        
-        // DMA_CNDTRx (number of transfers remaining) is decremented until 0 with each successful
-        // transfer. To begin another transfer this must be set to the buffer length again. The
-        // DMA channel must be disabled to write to DMA_CNDTRx, and the peripherial must be
-        // disabled to disable the DMA.
+
+        /**
+         * DMA_CNDTRx (number of transfers remaining) is decremented until 0 with each successful
+         * transfer. To begin another transfer this must be set to the buffer length again. The
+         * DMA channel must be disabled to write to DMA_CNDTRx, and the peripheral must be
+         * disabled to disable the DMA.
+         */
         spi_disable_tx_dma(LED_SPI);
-        dma_disable_channel(DMA1, DMA_CHANNEL1);
-        dma_set_number_of_data(DMA1, DMA_CHANNEL1, LED_BUFFER_SIZE + LED_RESET_TX_COUNT);
-        dma_enable_channel(DMA1, DMA_CHANNEL1);
+        dma_disable_channel(LED_DMA, LED_DMA_CHANNEL);
+        dma_set_number_of_data(LED_DMA, LED_DMA_CHANNEL, LED_BUFFER_SIZE + LED_RESET_TX_COUNT);
+        dma_enable_channel(LED_DMA, LED_DMA_CHANNEL);
         spi_enable_tx_dma(LED_SPI);
     }
 }

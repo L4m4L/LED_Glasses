@@ -4,6 +4,6 @@
 #include "util.h"
 
 void display_init(void);
-void display_run(context_t* context);
+void display_run(context_t *context);
 
-#endif // #ifndef DISPLAY_H
+#endif /** DISPLAY_H */

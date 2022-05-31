@@ -1,22 +1,36 @@
-/* This module manages reading raw PDM microphone data from the SPH0641LM4H-1, converting the PDM
-** data (1s and 0s) to PCM (16bit numbers), lowpass filtering and downsampling the data and finally
-** extracting the desired frequency components from the audio.
-** The read-filter-downsample process is all handled in the SPI interrupt (don't worry it uses
-** lookup tables so it's really fast!), and the frequency component extraction is done in
-** audio_run().
-** TODO: double buffer audio data
-*/
+/**
+ * This module manages buffering PDM data from the microphone (mic.h), processing that data with
+ * the audio filter (filter.h), and making the audio available to the rest of the program via the
+ * context structure.
+ *
+ * It will start collecting audio on initialisation and will require "audio_run" to be called
+ * frequently to keep up with the audio stream. Don't worry if it doesn't, the recording will stop
+ * if it runs out of buffers but will be restarted on the next call to "audio_run".
+ *
+ * To manage a continuous stream of data, we use multiple audio buffers. This allows us to save new
+ * data in a one buffer and process data from another. These buffers are quite large
+ * (512 * 120 / 8 == 7680 bytes), their size being dependant on the decimation rate of the filter
+ * and the size of the "audio_filtered" array in the context structure.
+ *
+ * TODO:
+ *  - Implement a flushing mechanism so the audio stream can be paused/resumed without worrying
+ *    about stale data.
+ *  - Maybe have some sort of overlap option. Some % of the previous processed audio can be
+ *    carried over, this should provide a smoother frequency decomposition.
+ */
 
 #ifndef AUDIO_H
 #define AUDIO_H
 
 #include "util.h"
 
-// Initialises the audio module. This must be called before audio_run().
+/** Starts the audio recording. */
 void audio_init(void);
-// Processes collected audio data, saving frequency components into context. Will only run if a
-// full buffer of data is available, saving data into audio_volume and setting audio_updated.
-// \param[in/out]  context  Global state structure.
-void audio_run(context_t* context);
 
-#endif // #ifndef AUDIO_H
+/**
+ * Filters any available PDM data, storing it in context and setting the "audio_updated" flag.
+ * Will also restart recordings if it ran out of available buffers and paused.
+ */
+void audio_run(context_t *context);
+
+#endif // AUDIO_H
