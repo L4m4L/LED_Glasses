@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name rave_shades)(type KiCad)(uri ${KIPRJMOD}/../rave_shades.lib)(options "")(descr ""))
-)

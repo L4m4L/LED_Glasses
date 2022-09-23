@@ -1,0 +1,5 @@
+Reading around it seems like the RP2040 could power up and start querying the external quad-spi
+flash before it's had a chance to power up as well. This seems to be a problem when there is
+lots of capacitance on the 3v3 net, there is roughly 4uF at the current revision (controller_b_r1).
+If I notice any problems I'll look into making a circuit that'll hold the RP2040 in reset while
+supply voltage is below a threshold.
