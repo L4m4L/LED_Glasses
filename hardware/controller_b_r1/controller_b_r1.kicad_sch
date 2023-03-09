@@ -2823,6 +2823,11 @@
     (uuid ff54bb40-54b7-4b4b-9fcb-67e7c7651d83)
   )
 
+  (text "It's important that +3V3 turns on quickly because the RP2040 has a lower on voltage than the\nflash and if it's too slow the RP2040 will attempt to read from flash before it's ready. This\nis especially a concern because +5V0 has a lot of capacitance on the display and power boards\nto support all the LEDs. To solve this the EN voltage divider is setup to turn the regulator\non at +3.6V (dropout voltage for Vout=+3V3@300mA is 0.3V).\n"
+    (at 77.47 25.4 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 0008f825-4611-4ece-947f-41fb7c4b21bc)
+  )
   (text "PWM_3_A" (at 283.21 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 0bf469c4-6f90-47e8-b3a9-ce0cfb440b9c)
@@ -4288,7 +4293,7 @@
     (property "Reference" "R101" (id 0) (at 104.14 35.5599 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "10k" (id 1) (at 104.14 38.0999 0)
+    (property "Value" "75k" (id 1) (at 104.14 38.0999 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "Resistor_SMD:R_0402_1005Metric" (id 2) (at 101.6 36.83 0)
@@ -4447,6 +4452,22 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 6e7f114d-3da5-4970-a612-a08b424126de))
+  )
+
+  (symbol (lib_id "power:GND") (at 101.6 44.45 0) (unit 1)
+    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (uuid 9e79f1f1-5f45-41a0-96ff-06d6b5bd2da7)
+    (property "Reference" "#PWR0151" (id 0) (at 101.6 50.8 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "GND" (id 1) (at 101.6 49.53 0))
+    (property "Footprint" "" (id 2) (at 101.6 44.45 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (id 3) (at 101.6 44.45 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 857965bb-5f05-43b4-bc1c-093fc6ab7480))
   )
 
   (symbol (lib_id "power:GND") (at 137.16 39.37 0) (unit 1)
@@ -4656,6 +4677,25 @@
     (pin "6" (uuid b9c49e87-9f07-466b-9738-1e72078efea4))
     (pin "4" (uuid 677e66e1-ca5e-4440-af62-1f88ade31e2f))
     (pin "5" (uuid 5f20d501-19fe-4559-90c4-cc4d5313db15))
+  )
+
+  (symbol (lib_id "Device:R_Small") (at 101.6 41.91 180) (unit 1)
+    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (uuid b9607c09-e293-4332-83e9-c1e94077ce90)
+    (property "Reference" "R110" (id 0) (at 104.14 40.6399 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+    )
+    (property "Value" "15k" (id 1) (at 104.14 43.1799 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric" (id 2) (at 101.6 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (id 3) (at 101.6 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 7f776348-dc67-41b2-ac07-a33c6adb5dc9))
+    (pin "2" (uuid d742b6d8-67c1-47a7-a87b-5a5cceb15285))
   )
 
   (symbol (lib_id "Jumper:SolderJumper_2_Open") (at 330.2 217.17 90) (unit 1)
@@ -5384,6 +5424,9 @@
     (path "/81d1ec03-24ba-41e1-86de-f4d1697c9700"
       (reference "#PWR0150") (unit 1) (value "VDD") (footprint "")
     )
+    (path "/9e79f1f1-5f45-41a0-96ff-06d6b5bd2da7"
+      (reference "#PWR0151") (unit 1) (value "GND") (footprint "")
+    )
     (path "/db515d74-3d0b-477b-8e05-e548a429c513"
       (reference "C101") (unit 1) (value "1u") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
@@ -5496,7 +5539,7 @@
       (reference "Q101") (unit 2) (value "NMOS") (footprint "Package_TO_SOT_SMD:SOT-363_SC-70-6")
     )
     (path "/82bcf8a8-0208-404b-8bd2-25710fbe3f5d"
-      (reference "R101") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0402_1005Metric")
+      (reference "R101") (unit 1) (value "75k") (footprint "Resistor_SMD:R_0402_1005Metric")
     )
     (path "/901630b6-acce-49bc-9a7c-e09bfc7be616"
       (reference "R102") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0402_1005Metric")
@@ -5521,6 +5564,9 @@
     )
     (path "/464e94a3-934c-47dc-ac45-ac442db836e0"
       (reference "R109") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0402_1005Metric")
+    )
+    (path "/b9607c09-e293-4332-83e9-c1e94077ce90"
+      (reference "R110") (unit 1) (value "15k") (footprint "Resistor_SMD:R_0402_1005Metric")
     )
     (path "/b68868d2-8513-482d-974f-9ce023751b7f"
       (reference "RN101") (unit 1) (value "10k") (footprint "Resistor_SMD:R_Array_Convex_4x0402")
