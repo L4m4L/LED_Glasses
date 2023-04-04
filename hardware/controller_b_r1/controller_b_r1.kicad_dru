@@ -1,0 +1,9 @@
+(version 1)
+
+(rule "Distance Between Vias of Different Nets"
+    (constraint hole_to_hole (min 0.5mm))
+    (condition "A.Type =='Via' && B.Type =='Via' && A.Net != B.Net"))
+
+(rule "USB Clearance"
+   (constraint clearance (min 0.8mm))
+   (condition "A.NetClass == 'USB' && B.Type == 'Zone' && B.Layer == 'F.Cu'"))
