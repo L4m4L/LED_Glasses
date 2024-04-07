@@ -1,3 +1,4 @@
 (sym_lib_table
+  (version 7)
   (lib (name "rave_shades")(type "KiCad")(uri "${KIPRJMOD}/../rave_shades.kicad_sym")(options "")(descr ""))
 )

@@ -3,3 +3,19 @@ flash before it's had a chance to power up as well. This seems to be a problem w
 lots of capacitance on the 3v3 net, there is roughly 4uF at the current revision (controller_b_r1).
 If I notice any problems I'll look into making a circuit that'll hold the RP2040 in reset while
 supply voltage is below a threshold.
+
+put power supply switch back on power board
+swap crystal for crystal oscilator !!!!
+get push buttons with more travel
+look into more robust cabling options
+light level sensor
+use thermal reliefs!!
+always use a dot for pin 1!!
+the usb port doesnt need the overhang
+usb port could be through hole, then file down pins on far side
+usb usb c!!!
+relax current and thermal efficiency requirements for power board, leds are much worse!! (smaller inductor would be nice)
+make front board narrower
+more test points !!!
+less caps on led board, maybe 1 for every 5
+90 deg magnet plug for power cable?
