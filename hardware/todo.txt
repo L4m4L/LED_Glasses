@@ -19,3 +19,5 @@ make front board narrower
 more test points !!!
 less caps on led board, maybe 1 for every 5
 90 deg magnet plug for power cable?
+Move all class 2 dielectric capacitors physically away from the microphone and use class 1 for
+bypass on it's power/gnd line.
